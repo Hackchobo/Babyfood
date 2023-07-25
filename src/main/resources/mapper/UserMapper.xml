@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.babyfood.user.UserMapper">
+
+    <insert id="insUser">
+        insert into user
+        set email = #{email},
+        nick_nm = #{nickNm},
+        password = #{password},
+        name = #{name},
+        mobile_nb = #{mobileNb},
+        birthday = #{birthday},
+        address = #{address}
+    </insert>
+
+    <insert id="insAdmin">
+        insert into user
+        set email = #{email},
+        password = #{password},
+        name = #{name},
+        mobile_nb = #{mobileNb},
+        address = #{address},
+        nick_nm = #{nickNm},
+        admin = 1
+    </insert>
+
+    <select id="selUser">
+        SELECT iuser , email, password, image, name, birthday, mobile_nb mobileNb, created_at createdAt
+        , admin, address, nick_nm nickNm, point
+        FROM user
+    </select>
+
+    <update id="updUser">
+        update user
+        set email = #{email},
+        password = #{password},
+        name = #{name},
+        birthday = #{birthday},
+        mobile_nb = #{mobileNb},
+        admin = #{admin},
+        address = #{address},
+        nick_nm = #{nickNm}
+        where iuser = #{iuser}
+    </update>
+
+    <update id="updPicUser">
+        update user
+        set image = #{image}
+        where iuser = #{iuser}
+    </update>
+
+    <update id="updPointUser">
+        update user
+        set point = #{point}
+        where iuser = #{iuser}
+    </update>
+
+    <delete id="delUser">
+        delete
+        from user
+        where iuser = #{iuser}
+    </delete>
+
+</mapper>
