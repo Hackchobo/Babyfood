@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.babyfood.orderbasket.OrderBasketMapper">
+
+    <insert id="insOrderBasket" useGeneratedKeys="true" keyProperty="cartId">
+        insert into order_basket
+        (iuser,product_id ,count)
+        values
+        (#{iuser},#{productId},#{count})
+    </insert>
+
+    <select id="selUserOrderBasket">
+        select A.cart_id cartId,A.product_id productId,A.count,B.p_title title,B.p_price price,C.thumbnail
+        from order_basket A
+        inner join product B
+        on A.product_id=B.product_id
+        inner join product_img C
+        on B.product_id=C.product_id
+        where A.iuser=#{iuser}
+    </select>
+
+    <select id="selPrice">
+        select p_price from product
+        where product_id=#{productId}
+    </select>
+    
+    <update id="updCountPlus">
+        update order_basket
+        set count=count+1
+        where cart_id=#{cartId}
+    </update>
+
+    <update id="updCountMinus">
+        update order_basket
+        set count=count-1
+        where cart_id=#{cartId}
+    </update>
+
+    <delete id="delOrderBasket">
+        delete from order_basket
+        where cart_id=#{cartId}
+    </delete>
+</mapper>
