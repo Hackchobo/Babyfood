@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.babyfood.main.MainMapper">
+
+    <select id="mainSelView">
+    SELECT A.product_id productId,A.p_title title,A.p_price price,B.thumbnail pic
+    from product A
+    inner join product_img B
+    ON A.product_id=B.product_id
+    ORDER BY created_at desc
+    LIMIT #{startIdx},#{row};
+    </select>
+
+    <select id="maxPaige">
+        SELECT count(product_id) FROM product
+    </select>
+</mapper>

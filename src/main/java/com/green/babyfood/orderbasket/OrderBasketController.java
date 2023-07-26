@@ -29,8 +29,7 @@ public class OrderBasketController {
 
     @GetMapping
     @Operation(summary = "장바구니 목록",description = ""+
-            "iuser : 로그인한 유저번호<br>"+
-            "productId : 장바구니에 넣을 제품 번호<br>"+
+            "cartId : 장바구니의 번호<br>"+
             "title : 상품의 title<br>"+
             "count : 수량 <br>"+
             "price : 해당상품 하나의 가격<br>"+
@@ -57,4 +56,7 @@ public class OrderBasketController {
     private int delOrderBasket(Long cartId){
         return service.delOrderBasket(cartId);
     }
+
+
+
 }

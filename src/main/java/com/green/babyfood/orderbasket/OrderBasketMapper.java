@@ -13,7 +13,6 @@ public interface OrderBasketMapper {
 
     int insOrderBasket(OrderBasketEntity entity);
     List<OrderBasketSelVo> selUserOrderBasket(Long iuser);
-    int selPrice(Long productId);
     int updCountPlus(Long cartId);
     int updCountMinus(Long cartId);
     int delOrderBasket(Long cartId);
