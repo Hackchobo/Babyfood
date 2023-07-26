@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.babyfood.mypage.MypageMapper">
+    
+    <select id="mypageOrderlist">
+        SELECT A.order_id orderid,C.p_name NAME ,A.shipment shipment
+        from order_list A
+        INNER JOIN order_detail B
+        ON A.order_id = B.order_id
+        INNER JOIN product C
+        ON B.product_id = C.product_id
+        WHERE iuser = #{iuser}
+    </select>
+
+    <select id="profile">
+        SELECT A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb phoneNumber,A.address address,A.nick_nm nickNm,A.point point
+        FROM user A
+        WHERE iuser = #{iuser}
+
+    </select>
+
+
+
+</mapper>
