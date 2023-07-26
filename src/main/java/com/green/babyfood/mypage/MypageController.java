@@ -46,6 +46,7 @@ public class MypageController {
     @DeleteMapping("/profile")
     @Operation(summary = "회원탈퇴")
     int delprofile(int iuser){
+        //ddd
         return service.delUser(iuser);
     }
 
