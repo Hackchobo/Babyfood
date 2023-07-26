@@ -11,6 +11,7 @@ public interface UserMapper {
     int insAdmin(AdminInsDto dto);
     List<UserEntity> selUser();
     int updUser(UserUpdDto dto);
+    int updPicUser(CreatePicDto dto);
     int updPointUser(UserPointDto dto);
     int delUser(UserDelDto dto);
 }
