@@ -2,14 +2,20 @@ package com.green.babyfood.user;
 
 import com.green.babyfood.user.model.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@RestController
+@Slf4j
 @AllArgsConstructor
-@RequestMapping("api/user")
+@RestController
+@RequestMapping("/api/user")
+@Tag(name = "유저/관리자 회원관리")
 public class UserController {
 
     private final UserService service;
@@ -64,6 +70,13 @@ public class UserController {
     )
     public int patchUser(@RequestBody UserUpdDto dto){
         return service.updUser(dto);
+    }
+
+    @PatchMapping(value = "/pic", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public int patchPic(@RequestPart MultipartFile pic, @RequestParam Long iuser){
+        CreatePicDto dto = new CreatePicDto();
+        dto.setIuser(iuser);
+        return service.updPicUser(pic, dto);
     }
 
     @PatchMapping("/point/{iuser}")
