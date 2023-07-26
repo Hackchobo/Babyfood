@@ -25,6 +25,4 @@ public class MainController {
     public MainSelVoMaxPaige selPaging(@RequestParam @Min(value = 1) int paige, @RequestParam int row){
         return service.mainSelView(paige,row);
     }
-
-
 }
