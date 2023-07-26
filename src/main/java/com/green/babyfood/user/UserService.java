@@ -3,6 +3,7 @@ package com.green.babyfood.user;
 import com.green.babyfood.user.model.*;
 import com.green.babyfood.util.FileUtils;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,13 +14,13 @@ import java.io.File;
 import java.util.List;
 
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
     @Value("${file.dir}")
     private String fileDir;
-    @Autowired
+
     private final UserMapper mapper;
 
     /*@Autowired
