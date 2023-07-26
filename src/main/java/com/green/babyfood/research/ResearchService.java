@@ -55,7 +55,6 @@ public class ResearchService {
 //        }
 
         List<ProductDto> selproduct = mapper.selproduct(msg);
-
         return selproduct;
     }
 }

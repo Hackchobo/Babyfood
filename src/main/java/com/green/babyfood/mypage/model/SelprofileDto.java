@@ -10,6 +10,7 @@ public class SelprofileDto {
     private String birthday;
     private String phoneNumber;
     private String address;
+    private String addressDetail;
     private String nickNm;
     private int point;
 }

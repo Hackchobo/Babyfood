@@ -15,11 +15,32 @@
     </select>
 
     <select id="profile">
-        SELECT A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb phoneNumber,A.address address,A.nick_nm nickNm,A.point point
+        SELECT A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb phoneNumber,A.address address,A.address_detail addressDetail,A.nick_nm nickNm,A.point point
         FROM user A
         WHERE iuser = #{iuser}
 
     </select>
+
+    <update id="Updprofile">
+        UPDATE user
+        SET nick_nm = #{nickNm},
+        password = #{password},
+        mobile_nb = #{phoneNumber},
+        birthday= #{birthday},
+        address = #{address},
+        address_detail = #{addressDetail}
+        WHERE iuser = #{iuser};
+    </update>
+
+    <select id="SelNickNm">
+        SELECT nick_nm nickNm FROM user
+        WHERE nick_nm =#{nickNm}
+    </select>
+
+    <delete id="delUser">
+        delete from user
+        where iuser =#{iuser}
+    </delete>
 
 
 

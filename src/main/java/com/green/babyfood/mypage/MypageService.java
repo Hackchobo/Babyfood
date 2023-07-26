@@ -1,8 +1,11 @@
 package com.green.babyfood.mypage;
 
+import com.green.babyfood.mypage.model.SelNickNmDto;
 import com.green.babyfood.mypage.model.SelOrderlistDto;
 import com.green.babyfood.mypage.model.SelprofileDto;
+import com.green.babyfood.mypage.model.UpdProfileDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +14,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class MypageService {
     private final MypageMapper mapper;
 
@@ -34,5 +38,24 @@ public class MypageService {
         SelprofileDto profile = mapper.profile(iuser);
         return profile;
     }
+    public int UpdProfileDto(UpdProfileDto dto){
+        log.info("입력한 닉네임:{}",dto.getNickNm());
+        SelNickNmDto selNickNmDto = mapper.SelNickNm(dto.getNickNm());
+
+        //log.info("검색한 닉네임: {}",selNickNmDto.getNickNm());
+
+        if (!(selNickNmDto == null)){
+            return -1;
+        }else if (!dto.getPassword().equals(dto.getPasswordcheck())){
+            return 0;
+        }
+        return mapper.Updprofile(dto);
+    }
+
+    public int delUser(int iuser){
+        return mapper.delUser(iuser);
+    }
+
+
 
 }
