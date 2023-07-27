@@ -9,4 +9,5 @@ import java.util.List;
 @Mapper
 public interface ResearchMapper {
     List<ProductDto> selproduct(String num);
+    List<ProductDto> selproduct2(String msg);
 }

@@ -2,6 +2,7 @@ package com.green.babyfood.research;
 
 import com.green.babyfood.research.model.ProductDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.KomoranResult;
@@ -11,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Tag(name = "검색")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/research")
@@ -29,6 +30,11 @@ public class ResearchController {
             "allergy : 알레르기 종류")
     public List<ProductDto> analysisChat(@RequestParam String msg) {
         return service.selproduct(msg);
+    }
+
+    @GetMapping("/dddd")
+    public List<ProductDto> analysisChat2(@RequestParam String msg) {
+        return service.tokenList(msg);
     }
 
 

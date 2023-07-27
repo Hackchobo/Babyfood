@@ -1,8 +1,6 @@
 package com.green.babyfood.mypage;
 
-import com.green.babyfood.mypage.model.SelOrderlistDto;
-import com.green.babyfood.mypage.model.SelprofileDto;
-import com.green.babyfood.mypage.model.UpdProfileDto;
+import com.green.babyfood.mypage.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +21,28 @@ public class MypageController {
             "shipment: 상품배송상태 <br>"+
             "nickNm : 닉네임<br>"+
             "point : 포인트<br>")
-    List<SelOrderlistDto> getOrderlist(int iuser){
+    List<SelMypageOrderListDto> getOrderList(int iuser){
         return service.mypageOrderlist(iuser);
     }
+
+    @GetMapping("/orderlist")
+    @Operation(summary = "나의 주문내역조회",description = ""+
+            "name: 상품이름"+
+            "shipment: 상품배송상태 <br>"+
+            "nickNm : 닉네임<br>"+
+            "point : 포인트<br>")
+    List<SelOrderlistDto>getOrderlist(int iuser){
+        return service.Orderlist(iuser);
+    }
+
+    @GetMapping("/orderlist/months")
+    @Operation(summary = "주문내역조회",description = ""+
+            "iuser: 유저PK <br>"+
+            "num: 조회하고싶은 기간(개월) <br>")
+    List<SelOrderlistDto>getOrderlistMonths(SelOrderlistMonthsDto dto){
+        return service.selOneMonths(dto);
+    }
+
 
     @GetMapping("/profile")
     @Operation(summary = "내 정보조회",description = ""+

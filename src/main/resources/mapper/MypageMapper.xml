@@ -5,20 +5,40 @@
 <mapper namespace="com.green.babyfood.mypage.MypageMapper">
     
     <select id="mypageOrderlist">
-        SELECT A.order_id orderid,C.p_name NAME ,A.shipment shipment
-        from order_list A
+        SELECT A.order_id orderId, A.created_at createdAt,C.p_title title,C.p_name name,B.`count` count,B.total_price price,A.shipment shipment
+        FROM order_list A
         INNER JOIN order_detail B
         ON A.order_id = B.order_id
         INNER JOIN product C
         ON B.product_id = C.product_id
-        WHERE iuser = #{iuser}
+        where iuser = #{iuser}
+    </select>
+
+    <select id="Orderlist">
+        SELECT A.order_id orderId, A.created_at createdAt,C.p_title title,C.p_name name,B.`count` count,B.total_price price,A.shipment shipment
+        FROM order_list A
+        INNER JOIN order_detail B
+        ON A.order_id = B.order_id
+        INNER JOIN product C
+        ON B.product_id = C.product_id
+        where iuser = #{iuser}
+    </select>
+
+    <select id="selOneMonths">
+        SELECT A.order_id orderId, A.created_at createdAt,C.p_title title,C.p_name name,B.`count` count,B.total_price price,A.shipment shipment
+        FROM order_list A
+        INNER JOIN order_detail B
+        ON A.order_id = B.order_id
+        INNER JOIN product C
+        ON B.product_id = C.product_id
+        where iuser = #{iuser}
+        and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{num} MONTH) AND NOW()
     </select>
 
     <select id="profile">
         SELECT A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb phoneNumber,A.address address,A.address_detail addressDetail,A.nick_nm nickNm,A.point point
         FROM user A
         WHERE iuser = #{iuser}
-
     </select>
 
     <update id="Updprofile">
@@ -36,6 +56,7 @@
         SELECT nick_nm nickNm FROM user
         WHERE nick_nm =#{nickNm}
     </select>
+
 
     <delete id="delUser">
         delete from user

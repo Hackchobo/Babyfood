@@ -1,9 +1,6 @@
 package com.green.babyfood.mypage;
 
-import com.green.babyfood.mypage.model.SelNickNmDto;
-import com.green.babyfood.mypage.model.SelOrderlistDto;
-import com.green.babyfood.mypage.model.SelprofileDto;
-import com.green.babyfood.mypage.model.UpdProfileDto;
+import com.green.babyfood.mypage.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,8 +15,8 @@ import java.util.List;
 public class MypageService {
     private final MypageMapper mapper;
 
-    List<SelOrderlistDto> mypageOrderlist(int iuser){
-        List<SelOrderlistDto> orderlistDtos = mapper.mypageOrderlist(iuser);
+    List<SelMypageOrderListDto> mypageOrderlist(int iuser){
+        List<SelMypageOrderListDto> orderlistDtos = mapper.mypageOrderlist(iuser);
 
         for (int i = 0; i <orderlistDtos.size(); i++) {
             if (orderlistDtos.get(i).getShipment().equals("1")){
@@ -34,28 +31,33 @@ public class MypageService {
         }
         return orderlistDtos;
     }
+    public List<SelOrderlistDto> Orderlist(int iuser){
+
+
+        return mapper.Orderlist(iuser);
+    }
+    public List<SelOrderlistDto> selOneMonths(SelOrderlistMonthsDto dto){
+        return mapper.selOneMonths(dto);
+    }
+
     SelprofileDto profile(int iuser){
         SelprofileDto profile = mapper.profile(iuser);
         return profile;
     }
+
     public int UpdProfileDto(UpdProfileDto dto){
         log.info("입력한 닉네임:{}",dto.getNickNm());
         SelNickNmDto selNickNmDto = mapper.SelNickNm(dto.getNickNm());
 
-        //log.info("검색한 닉네임: {}",selNickNmDto.getNickNm());
-
         if (!(selNickNmDto == null)){
             return -1;
-        }else if (!dto.getPassword().equals(dto.getPasswordcheck())){
-            return 0;
         }
+
         return mapper.Updprofile(dto);
     }
 
     public int delUser(int iuser){
         return mapper.delUser(iuser);
     }
-
-
 
 }

@@ -16,4 +16,17 @@
         WHERE p_name like '%${msg}%' AND A.p_quantity != 0
     </select>
 
+    <select id="selproduct2">
+        SELECT A.product_id productid,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,A.description description, A.sale_volumn salevolumn, C.allergy_name allergy
+        FROM product A
+        left JOIN product_allergy B
+        ON A.product_id = B.product_id
+        left JOIN allergy C
+        on C.allergy_id = B.allergy_id
+        LEFT JOIN product_img D
+        ON D.product_id = A.product_id
+        WHERE p_name REGEXP #{msg}
+        AND A.p_quantity != 0
+    </select>
+
 </mapper>
