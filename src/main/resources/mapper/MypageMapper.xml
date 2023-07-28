@@ -12,17 +12,25 @@
         INNER JOIN product C
         ON B.product_id = C.product_id
         where iuser = #{iuser}
+        ORDER BY A.created_at DESC
     </select>
 
 
     <select id="Orderlist">
-        SELECT A.order_id orderId, A.created_at createdAt,C.p_title title,C.p_name name,B.`count` count,B.total_price price,A.shipment shipment
+        SELECT A.order_id orderId,DATE_FORMAT(A.created_at,'%Y-%m-%d') createdAt,C.p_name name,D.thumbnail thumbnail,B.total_price price,A.shipment shipment
         FROM order_list A
         INNER JOIN order_detail B
         ON A.order_id = B.order_id
         INNER JOIN product C
         ON B.product_id = C.product_id
+        LEFT JOIN product_img D
+        ON D.product_id = C.product_id
         where iuser = #{iuser}
+        <if test="num !=0">
+            and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{num} MONTH) AND NOW()
+        </if>
+        ORDER BY A.created_at DESC
+
     </select>
 
     <select id="OrderlistDetail">
@@ -34,20 +42,10 @@
         ON B.product_id = C.product_id
         WHERE iuser = #{iuser}
         and A.order_id = #{orderId}
+        ORDER BY A.created_at DESC
 
     </select>
 
-
-    <select id="selOneMonths">
-        SELECT A.order_id orderId, A.created_at createdAt,C.p_title title,C.p_name name,B.`count` count,B.total_price price,A.shipment shipment
-        FROM order_list A
-        INNER JOIN order_detail B
-        ON A.order_id = B.order_id
-        INNER JOIN product C
-        ON B.product_id = C.product_id
-        where iuser = #{iuser}
-        and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{num} MONTH) AND NOW()
-    </select>
 
     <select id="profile">
         SELECT A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb mobileNb,A.address address,A.address_detail addressDetail,A.nick_nm nickNm,A.point point

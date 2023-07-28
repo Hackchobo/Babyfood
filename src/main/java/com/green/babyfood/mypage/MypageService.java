@@ -31,13 +31,24 @@ public class MypageService {
         }
         return orderlistDtos;
     }
-    public List<SelOrderlistDto> Orderlist(int iuser){
+    public List<SelOrderlistDto> Orderlist(SelOrderlistMonthsDto dto){
 
 
-        return mapper.Orderlist(iuser);
-    }
-    public List<SelOrderlistDto> selOneMonths(SelOrderlistMonthsDto dto){
-        return mapper.selOneMonths(dto);
+        List<SelOrderlistDto> orderlist = mapper.Orderlist(dto);
+
+        for (int i = 0; i <orderlist.size(); i++) {
+            if (orderlist.get(i).getShipment().equals("1")){
+                orderlist.get(i).setShipment("상품 준비중");
+            } else if (orderlist.get(i).getShipment().equals("2")) {
+                orderlist.get(i).setShipment("상품 배송중");
+            } else if (orderlist.get(i).getShipment().equals("3")) {
+                orderlist.get(i).setShipment("상품 주문취소");
+            } else if (orderlist.get(i).getShipment().equals("4")) {
+                orderlist.get(i).setShipment("상품 배송완료");
+            }
+        }
+
+        return orderlist;
     }
     public List<SelOrderlistDetailDto>OrderlistDetail(SelOrderlistDetailVo vo){
         return mapper.OrderlistDetail(vo);
@@ -53,7 +64,7 @@ public class MypageService {
         SelNickNmDto selNickNmDto = mapper.SelNickNm(dto.getNickNm());
 
         if (!(selNickNmDto == null)){
-            return -1;
+            return 0;
         }
 
         return mapper.Updprofile(dto);

@@ -12,8 +12,7 @@ public interface MypageMapper {
     int Updprofile(UpdProfileDto dto);
     SelNickNmDto SelNickNm(String nickNm);
     int delUser(int iuser);
-    List<SelOrderlistDto> Orderlist(int iuser);
-    List<SelOrderlistDto>selOneMonths(SelOrderlistMonthsDto dto);
+    List<SelOrderlistDto> Orderlist(SelOrderlistMonthsDto dto);
     List<SelOrderlistDetailDto> OrderlistDetail(SelOrderlistDetailVo vo);
 
 
