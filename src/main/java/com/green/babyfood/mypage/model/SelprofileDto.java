@@ -8,7 +8,7 @@ public class SelprofileDto {
     private String image;
     private String name;
     private String birthday;
-    private String phoneNumber;
+    private String mobileNb;
     private String address;
     private String addressDetail;
     private String nickNm;

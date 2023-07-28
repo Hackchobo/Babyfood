@@ -14,6 +14,7 @@ public interface MypageMapper {
     int delUser(int iuser);
     List<SelOrderlistDto> Orderlist(int iuser);
     List<SelOrderlistDto>selOneMonths(SelOrderlistMonthsDto dto);
+    List<SelOrderlistDetailDto> OrderlistDetail(SelOrderlistDetailVo vo);
 
 
 }

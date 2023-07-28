@@ -32,10 +32,5 @@ public class ResearchController {
         return service.selproduct(msg);
     }
 
-    @GetMapping("/dddd")
-    public List<ProductDto> analysisChat2(@RequestParam String msg) {
-        return service.tokenList(msg);
-    }
-
 
 }
