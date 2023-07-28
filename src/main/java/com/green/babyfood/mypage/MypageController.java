@@ -25,15 +25,15 @@ public class MypageController {
         return service.mypageOrderlist(iuser);
     }
 
-    @GetMapping("/orderlist")
-    @Operation(summary = "나의 주문내역조회",description = ""+
-            "name: 상품이름"+
-            "shipment: 상품배송상태 <br>"+
-            "nickNm : 닉네임<br>"+
-            "point : 포인트<br>")
-    List<SelOrderlistDto>getOrderlist(int iuser){
-        return service.Orderlist(iuser);
-    }
+//    @GetMapping("/orderlist")
+//    @Operation(summary = "나의 주문내역조회",description = ""+
+//            "name: 상품이름"+
+//            "shipment: 상품배송상태 <br>"+
+//            "nickNm : 닉네임<br>"+
+//            "point : 포인트<br>")
+//    List<SelOrderlistDto>getOrderlist(int iuser){
+//        return service.Orderlist(iuser);
+//    }
 
     @GetMapping("/orderlist/months")
     @Operation(summary = "주문내역조회",description = ""+
@@ -41,6 +41,11 @@ public class MypageController {
             "num: 조회하고싶은 기간(개월) <br>")
     List<SelOrderlistDto>getOrderlistMonths(SelOrderlistMonthsDto dto){
         return service.selOneMonths(dto);
+    }
+    @GetMapping("/orderlist/detail")
+    @Operation(summary = "상세주문내역",description = "")
+    List<SelOrderlistDetailDto>getOrderlistDetail(SelOrderlistDetailVo vo){
+        return service.OrderlistDetail(vo);
     }
 
 

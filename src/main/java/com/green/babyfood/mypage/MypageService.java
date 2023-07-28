@@ -39,6 +39,9 @@ public class MypageService {
     public List<SelOrderlistDto> selOneMonths(SelOrderlistMonthsDto dto){
         return mapper.selOneMonths(dto);
     }
+    public List<SelOrderlistDetailDto>OrderlistDetail(SelOrderlistDetailVo vo){
+        return mapper.OrderlistDetail(vo);
+    }
 
     SelprofileDto profile(int iuser){
         SelprofileDto profile = mapper.profile(iuser);
