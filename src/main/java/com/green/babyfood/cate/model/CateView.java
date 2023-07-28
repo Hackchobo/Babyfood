@@ -9,6 +9,6 @@ public class CateView {
 
     private Long cateId;
     private String cateName;
-    private String str;
+    private List list;
 
 }

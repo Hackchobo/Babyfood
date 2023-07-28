@@ -29,22 +29,18 @@ public class CateService {
         return vo;
     }
 
-    public List cateList() {
-        List<CateVo> cateVos = mapper.cateAll(); //단계 카테고리
-        List<cateDetailVo> cateDetailVos = mapper.cateDetailAll(); //디테일 카테고리
 
-        List list = new ArrayList();
-        for (int i = 0; i < cateVos.size(); i++) {
-            cateAllVo vo = new cateAllVo();
-            vo.setCateId(cateVos.get(i).getCateId());
-            vo.setCateName(cateVos.get(i).getCateName());
-            vo.setList(cateDetailVos);
-            list.add(vo);
+    public List selCateList(){
+        List<CateVo> selcate = mapper.selcate();
+        List list=new ArrayList();
+        for (int i = 0; i < selcate.size(); i++) {
+            List<CateDetailVo> cateDetailVos = mapper.selCateList(selcate.get(i).getCateId());
+            CateView view=new CateView();
+            view.setCateId(selcate.get(i).getCateId());
+            view.setCateName(selcate.get(i).getCateName());
+            view.setList(cateDetailVos);
+            list.add(view);
         }
-        return list;
-    }
-
-    public List<CateView> selCateList(){
-    return mapper.selCateList();
+    return list;
     }
 }

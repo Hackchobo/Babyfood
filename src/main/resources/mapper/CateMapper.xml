@@ -39,13 +39,11 @@
     </select>
 
     <select id="selCateList">
-        SELECT A.cate_id cateId,B.cate_name cateName,GROUP_CONCAT(A.cate_detail_id) str
-        from cate_view A
-        INNER JOIN category B
-        ON A.cate_id=B.cate_id
-        INNER JOIN cate_detail C
-        ON A.cate_detail_id=C.cate_detail_id
-        GROUP BY A.cate_id;
+        SELECT A.cate_detail_id cateDetailId,B.cate_name cateName
+        FROM cate_view A
+        INNER JOIN cate_detail B
+        ON A.cate_detail_id=B.cate_detail_id
+        WHERE A.cate_id=#{cateId}
     </select>
 
 
