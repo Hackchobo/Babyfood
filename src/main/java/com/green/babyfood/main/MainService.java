@@ -26,4 +26,8 @@ public class MainService  {
 
         return mainSelVoMaxPaige;
     }
+
+    public int insPk(){
+        return mapper.insPk();
+    }
 }

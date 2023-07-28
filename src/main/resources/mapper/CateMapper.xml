@@ -2,17 +2,50 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.babyfood1.cate.CateMapper">
+<mapper namespace="com.green.babyfood.cate.CateMapper">
 
-    <select id="cateSel">
-        select cate_name cateName
-        from category
-    </select>
+
 
     <select id="cateSelDetail">
         select cate_name cateName
         from category
         where cate_id = {cateId}
+    </select>
+
+    <select id="cateSelLevelmaxPaige">
+        SELECT count(A.product_id)
+        FROM product_category_relation A
+        INNER JOIN product_img B
+        ON A.product_id=B.product_id
+        INNER JOIN product C
+        ON A.product_id=C.product_id
+        WHERE A.cate_id=#{cateId} AND A.cate_detail_id=#{cateDetailId}
+    </select>
+
+    <select id="cateSelLevel">
+        SELECT A.product_id productId,B.thumbnail,C.p_title title,C.p_price price
+        FROM product_category_relation A
+        INNER JOIN product_img B
+        ON A.product_id=B.product_id
+        INNER JOIN product C
+        ON A.product_id=C.product_id
+        WHERE A.cate_id=#{cateId} AND A.cate_detail_id=#{cateDetailId}
+        LIMIT #{paige},#{row};
+    </select>
+
+
+    <select id="selcate">
+        select cate_id cateId,cate_name cateName from category
+    </select>
+
+    <select id="selCateList">
+        SELECT A.cate_id cateId,B.cate_name cateName,GROUP_CONCAT(A.cate_detail_id) str
+        from cate_view A
+        INNER JOIN category B
+        ON A.cate_id=B.cate_id
+        INNER JOIN cate_detail C
+        ON A.cate_detail_id=C.cate_detail_id
+        GROUP BY A.cate_id;
     </select>
 
 

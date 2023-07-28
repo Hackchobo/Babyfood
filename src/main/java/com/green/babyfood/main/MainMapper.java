@@ -10,4 +10,5 @@ public interface MainMapper {
 
     List<MainSelVo> mainSelView(int startIdx,int row);
     int maxPaige();
+    int insPk();
 }
