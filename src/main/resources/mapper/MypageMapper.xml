@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.babyfood.mypage.MypageMapper">
+    
+    <select id="mypageOrderlist">
+        SELECT A.order_id orderId, A.created_at createdAt,C.p_title title,C.p_name name,B.`count` count,B.total_price price,A.shipment shipment
+        FROM order_list A
+        INNER JOIN order_detail B
+        ON A.order_id = B.order_id
+        INNER JOIN product C
+        ON B.product_id = C.product_id
+        where iuser = #{iuser}
+    </select>
+
+    <select id="Orderlist">
+        SELECT A.order_id orderId, A.created_at createdAt,C.p_title title,C.p_name name,B.`count` count,B.total_price price,A.shipment shipment
+        FROM order_list A
+        INNER JOIN order_detail B
+        ON A.order_id = B.order_id
+        INNER JOIN product C
+        ON B.product_id = C.product_id
+        where iuser = #{iuser}
+    </select>
+
+    <select id="selOneMonths">
+        SELECT A.order_id orderId, A.created_at createdAt,C.p_title title,C.p_name name,B.`count` count,B.total_price price,A.shipment shipment
+        FROM order_list A
+        INNER JOIN order_detail B
+        ON A.order_id = B.order_id
+        INNER JOIN product C
+        ON B.product_id = C.product_id
+        where iuser = #{iuser}
+        and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{num} MONTH) AND NOW()
+    </select>
+
+    <select id="profile">
+        SELECT A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb phoneNumber,A.address address,A.address_detail addressDetail,A.nick_nm nickNm,A.point point
+        FROM user A
+        WHERE iuser = #{iuser}
+    </select>
+
+    <update id="Updprofile">
+        UPDATE user
+        SET nick_nm = #{nickNm},
+        password = #{password},
+        mobile_nb = #{phoneNumber},
+        birthday= #{birthday},
+        address = #{address},
+        address_detail = #{addressDetail}
+        WHERE iuser = #{iuser};
+    </update>
+
+    <select id="SelNickNm">
+        SELECT nick_nm nickNm FROM user
+        WHERE nick_nm =#{nickNm}
+    </select>
+
+
+    <delete id="delUser">
+        delete from user
+        where iuser =#{iuser}
+    </delete>
+
+
+
+</mapper>
