@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.babyfood.search.SearchtMapper">
+<mapper namespace="com.green.babyfood.search.SearchMapper">
 
     <select id="selproduct">
         SELECT A.product_id productid,A.p_name NAME,D.thumbnail thumbnail,A.p_price price
@@ -14,11 +14,11 @@
         LEFT JOIN product_img D
         ON D.product_id = A.product_id
         WHERE p_name REGEXP #{msg}
-        AND A.p_quantity != 0
-        ORDER BY A.sale_volumn DESC
+        AND A.p_quantity !=0
+        LIMIT #{startIdx}, #{row}
     </select>
 
-    <select id="selproductPrice">
+    <select id="selfilter">
         SELECT A.product_id productid,A.p_name NAME,D.thumbnail thumbnail,A.p_price price
         FROM product A
         left JOIN product_allergy B
@@ -28,8 +28,26 @@
         LEFT JOIN product_img D
         ON D.product_id = A.product_id
         WHERE p_name REGEXP #{msg}
-        AND A.p_quantity != 0
-        ORDER BY A.price DESC
+        AND A.p_quantity !=0
+        AND not A.allergy REGEXP #{allergy}
+
+        <choose>
+            <when test="sorter == 0">
+                ORDER BY A.sale_volumn DESC
+            </when>
+            <when test="sorter == 1">
+                ORDER BY A.sale_volumn
+            </when>
+            <when test="sorter == 2">
+                ORDER BY A.p_price DESC
+            </when>
+            <when test="sorter == 3">
+                ORDER BY A.p_price
+            </when>
+        </choose>
+        LIMIT #{startIdx}, #{row}
+
     </select>
+
 
 </mapper>

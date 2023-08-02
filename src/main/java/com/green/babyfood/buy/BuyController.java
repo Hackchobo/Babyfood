@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 public class BuyController {
     private final BuyService SERVICE;
 
-    @PostMapping
+    @PostMapping()
     public Long BuyProduct(BuyEntity entity){
         return SERVICE.BuyProduct(entity);
 
     }
     @GetMapping()
-    public Long GetBuyProduct(){
-        return 1L;
+    public Long GetBuyProduct(int orderId){
+        return null;
     }
 }

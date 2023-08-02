@@ -3,7 +3,7 @@ package com.green.babyfood.mypage.model;
 import lombok.Data;
 
 @Data
-public class SelprofileDto {
+public class ProfileSelDto {
     private String email;
     private String image;
     private String name;

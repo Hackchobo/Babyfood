@@ -1,8 +1,6 @@
 package com.green.babyfood.buy;
 
-import com.green.babyfood.buy.model.BuyDetailInsDto;
-import com.green.babyfood.buy.model.BuyEntity;
-import com.green.babyfood.buy.model.BuyInsDto;
+import com.green.babyfood.buy.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,21 +21,36 @@ public class BuyService {
         dto.setRequest(entity.getRequest());
         dto.setReciever(entity.getReciever());
 
-        int i = Mapper.InsBuy(dto);
+        Mapper.InsBuy(dto);
 
-        BuyDetailInsDto dto2 = new BuyDetailInsDto();
+        BuyDetailInsDto detailInsDto = new BuyDetailInsDto();
 
-        dto2.setProductId(entity.getProductId());
-        dto2.setCount(entity.getCount());
-        dto2.setOrderId(dto.getOrderId());
-        dto2.setTotalPrice(entity.getTotalPrice());
 
-        int result = Mapper.InsBuyDetail(dto2);
+        detailInsDto.setProductId(entity.getProductId());
+        detailInsDto.setCount(entity.getCount());
+        detailInsDto.setOrderId(dto.getOrderId());
+        detailInsDto.setTotalPrice(entity.getTotalPrice());
+
+        BuyUpdDto updDto = new BuyUpdDto();
+
+        updDto.setQuantity(entity.getCount());
+        updDto.setSaleVolumn(entity.getCount());
+        updDto.setProductId(entity.getProductId());
+
+        BuyPointUpdDto pointdto = new BuyPointUpdDto();
+
+        pointdto.setIuser(entity.getIuser());
+        pointdto.setPoint(entity.getPoint());
+
+        int result = Mapper.InsBuyDetail(detailInsDto);
 
         if (result ==1){
-            Mapper.delOrderbasket(entity.getCartId());
-        }
 
+            Mapper.updProduct(updDto);
+            Mapper.delOrderbasket(entity.getCartId());
+            Mapper.userpoint(pointdto);
+
+        }
 
         return dto.getOrderId();
     }

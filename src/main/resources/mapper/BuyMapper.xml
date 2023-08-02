@@ -25,10 +25,29 @@
 
     </insert>
 
+    <update id="updProduct">
+        UPDATE product
+        SET p_quantity = p_quantity - #{quantity},
+        sale_volumn = sale_volumn + #{saleVolumn}
+        WHERE product_id = #{productId};
+
+    </update>
+
     <delete id="delOrderbasket">
         DELETE FROM order_basket
         WHERE cart_id = #{cartId};
     </delete>
+
+    <update id="userpoint">
+        UPDATE user
+        SET POINT = POINT + #{point}
+        WHERE iuser = #{iuser};
+    </update>
+    
+    <select id="sel">
+
+
+    </select>
 
 
 </mapper>
