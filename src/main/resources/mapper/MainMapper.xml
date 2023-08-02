@@ -38,5 +38,25 @@
         order by A.sale_volumn desc,rand()
         limit 4
     </select>
+    
+    
+    <select id="birth" resultType="int">
+        SELECT TIMESTAMPDIFF(MONTH, birthday, date(NOW()))
+        FROM user
+        WHERE iuser=#{iuser};
+    </select>
+
+    <select id="birthRecommend">
+        select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
+        from product A
+        left join product_img B
+        ON A.product_id=B.product_id
+        LEFT JOIN product_category_relation C
+        ON A.product_id=C.product_id
+        WHERE C.cate_id=#{cate}
+        group by A.product_id
+        order by A.sale_volumn desc,rand()
+        LIMIT 5
+    </select>
 
 </mapper>
