@@ -1,4 +1,4 @@
-package com.green.babyfood.product.model;
+package com.green.babyfood.admin.model;
 
 import lombok.Data;
 

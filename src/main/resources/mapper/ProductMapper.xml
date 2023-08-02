@@ -4,56 +4,22 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.babyfood.product.ProductMapper">
 
-    <insert id="insPk" useGeneratedKeys="true" keyProperty="productId">
-        insert into product
-        (p_title,p_name,p_price,p_quantity,description,created_at,updated_at)
-        values
-        ('','',0,0,'',null,null);
+    <select id="selProduct">
+        select p_title title, p_name name, p_price price, p_quantity quantity, description from product
+        where product_id=#{productId}
+    </select>
+
+    <insert id="postReview">
+        insert into review
+        SET iuser = #{iuser}
+        , product_id = #{productId}
+        , ctnt = #{ctnt}
     </insert>
 
-
-    <insert id="insWebEditorImg">
-        insert into product_img
-        (product_id,img)
-        values
-        (#{productId},#{img})
-    </insert>
-
-    <insert id="insWebEditorImgList">
-        insert into product_img
-        (product_id,img)
-        values
-        <foreach collection="img" item="item" separator=",">
-        (#{productId},#{item})
-        </foreach>
-    </insert>
-
-
-
-
-    <update id="updProduct">
-        update product
-        set p_title=#{title}
-        ,p_name=#{name}
-        ,p_price=#{price}
-        ,p_quantity=#{quantity}
-        ,description=#{description}
-        ,allergy=#{allergy}
-        where product_id=#{productId}
-    </update>
-
-    <delete id="delImg">
-        delete from product_img
-        where product_id=#{productId}
-    </delete>
-
-
-    <delete id="delProduct">
-        delete from product
-        where product_id=#{productId}
-    </delete>
-
-
-
+    <select id="selReview">
+        SELECT iuser, ctnt
+        from review
+        where product_id = #{productId}
+    </select>
 
 </mapper>

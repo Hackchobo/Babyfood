@@ -13,4 +13,89 @@
         , allergy = #{allergy}
         , is_delete = 0
     </insert>
+
+    <select id="productAll">
+        select p_title title, p_name name, p_price price, p_quantity quantity, description
+        from product
+        order by product_id desc
+        LIMIT #{startIdx}, #{rowLen}
+    </select>
+
+    <select id="getProduct">
+        select p_title title, p_name name, p_price price, p_quantity quantity, description,
+    </select>
+
+    <update id="updAdminProduct">
+        update product
+        SET p_title = #{title}
+        , p_name = #{name}
+        , p_price = #{price}
+        , p_quantity = #{quantity}
+        , description = #{description}
+        , sale_volumn = #{saleVolume}
+        , allergy = #{allergy}
+        , updated_at = current_timestamp()
+        where product_id = #{productId}
+    </update>
+
+    <update id="delAdminProduct">
+        update product
+        SET is_delete = 1
+        where product_id = #{productId}
+    </update>
+
+
+
+
+
+
+
+
+
+    <insert id="insPk" useGeneratedKeys="true" keyProperty="productId">
+        insert into product
+        (p_title,p_name,p_price,p_quantity,description,created_at,updated_at)
+        values
+        ('','',0,0,'',null,null);
+    </insert>
+
+
+    <insert id="insWebEditorImg">
+        insert into product_img
+        (product_id,img)
+        values
+        (#{productId},#{img})
+    </insert>
+
+    <insert id="insWebEditorImgList">
+        insert into product_img
+        (product_id,img)
+        values
+        <foreach collection="img" item="item" separator=",">
+            (#{productId},#{item})
+        </foreach>
+    </insert>
+
+    <update id="updProduct">
+        update product
+        set p_title=#{title}
+        ,p_name=#{name}
+        ,p_price=#{price}
+        ,p_quantity=#{quantity}
+        ,description=#{description}
+        ,allergy=#{allergy}
+        where product_id=#{productId}
+    </update>
+
+    <delete id="delImg">
+        delete from product_img
+        where product_id=#{productId}
+    </delete>
+
+
+    <delete id="delProduct">
+        delete from product
+        where product_id=#{productId}
+    </delete>
+
 </mapper>
