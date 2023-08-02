@@ -4,11 +4,13 @@ import com.green.babyfood.main.model.MainSelVo;
 import com.green.babyfood.main.model.MainSelVoMaxPaige;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MainService  {
 
     private final MainMapper mapper;
@@ -27,7 +29,5 @@ public class MainService  {
         return mainSelVoMaxPaige;
     }
 
-    public int insPk(){
-        return mapper.insPk();
-    }
+
 }

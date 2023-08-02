@@ -1,6 +1,5 @@
 package com.green.babyfood.main;
 
-import com.green.babyfood.main.model.MainSelVo;
 import com.green.babyfood.main.model.MainSelVoMaxPaige;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,9 +25,10 @@ public class MainController {
         return service.mainSelView(paige,row);
     }
 
-    @PostMapping
-    public int insPk(){
-        return service.insPk();
-    }
+
+
+
+
+
 
 }
