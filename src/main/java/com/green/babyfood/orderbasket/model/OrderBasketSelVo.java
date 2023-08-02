@@ -11,4 +11,5 @@ public class OrderBasketSelVo {
     private int count;
     private int price;
     private String thumbnail;
+    private String createdAt;
 }

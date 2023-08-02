@@ -29,5 +29,11 @@ public class MainService  {
         return mainSelVoMaxPaige;
     }
 
+    public List<MainSelVo> random(){
+        return mapper.random();
+    }
 
+    public List<MainSelVo> bestSell(){
+        return mapper.bestSell();
+    }
 }
