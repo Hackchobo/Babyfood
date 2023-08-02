@@ -3,10 +3,7 @@ package com.green.babyfood.buy;
 import com.green.babyfood.buy.model.BuyEntity;
 import com.green.babyfood.buy.model.BuyEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,8 +16,8 @@ public class BuyController {
         return SERVICE.BuyProduct(entity);
 
     }
-    @GetMapping("/#{orderId}")
-    public Long GetBuyProduct(int orderId){
+    @GetMapping()
+    public Long GetBuyProduct(){
         return 1L;
     }
 }

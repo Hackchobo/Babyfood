@@ -2,6 +2,10 @@ package com.green.babyfood.search;
 
 import com.green.babyfood.search.EnToKo.EnToKo;
 import com.green.babyfood.search.model.ProductDto;
+import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
+import kr.co.shineware.nlp.komoran.core.Komoran;
+import kr.co.shineware.nlp.komoran.model.KomoranResult;
+import kr.co.shineware.nlp.komoran.model.Token;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,24 +34,24 @@ public class SearchService {
             msg2 = typoText;
         }
 
-//        Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
-//        KomoranResult analyzeResultList = komoran.analyze(msg2);
-//
-//        List<Token> tokenList = analyzeResultList.getTokenList();
-//
-//        StringBuffer sb = new StringBuffer();
-//
-//
-//        if (tokenList.size()!=1) {
-//            for (int i = 0; i < tokenList.size() - 1; i++) {
-//                sb.append(tokenList.get(i).getMorph() + "|");
-//            }
-//        }
-//        StringBuffer append = sb.append(tokenList.get(tokenList.size() - 1).getMorph());
-//        String str = String.valueOf(append);
-//
-//        log.info("str: ", str);
-//        System.out.println("str: "+str);
+        Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
+        KomoranResult analyzeResultList = komoran.analyze(msg2);
+
+        List<Token> tokenList = analyzeResultList.getTokenList();
+
+        StringBuffer sb = new StringBuffer();
+
+
+        if (tokenList.size()!=1) {
+            for (int i = 0; i < tokenList.size() - 1; i++) {
+                sb.append(tokenList.get(i).getMorph() + "|");
+            }
+        }
+        StringBuffer append = sb.append(tokenList.get(tokenList.size() - 1).getMorph());
+        String str = String.valueOf(append);
+
+        log.info("str: ", str);
+        System.out.println("str: "+str);
         List<ProductDto> productDtos = mapper.selproduct(msg2);
 
         return productDtos;
