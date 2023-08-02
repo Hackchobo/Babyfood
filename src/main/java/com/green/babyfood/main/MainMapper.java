@@ -11,4 +11,9 @@ public interface MainMapper {
     List<MainSelVo> mainSelView(int startIdx,int row);
     int maxPaige();
 
+    List<MainSelVo> random();
+    List<MainSelVo> bestSell();
+
+    int birth(Long iuser);
+    List<MainSelVo> birthRecommend(int cate);
 }

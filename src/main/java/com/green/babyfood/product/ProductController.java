@@ -41,7 +41,7 @@ public class ProductController {
 
 
     @PatchMapping
-    @Operation(summary = "최종상품등록할때 저장하는 메소드")
+    @Operation(summary = "최종상품등록할때 저장하는 메소드(수정필요)")
     public int insProduct(@RequestBody ProductUpdDto dto){
         return service.updProduct(dto);
     }

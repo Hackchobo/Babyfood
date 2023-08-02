@@ -29,5 +29,29 @@ public class MainService  {
         return mainSelVoMaxPaige;
     }
 
+    public List<MainSelVo> random(){
+        return mapper.random();
+    }
 
+    public List<MainSelVo> bestSell(){
+        return mapper.bestSell();
+    }
+
+    public List<MainSelVo> birthRecommend(Long iuser){
+       int month=mapper.birth(iuser);
+       int cate=0;
+       if(month<=4){
+           throw new RuntimeException("이유식 먹을수 있는 나이가 아닙니다");
+       }
+       if(month>4 && month<=6){
+           cate=1;
+       } else if (month>6 && month<=10) {
+           cate=2;
+       } else if (month>10 && month<=13) {
+           cate=3;
+       }else if(month>13){
+           cate=4;
+       }
+       return mapper.birthRecommend(cate);
+    }
 }
