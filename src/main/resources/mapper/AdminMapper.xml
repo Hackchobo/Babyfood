@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.babyfood.admin.AdminMapper">
+    <insert id="productIns">
+        insert into product
+        SET p_title = #{title}
+        , p_name = #{name}
+        , p_price = #{price}
+        , p_quantity = #{quantity}
+        , description = #{description}
+        , allergy = #{allergy}
+        , is_delete = 0
+    </insert>
+</mapper>
