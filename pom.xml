@@ -92,6 +92,16 @@
 			<artifactId>KOMORAN</artifactId>
 			<version>3.3.9</version>
 		</dependency>
+
+
+		<!-- 자바 이메일 api -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
+
 	</dependencies>
 	<repositories>
 		<repository>
