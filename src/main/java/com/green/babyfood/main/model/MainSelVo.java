@@ -6,8 +6,11 @@ import lombok.Data;
 public class MainSelVo {
 
     private Long productId;
+    private String thumbnail;
     private String title;
-    private int price;
-    private String pic;
+    private String name;
+    private String price;
+    private String quantity;
+    private String volumn;
 
 }

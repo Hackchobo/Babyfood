@@ -1,15 +1,21 @@
 package com.green.babyfood.product;
 
-import com.green.babyfood.product.model.ProductReviewDto;
-import com.green.babyfood.product.model.ProductSelDto;
-import com.green.babyfood.product.model.ReviewEntity;
+import com.green.babyfood.product.model.PkVo;
+import com.green.babyfood.product.model.ProductUpdDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Mapper
 public interface ProductMapper {
-    ProductSelDto selProduct(int productId);
-    int postReview(ProductReviewDto dto);
-    List<ReviewEntity> selReview(int productId);
+
+    int insPk(PkVo pkVo);
+
+    int insWebEditorImg(Long productId,String img);
+    int updProduct(ProductUpdDto dto);
+    int delImg(Long productId);
+    int delProduct(Long productId);
+
+    int insWebEditorImgList(List img,Long productId);
 }

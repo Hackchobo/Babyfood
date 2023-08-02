@@ -10,8 +10,6 @@ public interface CateMapper {
 
     int cateSelLevelmaxPaige(Long cateId,Long cateDetailId);
     List<CateSelListVo> cateSelLevel(CateSelLevelDto dto);
-    List<CateVo> cateAll();
-    List<CateDetailVo> cateDetailAll();
 
 
     List<CateVo> selcate();

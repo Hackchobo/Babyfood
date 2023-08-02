@@ -13,7 +13,7 @@
     </select>
 
     <select id="cateSelLevelmaxPaige">
-        SELECT count(A.product_id)
+        SELECT count(distinct A.product_id)
         FROM product_category_relation A
         INNER JOIN product_img B
         ON A.product_id=B.product_id
@@ -23,13 +23,15 @@
     </select>
 
     <select id="cateSelLevel">
-        SELECT A.product_id productId,B.thumbnail,C.p_title title,C.p_price price
+        SELECT A.product_id productId,B.thumbnail,C.p_title title,C.p_price price,C.p_name name,C.p_quantity quantity,C.sale_volumn volumn
         FROM product_category_relation A
         INNER JOIN product_img B
         ON A.product_id=B.product_id
         INNER JOIN product C
         ON A.product_id=C.product_id
         WHERE A.cate_id=#{cateId} AND A.cate_detail_id=#{cateDetailId}
+        group by A.product_id
+        ORDER BY C.created_at desc
         LIMIT #{paige},#{row};
     </select>
 
