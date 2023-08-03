@@ -32,7 +32,8 @@ public class BuyController {
     }
     @GetMapping()
     @Operation(summary = "상품조회",description = ""+
-            "orderId : 상품 PK 번호<br>")
+            "orderId : 상품 PK 번호<br>" +
+            "1~4까지 있음!")
     public BuySelOrderDto GetBuyProduct(int orderId){
         return SERVICE.selorderproduct(orderId);
     }

@@ -35,7 +35,8 @@ public class SearchController {
             " sorter: 0이면 판매량 많은순서 1이면 판매량 적은순서 <br> "+
             "sorter: 2이면 가격 높은 순서 3이면 가격 낮은 순서<br>"+
             "알러지 1~20사이의 값을 보내주세요<br>"+
-            "egg는1 milk는2 buckwheat는 3"
+            "egg는1 milk는2 buckwheat는 3" +
+            ""
     )
     public List<SearchtSelVo> getallergy(@RequestParam String product,
                                          @RequestParam(defaultValue = "1") int page,

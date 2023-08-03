@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class OrderlistMonthsSelDto {
     private Long iuser;
-    private int num;
+    private int month;
 }
