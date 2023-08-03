@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class MainSelVoMaxPaige {
-    private int maxPaige;
+    private int maxPage;
     private List<MainSelVo> list;
 }
