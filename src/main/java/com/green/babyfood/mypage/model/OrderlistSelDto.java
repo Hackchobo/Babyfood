@@ -3,14 +3,11 @@ package com.green.babyfood.mypage.model;
 import lombok.Data;
 
 @Data
-public class SelOrderlistDetailDto {
+public class OrderlistSelDto {
     private Long orderId;
-    private String reciever;
-    private String request;
     private String createdAt;
-    private String title;
+    private String thumbnail;
     private String name;
-    private String count;
     private int price;
     private String shipment;
 

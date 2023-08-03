@@ -9,6 +9,7 @@ public class BuyEntity {
     private Long iuser;
     private int count;
     private int totalPrice;
+    private int point;
     private int payment;
     private String calluser;
     private String request;

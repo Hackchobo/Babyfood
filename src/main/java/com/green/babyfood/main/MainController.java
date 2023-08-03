@@ -50,12 +50,47 @@ public class MainController {
             "price : 상품의 가격<br>"+
             "quantity : 상품의 재고<br>"+
             "volumn : 판매량")
-    public List<MainSelVo> bestSell(){
-        return service.bestSell();
+    public List<MainSelVo> bestSell(@RequestParam(required = false)String egg,
+                                    @RequestParam(required = false)String milk,
+                                    @RequestParam(required = false)String buckwheat,
+                                    @RequestParam(required = false)String peanut,
+                                    @RequestParam(required = false)String soybean,
+                                    @RequestParam(required = false)String wheat,
+                                    @RequestParam(required = false)String pine_nut,
+                                    @RequestParam(required = false)String walnut,
+                                    @RequestParam(required = false)String crab,
+                                    @RequestParam(required = false)String shrimp,
+                                    @RequestParam(required = false)String squid,
+                                    @RequestParam(required = false)String mackerel,
+                                    @RequestParam(required = false)String shellfish,
+                                    @RequestParam(required = false)String peach,
+                                    @RequestParam(required = false)String tomato,
+                                    @RequestParam(required = false)String chicken,
+                                    @RequestParam(required = false)String pork,
+                                    @RequestParam(required = false)String beef,
+                                    @RequestParam(required = false)String sulfur_dioxide,
+                                    @RequestParam(required = false)String fish){
+        return service.bestSell(egg, milk, buckwheat, peanut, soybean, wheat, pine_nut, walnut, crab, shrimp, squid,
+                mackerel, shellfish, peach, tomato, chicken, pork, beef, sulfur_dioxide,fish);
     }
 
 
-    @GetMapping("/recommend")
+//   @GetMapping("/recommend")
+//   @Operation(summary = "회원 자녀의 개월에따라 상품추천",description = ""+
+//           "productId : 상품의 고유번호<br>"+
+//           "thumbnail : 상품의 썸네일<br>"+
+//           "title : 상품의 제목<br>"+
+//           "name : 상품의 이름<br>"+
+//           "price : 상품의 가격<br>"+
+//           "quantity : 상품의 재고<br>"+
+//           "volumn : 판매량<br>"+
+//           "maxPaige : 최대페이지수<br>"+
+//   "4개월 이하는 이유식이 먹을 나이가 아닙니다")
+//   public MainSelVoMaxPaige postBirth(Long iuser,int page,int row){
+//      return service.birthRecommend(iuser,page,row);
+//  }
+
+    @GetMapping("/recommend/filter")
     @Operation(summary = "회원 자녀의 개월에따라 상품추천",description = ""+
             "productId : 상품의 고유번호<br>"+
             "thumbnail : 상품의 썸네일<br>"+
@@ -64,11 +99,30 @@ public class MainController {
             "price : 상품의 가격<br>"+
             "quantity : 상품의 재고<br>"+
             "volumn : 판매량<br>"+
-    "-1이 응답으로 오면 이유식이 먹을 나이가 아닙니다")
-    public List<MainSelVo> postBirth(Long iuser){
-        return service.birthRecommend(iuser);
+            "maxPaige : 최대페이지수<br>"+
+            "4개월 이하는 이유식이 먹을 나이가 아닙니다")
+    public MainSelVoMaxPaige postBirthfilter(Long iuser,int page,int row,
+                                             @RequestParam(required = false)String egg,
+                                             @RequestParam(required = false)String milk,
+                                             @RequestParam(required = false)String buckwheat,
+                                             @RequestParam(required = false)String peanut,
+                                             @RequestParam(required = false)String soybean,
+                                             @RequestParam(required = false)String wheat,
+                                             @RequestParam(required = false)String pine_nut,
+                                             @RequestParam(required = false)String walnut,
+                                             @RequestParam(required = false)String crab,
+                                             @RequestParam(required = false)String shrimp,
+                                             @RequestParam(required = false)String squid,
+                                             @RequestParam(required = false)String mackerel,
+                                             @RequestParam(required = false)String shellfish,
+                                             @RequestParam(required = false)String peach,
+                                             @RequestParam(required = false)String tomato,
+                                             @RequestParam(required = false)String chicken,
+                                             @RequestParam(required = false)String pork,
+                                             @RequestParam(required = false)String beef,
+                                             @RequestParam(required = false)String sulfur_dioxide,
+                                             @RequestParam(required = false)String fish){
+        return service.birthRecommendFilter(iuser,page,row,egg,milk,buckwheat,peanut,soybean,wheat,pine_nut,walnut,crab,shrimp,squid,mackerel,shellfish,peach,tomato
+                ,chicken,pork,beef,sulfur_dioxide,fish);
     }
-
-
-
 }

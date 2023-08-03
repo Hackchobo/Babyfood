@@ -21,7 +21,7 @@ public class MypageController {
             "shipment: 상품배송상태 <br>"+
             "nickNm : 닉네임<br>"+
             "point : 포인트<br>")
-    List<SelMypageOrderListDto> getOrderList(int iuser){
+    List<MypageSelOrderListDto> getOrderList(int iuser){
         return service.mypageOrderlist(iuser);
     }
 
@@ -29,12 +29,12 @@ public class MypageController {
     @Operation(summary = "주문내역조회",description = ""+
             "iuser: 유저PK <br>"+
             "num: 조회하고싶은 기간(개월) <br>")
-    List<SelOrderlistDto>getOrderlistMonths(SelOrderlistMonthsDto dto){
+    List<OrderlistSelDto>getOrderlistMonths(OrderlistMonthsSelDto dto){
         return service.Orderlist(dto);
     }
     @GetMapping("/orderlist/detail")
     @Operation(summary = "상세주문내역",description = "")
-    List<SelOrderlistDetailDto>getOrderlistDetail(SelOrderlistDetailVo vo){
+    List<OrderlistDetailSelDto>getOrderlistDetail(OrderlistDetailSelVo vo){
         return service.OrderlistDetail(vo);
     }
 
@@ -43,14 +43,14 @@ public class MypageController {
     @Operation(summary = "내 정보조회",description = ""+
             "image: 프로필이미지<br>"+
             "address: 주소 <br>")
-    SelprofileDto getprofile(int iuser){
+    ProfileSelDto getprofile(int iuser){
         return service.profile(iuser);
     }
     @PatchMapping("/profile")
     @Operation(summary = "내정보 수정" , description = ""+
             "return 0 : 이미 있는 닉네임 <br>"+
             "return 1 : 수정완료")
-    int patchprofile(@RequestBody UpdProfileDto dto){
+    int patchprofile(@RequestBody ProfileUpdDto dto){
         return service.UpdProfileDto(dto);
     }
 

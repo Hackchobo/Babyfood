@@ -15,8 +15,8 @@ import java.util.List;
 public class MypageService {
     private final MypageMapper mapper;
 
-    List<SelMypageOrderListDto> mypageOrderlist(int iuser){
-        List<SelMypageOrderListDto> orderlistDtos = mapper.mypageOrderlist(iuser);
+    List<MypageSelOrderListDto> mypageOrderlist(int iuser){
+        List<MypageSelOrderListDto> orderlistDtos = mapper.mypageOrderlist(iuser);
 
         for (int i = 0; i <orderlistDtos.size(); i++) {
             if (orderlistDtos.get(i).getShipment().equals("1")){
@@ -31,10 +31,10 @@ public class MypageService {
         }
         return orderlistDtos;
     }
-    public List<SelOrderlistDto> Orderlist(SelOrderlistMonthsDto dto){
+    public List<OrderlistSelDto> Orderlist(OrderlistMonthsSelDto dto){
 
 
-        List<SelOrderlistDto> orderlist = mapper.Orderlist(dto);
+        List<OrderlistSelDto> orderlist = mapper.Orderlist(dto);
 
         for (int i = 0; i <orderlist.size(); i++) {
             if (orderlist.get(i).getShipment().equals("1")){
@@ -50,18 +50,18 @@ public class MypageService {
 
         return orderlist;
     }
-    public List<SelOrderlistDetailDto>OrderlistDetail(SelOrderlistDetailVo vo){
+    public List<OrderlistDetailSelDto>OrderlistDetail(OrderlistDetailSelVo vo){
         return mapper.OrderlistDetail(vo);
     }
 
-    SelprofileDto profile(int iuser){
-        SelprofileDto profile = mapper.profile(iuser);
+    ProfileSelDto profile(int iuser){
+        ProfileSelDto profile = mapper.profile(iuser);
         return profile;
     }
 
-    public int UpdProfileDto(UpdProfileDto dto){
+    public int UpdProfileDto(ProfileUpdDto dto){
         log.info("입력한 닉네임:{}",dto.getNickNm());
-        SelNickNmDto selNickNmDto = mapper.SelNickNm(dto.getNickNm());
+        NickNmDto selNickNmDto = mapper.SelNickNm(dto.getNickNm());
 
         if (!(selNickNmDto == null)){
             return 0;
