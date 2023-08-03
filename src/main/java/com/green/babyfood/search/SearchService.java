@@ -71,17 +71,24 @@ public class SearchService {
 
         StringBuffer allergy = new StringBuffer();
 
-        allergy.append(egg+"|").append(milk+"|").append(buckwheat).append("|").append(peanut+"|").append(soybean + "|")
-                .append(wheat+"|").append(pine_nut+"|").append(walnut+"|").append(crab+"|").append(shrimp+"|").append(squid+"|")
-                .append(mackerel+"|").append(shellfish+"|").append(peach+"|").append(tomato+"|").append(chicken+"|").append(pork+"|")
-                .append(beef+"|").append(sulfur_dioxide+"|").append(fish);
-        String sallergy = String.valueOf(allergy);
-        log.info("allergy:{} ", sallergy);
+        allergy.append(egg+",").append(milk+",").append(buckwheat).append(",").append(peanut+",").append(soybean + ",")
+                .append(wheat+",").append(pine_nut+",").append(walnut+",").append(crab+",").append(shrimp+",").append(squid+",")
+                .append(mackerel+",").append(shellfish+",").append(peach+",").append(tomato+",").append(chicken+",").append(pork+",")
+                .append(beef+",").append(sulfur_dioxide+",").append(fish+",");
+        String strallergy = String.valueOf(allergy);
+        String[] split = strallergy.split(",");
+        String plus="";
+        for (String s : split) {
+            if(!s.equals("null")){
+                plus+=s+",";
+            }
+        }
+        String subAllergy = plus.substring(0, plus.length()-1);
 
         SearchSelDto dto = new SearchSelDto();
         dto.setPage(page);
         dto.setRow(row);
-        dto.setAllergy(String.valueOf(allergy));
+        dto.setAllergy(subAllergy);
         dto.setSorter(sorter);
 
         int startIdx = (dto.getPage() - 1) * dto.getRow();
