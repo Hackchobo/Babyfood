@@ -44,8 +44,18 @@
         WHERE iuser = #{iuser};
     </update>
     
-    <select id="sel">
-
+    <select id="selorderproduct">
+        SELECT D.thumbnail thumbnail, C.p_title title,C.p_name name, C.p_price price, B.`count` count , E.name username, E.address address ,E.address_detail addressDetail, A.request, B.total_price totalPrice
+        FROM order_list A
+        INNER JOIN order_detail B
+        ON A.order_id = B.order_id
+        INNER JOIN product C
+        ON C.product_id = B.product_id
+        INNER JOIN product_img D
+        ON C.product_id = D.product_id
+        INNER JOIN user E
+        ON A.iuser = E.iuser
+        WHERE A.order_id = #{orderId};
 
     </select>
 

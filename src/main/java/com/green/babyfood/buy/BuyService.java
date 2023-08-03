@@ -55,4 +55,8 @@ public class BuyService {
         return dto.getOrderId();
     }
 
+    public BuySelOrderDto selorderproduct(int orderId){
+        return Mapper.selorderproduct(orderId);
+
+    }
 }

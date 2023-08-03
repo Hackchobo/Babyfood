@@ -27,9 +27,11 @@
         on C.allergy_id = B.allergy_id
         LEFT JOIN product_img D
         ON D.product_id = A.product_id
+        LEFT JOIN product_allergy E
+        ON E.allergy_id = B.allergy_id
         WHERE p_name REGEXP #{msg}
         AND A.p_quantity !=0
-        AND not A.allergy REGEXP #{allergy}
+        AND not E.allergy_id IN #{}
 
         <choose>
             <when test="sorter == 0">

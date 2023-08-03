@@ -1,9 +1,6 @@
 package com.green.babyfood.buy;
 
-import com.green.babyfood.buy.model.BuyDetailInsDto;
-import com.green.babyfood.buy.model.BuyInsDto;
-import com.green.babyfood.buy.model.BuyPointUpdDto;
-import com.green.babyfood.buy.model.BuyUpdDto;
+import com.green.babyfood.buy.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -14,5 +11,6 @@ public interface BuyMapper {
     int delOrderbasket(Long cartId);
     int updProduct(BuyUpdDto dto);
     int userpoint(BuyPointUpdDto dto);
+    BuySelOrderDto selorderproduct(int orderId);
 
 }

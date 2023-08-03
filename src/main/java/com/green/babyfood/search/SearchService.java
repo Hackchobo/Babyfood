@@ -73,22 +73,15 @@ public class SearchService {
 
         allergy.append(egg+"|").append(milk+"|").append(buckwheat).append("|").append(peanut+"|").append(soybean + "|")
                 .append(wheat+"|").append(pine_nut+"|").append(walnut+"|").append(crab+"|").append(shrimp+"|").append(squid+"|")
-                .append(mackerel+"|")
-                .append(shellfish+"|")
-                .append(peach+"|")
-                .append(tomato+"|")
-                .append(chicken+"|")
-                .append(pork+"|")
-                .append(beef+"|")
-                .append(sulfur_dioxide+"|")
-                .append(fish+"|")
-                .append(" ");
-        String strallergy = String.valueOf(allergy);
+                .append(mackerel+"|").append(shellfish+"|").append(peach+"|").append(tomato+"|").append(chicken+"|").append(pork+"|")
+                .append(beef+"|").append(sulfur_dioxide+"|").append(fish);
+        String sallergy = String.valueOf(allergy);
+        log.info("allergy:{} ", sallergy);
 
         SearchSelDto dto = new SearchSelDto();
         dto.setPage(page);
         dto.setRow(row);
-        dto.setAllergy(strallergy);
+        dto.setAllergy(String.valueOf(allergy));
         dto.setSorter(sorter);
 
         int startIdx = (dto.getPage() - 1) * dto.getRow();

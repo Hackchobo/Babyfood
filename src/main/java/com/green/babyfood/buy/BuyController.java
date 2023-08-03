@@ -2,6 +2,7 @@ package com.green.babyfood.buy;
 
 import com.green.babyfood.buy.model.BuyEntity;
 import com.green.babyfood.buy.model.BuyEntity;
+import com.green.babyfood.buy.model.BuySelOrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class BuyController {
 
     }
     @GetMapping()
-    public Long GetBuyProduct(int orderId){
-        return null;
+    public BuySelOrderDto GetBuyProduct(int orderId){
+        return SERVICE.selorderproduct(orderId);
     }
 }
