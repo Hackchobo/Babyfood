@@ -23,24 +23,7 @@ public class UserService {
 
     private final UserMapper mapper;
 
-    /*@Autowired
-    public UserService(UserMapper mapper,@Value("${file.dir}")String fileDir) {
-        this.mapper = mapper;
-        this.fileDir=fileDir;
-    }*/
-
-    public int insUser(UserInsDto dto){
-        if (!dto.getPassword().equals(dto.getSecret())){
-            return -1;
-        }
-        return mapper.insUser(dto);
-    }
-
-    public int insAdmin(AdminInsDto dto){
-        return mapper.insAdmin(dto);
-    }
-
-    public List<UserEntity> selUser(){
+    public List<UserEntity1> selUser(){
         return mapper.selUser();
     }
 
@@ -85,6 +68,7 @@ public class UserService {
     }
 
     public int delUser(UserDelDto dto){
+        mapper.deltoken(dto);
         return mapper.delUser(dto);
     }
 }

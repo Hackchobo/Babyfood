@@ -4,31 +4,9 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.babyfood.user.UserMapper">
 
-    <insert id="insUser">
-        insert into user
-        set email = #{email},
-        nick_nm = #{nickNm},
-        password = #{password},
-        name = #{name},
-        mobile_nb = #{mobileNb},
-        birthday = #{birthday},
-        address = #{address}
-    </insert>
-
-    <insert id="insAdmin">
-        insert into user
-        set email = #{email},
-        password = #{password},
-        name = #{name},
-        mobile_nb = #{mobileNb},
-        address = #{address},
-        nick_nm = #{nickNm},
-        admin = 1
-    </insert>
-
     <select id="selUser">
         SELECT iuser , email, password, image, name, birthday, mobile_nb mobileNb, created_at createdAt
-        , admin, address, nick_nm nickNm, point
+        , role, address, nick_nm nickNm, point
         FROM user
     </select>
 
@@ -60,6 +38,12 @@
     <delete id="delUser">
         delete
         from user
+        where iuser = #{iuser}
+    </delete>
+
+    <delete id="deltoken">
+        delete
+        from user_token
         where iuser = #{iuser}
     </delete>
 
