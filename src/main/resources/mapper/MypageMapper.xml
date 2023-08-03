@@ -3,21 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.babyfood.mypage.MypageMapper">
-    
-    <select id="mypageOrderlist">
-        SELECT A.order_id orderId, A.created_at createdAt,C.p_title title,C.p_name name,B.`count` count,B.total_price price,A.shipment shipment
-        FROM order_list A
-        INNER JOIN order_detail B
-        ON A.order_id = B.order_id
-        INNER JOIN product C
-        ON B.product_id = C.product_id
-        where iuser = #{iuser}
-        ORDER BY A.created_at DESC
-    </select>
-
 
     <select id="Orderlist">
-        SELECT A.order_id orderId,DATE_FORMAT(A.created_at,'%Y-%m-%d') createdAt,C.p_name name,D.thumbnail thumbnail,B.total_price price,A.shipment shipment
+        SELECT A.order_id orderId,DATE_FORMAT(A.created_at,'%Y-%m-%d') createdAt,C.p_name name,D.thumbnail thumbnail,B.total_price price,A.shipment shipment,COUNT(A.order_id)-1 count
         FROM order_list A
         INNER JOIN order_detail B
         ON A.order_id = B.order_id
@@ -29,8 +17,8 @@
         <if test="month !=0">
             and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{month} MONTH) AND NOW()
         </if>
-          ORDER BY A.created_at DESC
-
+        GROUP BY A.order_id
+        ORDER BY A.created_at DESC
     </select>
 
     <select id="OrderlistDetail">

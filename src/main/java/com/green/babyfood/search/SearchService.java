@@ -69,6 +69,8 @@ public class SearchService {
             ,String pine_nut,String walnut,String crab,String shrimp,String squid,String mackerel,String shellfish,String peach
             ,String tomato,String chicken,String pork,String beef,String sulfur_dioxide,String fish){
 
+
+        
         StringBuffer allergy = new StringBuffer();
 
         allergy.append(egg+",").append(milk+",").append(buckwheat).append(",").append(peanut+",").append(soybean + ",")

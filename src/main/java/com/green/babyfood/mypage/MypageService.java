@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,28 +16,15 @@ import java.util.List;
 public class MypageService {
     private final MypageMapper mapper;
 
-    List<MypageSelOrderListDto> mypageOrderlist(int iuser){
-        List<MypageSelOrderListDto> orderlistDtos = mapper.mypageOrderlist(iuser);
+    public  OrderlistSelDto[] Orderlist(OrderlistMonthsSelDto dto){
 
-        for (int i = 0; i <orderlistDtos.size(); i++) {
-            if (orderlistDtos.get(i).getShipment().equals("1")){
-                orderlistDtos.get(i).setShipment("상품 준비중");
-            } else if (orderlistDtos.get(i).getShipment().equals("2")) {
-                orderlistDtos.get(i).setShipment("상품 배송중");
-            } else if (orderlistDtos.get(i).getShipment().equals("3")) {
-                orderlistDtos.get(i).setShipment("상품 주문취소");
-            } else if (orderlistDtos.get(i).getShipment().equals("4")) {
-                orderlistDtos.get(i).setShipment("상품 배송완료");
-            }
-        }
-        return orderlistDtos;
-    }
-    public List<OrderlistSelDto> Orderlist(OrderlistMonthsSelDto dto){
+        List<OrderlistCountSelDto> orderlist = mapper.Orderlist(dto);
+
+        OrderlistSelDto[] orderlistSelDto = new OrderlistSelDto[orderlist.size()];
 
 
-        List<OrderlistSelDto> orderlist = mapper.Orderlist(dto);
+        for (int i = 0; i < orderlist.size(); i++) {
 
-        for (int i = 0; i <orderlist.size(); i++) {
             if (orderlist.get(i).getShipment().equals("1")){
                 orderlist.get(i).setShipment("상품 준비중");
             } else if (orderlist.get(i).getShipment().equals("2")) {
@@ -46,9 +34,28 @@ public class MypageService {
             } else if (orderlist.get(i).getShipment().equals("4")) {
                 orderlist.get(i).setShipment("상품 배송완료");
             }
+
+            if (orderlist.get(i).getCount()>0){
+                String name = orderlist.get(i).getName();
+                StringBuffer sb = new StringBuffer();
+                sb.append(name).append(" 외").append(orderlist.get(i).getCount()).append("개");
+
+                String ordername = String.valueOf(sb);
+                orderlist.get(i).setName(ordername);
+            }
         }
 
-        return orderlist;
+        for (int i = 0; i < orderlistSelDto.length; i++) {
+            orderlistSelDto[i]=new OrderlistSelDto();
+            orderlistSelDto[i].setOrderId(orderlist.get(i).getOrderId());
+            orderlistSelDto[i].setCreatedAt(orderlist.get(i).getCreatedAt());
+            orderlistSelDto[i].setThumbnail(orderlist.get(i).getThumbnail());
+            orderlistSelDto[i].setName(orderlist.get(i).getName());
+            orderlistSelDto[i].setPrice(orderlist.get(i).getPrice());
+            orderlistSelDto[i].setShipment(orderlist.get(i).getShipment());
+        }
+
+        return orderlistSelDto;
     }
     public List<OrderlistDetailSelDto>OrderlistDetail(OrderlistDetailSelVo vo){
         return mapper.OrderlistDetail(vo);

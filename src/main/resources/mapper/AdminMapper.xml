@@ -23,6 +23,8 @@
 
     <select id="getProduct">
         select p_title title, p_name name, p_price price, p_quantity quantity, description,
+
+
     </select>
 
     <update id="updAdminProduct">
