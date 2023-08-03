@@ -10,6 +10,6 @@ public class BuyInsDto {
     private int shipment;
     private String call_user;
     private String request;
-    private String reciever;
+    private String receiver;
 
 }

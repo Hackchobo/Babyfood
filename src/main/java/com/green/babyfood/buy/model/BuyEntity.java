@@ -13,5 +13,5 @@ public class BuyEntity {
     private int payment;
     private String calluser;
     private String request;
-    private String reciever;
+    private String receiver;
 }

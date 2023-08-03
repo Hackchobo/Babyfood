@@ -11,7 +11,7 @@
     shipment = #{shipment},
     call_user = #{call_user},
     request = #{request},
-    reciever = #{reciever}
+    reciever = #{receiver}
 
     </insert>
 
@@ -56,7 +56,6 @@
         INNER JOIN user E
         ON A.iuser = E.iuser
         WHERE A.order_id = #{orderId};
-
     </select>
 
 

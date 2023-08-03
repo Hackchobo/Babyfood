@@ -38,7 +38,7 @@ public class MainService {
                                     String walnut, String crab, String shrimp, String squid, String mackerel, String shellfish, String peach, String tomato, String chicken,
                                     String pork, String beef, String sulfur_dioxide, String fish) {
         StringBuffer allergy = new StringBuffer();
-        allergy.append(egg+",").append(milk+",").append(buckwheat).append(",").append(peanut+",").append(soybean + ",")
+        allergy.append(egg+",").append(milk+",").append(buckwheat+",").append(peanut+",").append(soybean + ",")
                 .append(wheat+",").append(pine_nut+",").append(walnut+",").append(crab+",").append(shrimp+",").append(squid+",")
                 .append(mackerel+",").append(shellfish+",").append(peach+",").append(tomato+",").append(chicken+",").append(pork+",")
                 .append(beef+",").append(sulfur_dioxide+",").append(fish+",");
@@ -51,9 +51,13 @@ public class MainService {
                plus+=s+",";
            }
         }
-        String subAllergy = plus.substring(0, plus.length()-1);
+        if(!plus.equals("")){
+            String subAllergy = plus.substring(0, plus.length()-1);
+            System.out.println(subAllergy);
+            return mapper.bestSell(subAllergy);
+        }
+        return mapper.bestSell("");
 
-        return mapper.bestSell(subAllergy);
     }
 
     public MainSelVoMaxPaige birthRecommend(Long iuser, int page, int row) {
@@ -91,29 +95,28 @@ public class MainService {
         StringBuffer allergy = new StringBuffer();
         allergy.append(egg+",").append(milk+",").append(buckwheat).append(",").append(peanut+",").append(soybean + ",")
                 .append(wheat+",").append(pine_nut+",").append(walnut+",").append(crab+",").append(shrimp+",").append(squid+",")
-                .append(mackerel+",")
-                .append(shellfish+",")
-                .append(peach+",")
-                .append(tomato+",")
-                .append(chicken+",")
-                .append(pork+",")
-                .append(beef+",")
-                .append(sulfur_dioxide+",")
-                .append(fish+",");
+                .append(mackerel+",").append(shellfish+",").append(peach+",").append(tomato+",").append(chicken+",").append(pork+",")
+                .append(beef+",").append(sulfur_dioxide+",").append(fish+",");
                 
         String strallergy = String.valueOf(allergy);
         String[] split = strallergy.split(",");
         String plus="";
+        String subAllergy="";
         for (String s : split) {
             if(!s.equals("null")){
                 plus+=s+",";
             }
         }
-        String subAllergy = plus.substring(0, plus.length()-1);
+        if(!plus.equals("")){
+             subAllergy = plus.substring(0, plus.length()-1);
+        }
+        else {
+            subAllergy="";
+        }
         int month = mapper.birth(iuser);
         int cate = 0;
         if (month <= 4) {
-            throw new RuntimeException("이유식 먹을수 있는 나이가 아닙니다");
+             throw new RuntimeException("이유식 먹을수 있는 나이가 아닙니다");
         }
         if (month > 4 && month <= 6) {
             cate = 1;

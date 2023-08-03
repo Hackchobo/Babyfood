@@ -26,8 +26,8 @@
         LEFT JOIN product_img D
         ON D.product_id = C.product_id
         where iuser = #{iuser}
-        <if test="num !=0">
-            and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{num} MONTH) AND NOW()
+        <if test="month !=0">
+            and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{month} MONTH) AND NOW()
         </if>
           ORDER BY A.created_at DESC
 

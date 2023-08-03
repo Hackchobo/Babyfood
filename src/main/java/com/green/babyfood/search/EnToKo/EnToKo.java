@@ -69,7 +69,6 @@ public class EnToKo {
                 }
                 break;
             default:
-                System.out.println("잘못된 타입 입니다");
         }
         return -1;
     }
