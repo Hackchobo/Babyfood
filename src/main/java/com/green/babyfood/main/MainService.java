@@ -113,7 +113,7 @@ public class MainService {
         int month = mapper.birth(iuser);
         int cate = 0;
         if (month <= 4) {
-            throw new RuntimeException("이유식 먹을수 있는 나이가 아닙니다");
+             throw new RuntimeException("이유식 먹을수 있는 나이가 아닙니다");
         }
         if (month > 4 && month <= 6) {
             cate = 1;

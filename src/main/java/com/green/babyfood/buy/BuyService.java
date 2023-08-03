@@ -19,7 +19,7 @@ public class BuyService {
         dto.setShipment(1);
         dto.setCall_user(entity.getCalluser());
         dto.setRequest(entity.getRequest());
-        dto.setReciever(entity.getReciever());
+        dto.setReceiver(entity.getReceiver());
 
         Mapper.InsBuy(dto);
 

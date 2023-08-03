@@ -31,7 +31,7 @@
         ON E.allergy_id = B.allergy_id
         WHERE p_name REGEXP #{msg}
         AND A.p_quantity !=0
-        AND  E.allergy_id NOT IN (#{allergy})
+        AND E.allergy_id NOT IN (${allergy})
 
         <choose>
             <when test="sorter == 0">
