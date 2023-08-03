@@ -1,7 +1,8 @@
 package com.green.babyfood.email;
-import com.green.babyfood.email.model.MailCycleDto;
+import com.green.babyfood.email.model.MailReservation;
 import com.green.babyfood.email.model.MailSendDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -10,9 +11,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import org.springframework.stereotype.Component;
 
+@Component
 @Slf4j
 @Service
+@EnableScheduling
 public class EmailService {
 
 
@@ -20,7 +24,7 @@ public class EmailService {
     private static String password = "poigxflxgjinjqtt"; // 앱2차비밀번호 !!! 본인 비번 바로넣지마세요 !!!
 
 
-    public static void send(MailSendDto dto) {
+    public void send(MailSendDto dto) {
 
         log.info("메일 전송 시작");
 
@@ -57,10 +61,13 @@ public class EmailService {
         }
     }
 
-    public void cycleMail(MailCycleDto dto) {
+    public void cycleMail(MailReservation dto) {
         log.info("주1회 월요일 오전 10시 메일 자동 발송");
-
-
-        log.info("예약메일 발송 완료");
+        MailSendDto dto1 = new MailSendDto();
+        dto1.setCtnt(dto.getCtnt());
+        dto1.setMailAddress(dto.getMailAddress());
+        dto1.setTitle(dto.getTitle());
+        send(dto1); // 메일 발송 메소드 호출
+        log.info("정기메일 발송 완료");
     }
 }

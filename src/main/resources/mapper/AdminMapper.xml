@@ -22,7 +22,8 @@
     </select>
 
     <select id="getProduct">
-        select p_title title, p_name name, p_price price, p_quantity quantity, description,
+        select p_title title, p_name name, p_price price, p_quantity quantity, description
+        from product
     </select>
 
     <update id="updAdminProduct">
@@ -43,6 +44,11 @@
         SET is_delete = 1
         where product_id = #{productId}
     </update>
+
+    <select id="searchAdminProduct">
+        select p_title title, p_name name, p_price price, p_quantity quantity, description
+        where name = #{}
+    </select>
 
 
 
