@@ -13,12 +13,13 @@ public interface MainMapper {
 
     List<MainSelVo> random();
     List<MainSelVo> bestSell(String strallergy);
+    List<MainSelVo> bestSellAll(int startIdx,int row,String strallergy);
+    int bestSellAllMaxPage(String strallergy);
 
     int birth(Long iuser);
-    List<MainSelVo> birthRecommend(int cate,int startIdx,int row);
-    int birthMaxPage(int cate);
+//    List<MainSelVo> birthRecommend(int cate,int startIdx,int row);
+//    int birthMaxPage(int cate);
 
     List<MainSelVo> birthRecommendFilter(int cate,int startIdx,int row,String strallergy);
-
     int birthRecommendFilterMaxPaige(int cate,String strallergy);
 }

@@ -53,6 +53,14 @@
         where product_id = #{productId}
     </update>
 
+    <insert id="categorySel">
+        INSERT INTO product_category_relation (product_id, cate_id, cate_detail_id)
+        VALUES
+        <foreach collection="cateDetail" item="detailId" separator=",">
+            (#{productId}, #{category}, #{detailId})
+        </foreach>
+    </insert>
+
     <update id="delAdminProduct">
         update product
         SET is_delete = 1
