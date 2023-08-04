@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -57,8 +56,14 @@ public class MypageService {
 
         return orderlistSelDto;
     }
-    public List<OrderlistDetailSelDto>OrderlistDetail(OrderlistDetailSelVo vo){
-        return mapper.OrderlistDetail(vo);
+
+    public OrderlistSelUserDto OrderlistDetail(int orderId){
+
+        List<OrderlistDetailSelDto> orderlist = mapper.OrderlistDetail(orderId);
+        OrderlistUserDto user = mapper.selUser(orderId);
+        OrderlistSelUserDto build = OrderlistSelUserDto.builder().orderlist(orderlist).user(user).build();
+
+        return build;
     }
 
     ProfileSelDto profile(int iuser){
@@ -67,8 +72,9 @@ public class MypageService {
     }
 
     public int UpdProfileDto(ProfileUpdDto dto){
+
         log.info("입력한 닉네임:{}",dto.getNickNm());
-        NickNmDto selNickNmDto = mapper.SelNickNm(dto.getNickNm());
+        MypageNickNmDto selNickNmDto = mapper.SelNickNm(dto.getNickNm());
 
         if (!(selNickNmDto == null)){
             return 0;

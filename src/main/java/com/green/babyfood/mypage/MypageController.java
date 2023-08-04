@@ -24,10 +24,9 @@ public class MypageController {
     }
     @GetMapping("/orderlist/detail")
     @Operation(summary = "상세주문내역",description = "")
-    List<OrderlistDetailSelDto>getOrderlistDetail(OrderlistDetailSelVo vo){
-        return service.OrderlistDetail(vo);
+    OrderlistSelUserDto getOrderlistDetail(int orderId){
+        return service.OrderlistDetail(orderId);
     }
-
 
     @GetMapping("/profile")
     @Operation(summary = "내 정보조회",description = ""+
@@ -36,6 +35,7 @@ public class MypageController {
     ProfileSelDto getprofile(int iuser){
         return service.profile(iuser);
     }
+
     @PatchMapping("/profile")
     @Operation(summary = "내정보 수정" , description = ""+
             "return 0 : 이미 있는 닉네임 <br>"+

@@ -22,18 +22,21 @@
     </select>
 
     <select id="OrderlistDetail">
-        SELECT A.order_id orderId,C.product_id productId,D.thumbnail thumbnail,A.reciever reciever, A.request request, A.created_at createdAt,C.p_title title,C.p_name name,B.`count` count,B.total_price price,A.shipment shipment
+        SELECT B.product_id productId,D.thumbnail thumbnail, C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice
         FROM order_list A
         INNER JOIN order_detail B
         ON A.order_id = B.order_id
         INNER JOIN product C
-        ON B.product_id = C.product_id
-        INNER JOIN product_img D
+        ON C.product_id = B.product_id
+        inner JOIN product_img D
         ON C.product_id = D.product_id
-        WHERE iuser = #{iuser}
-        and A.order_id = #{orderId}
-        ORDER BY A.created_at DESC
+        WHERE B.order_id = #{orderId}
+    </select>
 
+    <select id="selUser">
+        SELECT reciever, address,address_detail addressDetail,call_user phoneNm, request
+        FROM order_list
+        WHERE order_id = #{orderId};
     </select>
 
 

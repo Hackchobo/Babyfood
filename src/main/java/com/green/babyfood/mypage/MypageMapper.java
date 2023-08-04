@@ -9,10 +9,12 @@ import java.util.List;
 public interface MypageMapper {
     ProfileSelDto profile(int iuser);
     int Updprofile(ProfileUpdDto dto);
-    NickNmDto SelNickNm(String nickNm);
+    MypageNickNmDto SelNickNm(String nickNm);
     int delUser(int iuser);
     List<OrderlistCountSelDto> Orderlist(OrderlistMonthsSelDto dto);
-    List<OrderlistDetailSelDto> OrderlistDetail(OrderlistDetailSelVo vo);
+    List<OrderlistDetailSelDto> OrderlistDetail(int orderId);
+    OrderlistUserDto selUser(int orderId);
+
 
 
 }

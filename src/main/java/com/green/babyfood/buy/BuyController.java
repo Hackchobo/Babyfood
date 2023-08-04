@@ -23,7 +23,7 @@ public class BuyController {
             "iuser : 유저 PK 번호 <br>"+
             "count : 상품 갯수 <br>"+
             "totalPrice : 주문한 상품의 가격 <br>"+
-            "point : 포인트 적립 금액 <br>"+
+            "point : 포인트 사용 금액 <br>"+
             "payment : 결제방법 <br>"+
             "준비중(1)/배송중(2)/배송완료(0)/주문취소(3) <br>"+
             "request: 요청사항 <br>"+
