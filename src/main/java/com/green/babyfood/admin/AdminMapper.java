@@ -25,4 +25,6 @@ public interface AdminMapper {
     int delProduct(Long productId);
 
     int insWebEditorImgList(List img, Long productId);
+
+    int categorySel(int productId, int category, List<Integer> cateDetail); // 카테고리분류
 }

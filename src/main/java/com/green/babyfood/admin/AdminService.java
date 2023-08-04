@@ -87,6 +87,7 @@ public class AdminService {
 
     public int updProduct(AdminProductUpdDto dto) {
         // 최종 상품 등록할때 사용되는 메소드
+        categorySel(dto.getProductId(), dto.getCategory(), dto.getCateDetail()); // 카테고리 분류 메소드 호출
         return mapper.updAdminProduct(dto);
     }
 
@@ -121,5 +122,12 @@ public class AdminService {
         }
         return mapper.searchAdminProduct(keyword);
     }
+
+
+    public int categorySel(int product_id, int category, List<Integer> cateDetail){
+        mapper.categorySel(product_id, category, cateDetail);
+        return 0;
+    }
+
 }
 
