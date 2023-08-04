@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -58,13 +57,23 @@ public class MainService {
 
 
 
-    public List<MainSelVo> random(Map<String,String> allergy) {
-        allergy.put("1","egg");allergy.put("2","milk");allergy.put("3","buckwheat");allergy.put("4","peanut");allergy.put("5","soybean");
-        allergy.put("6","wheat");allergy.put("7","pine_nut");allergy.put("8","walnut");allergy.put("9","crab");allergy.put("10","shrimp");
-        allergy.put("11","squid");allergy.put("12","mackerel");allergy.put("13","shellfish");allergy.put("14","peach");allergy.put("15","tomato");
-        allergy.put("16","chicken");allergy.put("17","pork");allergy.put("18","beef");allergy.put("19","sulfur_dioxide");allergy.put("20","fish");
+    public List<MainSelVo> random(String egg,String milk,String buckwheat,String peanut,String soybean,String wheat,String pine_nut,String walnut,String crab,String shrimp
+            ,String squid,String mackerel,String shellfish,String peach,String tomato,String chicken,String pork,String beef,String sulfur_dioxide,String fish) {
 
+        StringBuffer allergy = new StringBuffer();
+        allergy.append(egg + ",").append(milk + ",").append(buckwheat + ",").append(peanut + ",").append(soybean + ",")
+                .append(wheat + ",").append(pine_nut + ",").append(walnut + ",").append(crab + ",").append(shrimp + ",").append(squid + ",")
+                .append(mackerel + ",").append(shellfish + ",").append(peach + ",").append(tomato + ",").append(chicken + ",").append(pork + ",")
+                .append(beef + ",").append(sulfur_dioxide + ",").append(fish + ",");
 
+        String strallergy = String.valueOf(allergy);
+        String[] split = strallergy.split(",");
+        String plus = "";
+        for (String s : split) {
+            if (!s.equals("null")) {
+                plus += s + ",";
+            }
+        }
 
         return mapper.random();
     }
@@ -95,30 +104,76 @@ public class MainService {
         return mapper.bestSell("");
     }
 
-    public MainSelVoMaxPaige birthRecommend(Long iuser, int page, int row) {
-        int month = mapper.birth(iuser);
-        int cate = 0;
-        if (month <= 4) {
-            throw new RuntimeException("이유식 먹을수 있는 나이가 아닙니다");
+    public MainSelVoMaxPaige bestSellAll(int page,int row,
+                                    String egg, String milk, String buckwheat, String peanut, String soybean, String wheat, String pine_nut,
+                                    String walnut, String crab, String shrimp, String squid, String mackerel, String shellfish, String peach, String tomato, String chicken,
+                                    String pork, String beef, String sulfur_dioxide, String fish) {
+        StringBuffer allergy = new StringBuffer();
+        allergy.append(egg + ",").append(milk + ",").append(buckwheat + ",").append(peanut + ",").append(soybean + ",")
+                .append(wheat + ",").append(pine_nut + ",").append(walnut + ",").append(crab + ",").append(shrimp + ",").append(squid + ",")
+                .append(mackerel + ",").append(shellfish + ",").append(peach + ",").append(tomato + ",").append(chicken + ",").append(pork + ",")
+                .append(beef + ",").append(sulfur_dioxide + ",").append(fish + ",");
+
+        String strallergy = String.valueOf(allergy);
+        String[] split = strallergy.split(",");
+        String plus = "";
+        for (String s : split) {
+            if (!s.equals("null")) {
+                plus += s + ",";
+            }
         }
-        if (month > 4 && month <= 6) {
-            cate = 1;
-        } else if (month > 6 && month <= 10) {
-            cate = 2;
-        } else if (month > 10 && month <= 13) {
-            cate = 3;
-        } else if (month > 13) {
-            cate = 4;
+        int startIdx=(page-1)*row;
+        if(!plus.equals("")){
+            String subAllergy = plus.substring(0, plus.length()-1);
+
+            int maxPageCount = mapper.bestSellAllMaxPage(subAllergy);
+            int maxPage=(int)Math.ceil(maxPageCount/(double)row);
+
+            List<MainSelVo> mainSelVos = mapper.bestSellAll(startIdx, row, subAllergy);
+            MainSelVoMaxPaige mainSelVoMaxPaige=new MainSelVoMaxPaige();
+            mainSelVoMaxPaige.setMaxPage(maxPage);
+            mainSelVoMaxPaige.setList(mainSelVos);
+
+            return mainSelVoMaxPaige;
         }
-        int startIdx = (page - 1) * row;
-        int count = mapper.birthMaxPage(cate);
-        int maxPage = (int) (Math.ceil(count / (double) row));
-        MainSelVoMaxPaige voMaxPaige = new MainSelVoMaxPaige();
-        List<MainSelVo> mainSelVos = mapper.birthRecommend(cate, startIdx, row);
-        voMaxPaige.setMaxPage(maxPage);
-        voMaxPaige.setList(mainSelVos);
-        return voMaxPaige;
-    }
+
+        int maxPageCount = mapper.bestSellAllMaxPage("");
+        int maxPage=(int)Math.ceil(maxPageCount/(double)row);
+        List<MainSelVo> mainSelVos = mapper.bestSellAll(startIdx, row, "");
+        MainSelVoMaxPaige mainSelVoMaxPaige=new MainSelVoMaxPaige();
+        mainSelVoMaxPaige.setMaxPage(maxPage);
+        mainSelVoMaxPaige.setList(mainSelVos);
+        return mainSelVoMaxPaige;
+}
+
+
+
+
+
+//   public MainSelVoMaxPaige birthRecommend(Long iuser, int page, int row) {
+//       int month = mapper.birth(iuser);
+//       int cate = 0;
+//       if (month <= 4) {
+//           throw new RuntimeException("이유식 먹을수 있는 나이가 아닙니다");
+//       }
+//       if (month > 4 && month <= 6) {
+//           cate = 1;
+//       } else if (month > 6 && month <= 10) {
+//           cate = 2;
+//       } else if (month > 10 && month <= 13) {
+//           cate = 3;
+//       } else if (month > 13) {
+//           cate = 4;
+//       }
+//       int startIdx = (page - 1) * row;
+//       int count = mapper.birthMaxPage(cate);
+//       int maxPage = (int) (Math.ceil(count / (double) row));
+//       MainSelVoMaxPaige voMaxPaige = new MainSelVoMaxPaige();
+//       List<MainSelVo> mainSelVos = mapper.birthRecommend(cate, startIdx, row);
+//       voMaxPaige.setMaxPage(maxPage);
+//       voMaxPaige.setList(mainSelVos);
+//       return voMaxPaige;
+//   }
 
 
     public MainSelVoMaxPaige birthRecommendFilter(Long iuser, int page, int row,String egg,

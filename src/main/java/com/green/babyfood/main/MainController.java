@@ -50,18 +50,28 @@ public class MainController {
     }
 
 
-    @GetMapping("/random")
-    @Operation(summary = "랜덤으로 상품추천", description = "" +
-            "productId : 상품의 고유번호<br>" +
-            "thumbnail : 상품의 썸네일<br>" +
-            "title : 상품의 제목<br>" +
-            "name : 상품의 이름<br>" +
-            "price : 상품의 가격<br>" +
-            "quantity : 상품의 재고<br>" +
-            "volumn : 판매량")
-    public List<MainSelVo> random(@RequestParam Map<String,String> allergy) {
-        return service.random(allergy);
-    }
+//    @GetMapping("/random")
+//    @Operation(summary = "랜덤으로 상품추천", description = "" +
+//            "productId : 상품의 고유번호<br>" +
+//            "thumbnail : 상품의 썸네일<br>" +
+//            "title : 상품의 제목<br>" +
+//            "name : 상품의 이름<br>" +
+//            "price : 상품의 가격<br>" +
+//            "quantity : 상품의 재고<br>" +
+//            "volumn : 판매량")
+//    public List<MainSelVo> random(@RequestParam(required = false) String egg, @RequestParam(required = false) String milk,
+//                                  @RequestParam(required = false) String buckwheat, @RequestParam(required = false) String peanut,
+//                                  @RequestParam(required = false) String soybean, @RequestParam(required = false) String wheat,
+//                                  @RequestParam(required = false) String pine_nut, @RequestParam(required = false) String walnut,
+//                                  @RequestParam(required = false) String crab, @RequestParam(required = false) String shrimp,
+//                                  @RequestParam(required = false) String squid, @RequestParam(required = false) String mackerel,
+//                                  @RequestParam(required = false) String shellfish, @RequestParam(required = false) String peach,
+//                                  @RequestParam(required = false) String tomato, @RequestParam(required = false) String chicken,
+//                                  @RequestParam(required = false) String pork, @RequestParam(required = false) String beef,
+//                                  @RequestParam(required = false) String sulfur_dioxide, @RequestParam(required = false) String fish) {
+//        return service.random(egg,milk,buckwheat,peanut,soybean,wheat,pine_nut,walnut,crab,shrimp,squid,
+//                mackerel,shellfish,peach,tomato,chicken,pork,beef,sulfur_dioxide,fish);
+//    }
 
     @GetMapping("/bestproduct")
     @Operation(summary = "제일 많이 팔린 상품", description = "" +
@@ -96,6 +106,41 @@ public class MainController {
                 mackerel, shellfish, peach, tomato, chicken, pork, beef, sulfur_dioxide, fish);
     }
 
+    @GetMapping("/bestproduct/all")
+    @Operation(summary = "제일 많이 팔린 상품 더보기",description = "" +
+            "productId : 상품의 고유번호<br>" +
+            "thumbnail : 상품의 썸네일<br>" +
+            "title : 상품의 제목<br>" +
+            "name : 상품의 이름<br>" +
+            "price : 상품의 가격<br>" +
+            "quantity : 상품의 재고<br>" +
+            "volumn : 판매량")
+    public MainSelVoMaxPaige bestSellAll(@RequestParam int page,@RequestParam int row,
+                                    @RequestParam(required = false) String egg,
+                                    @RequestParam(required = false) String milk,
+                                    @RequestParam(required = false) String buckwheat,
+                                    @RequestParam(required = false) String peanut,
+                                    @RequestParam(required = false) String soybean,
+                                    @RequestParam(required = false) String wheat,
+                                    @RequestParam(required = false) String pine_nut,
+                                    @RequestParam(required = false) String walnut,
+                                    @RequestParam(required = false) String crab,
+                                    @RequestParam(required = false) String shrimp,
+                                    @RequestParam(required = false) String squid,
+                                    @RequestParam(required = false) String mackerel,
+                                    @RequestParam(required = false) String shellfish,
+                                    @RequestParam(required = false) String peach,
+                                    @RequestParam(required = false) String tomato,
+                                    @RequestParam(required = false) String chicken,
+                                    @RequestParam(required = false) String pork,
+                                    @RequestParam(required = false) String beef,
+                                    @RequestParam(required = false) String sulfur_dioxide,
+                                    @RequestParam(required = false) String fish) {
+        return service.bestSellAll(page,row,egg, milk, buckwheat, peanut, soybean, wheat, pine_nut, walnut, crab, shrimp, squid,
+                mackerel, shellfish, peach, tomato, chicken, pork, beef, sulfur_dioxide, fish);
+    }
+
+
 
 //   @GetMapping("/recommend")
 //   @Operation(summary = "회원 자녀의 개월에따라 상품추천",description = ""+
@@ -112,7 +157,7 @@ public class MainController {
 //      return service.birthRecommend(iuser,page,row);
 //  }
 
-    @GetMapping("/recommend/filter")
+    @GetMapping("/recommend")
     @Operation(summary = "회원 자녀의 개월에따라 상품추천", description = "" +
             "productId : 상품의 고유번호<br>" +
             "thumbnail : 상품의 썸네일<br>" +
