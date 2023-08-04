@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
     List<UserEntity1> selUser();
-    int updUser(UserUpdDto dto);
+    int updUser(UserUpdDto1 dto);
     int updPicUser(CreatePicDto dto);
     int updPointUser(UserPointDto dto);
     int delUser(UserDelDto dto);

@@ -9,6 +9,7 @@ public class SignEntity {
     private String name;
     private String mobileNb;
 //    private String role;
+    private String zipCode;
     private String address;
     private String addressDetail;
     private String nickNm;

@@ -12,8 +12,10 @@ public class UserEntity1 {
     private String birthday;
     private String mobileNb;
     private String createdAt;
-    private int admin;
+    private String role;
+    private String zipCode;
     private String address;
+    private String addressDetail;
     private String nickNm;
     private int point;
 }

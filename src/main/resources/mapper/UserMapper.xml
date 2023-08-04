@@ -6,7 +6,7 @@
 
     <select id="selUser">
         SELECT iuser , email, password, image, name, birthday, mobile_nb mobileNb, created_at createdAt
-        , role, address, nick_nm nickNm, point
+        , role,zip_code zipCode, address, address_detail addressDetail, nick_nm nickNm, point
         FROM user
     </select>
 
@@ -17,6 +17,7 @@
         name = #{name},
         birthday = #{birthday},
         mobile_nb = #{mobileNb},
+        zip_code = #{zipCode},
         address = #{address},
         address_detail = #{addressDetail},
         nick_nm = #{nickNm}

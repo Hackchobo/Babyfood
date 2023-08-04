@@ -3,7 +3,6 @@ package com.green.babyfood.user;
 import com.green.babyfood.user.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -24,7 +23,7 @@ public class UserController {
     @GetMapping("/seach")
     @Operation(summary = "유저/관리자 회원정보보기",description =
             "나타나는 정보 : 회원의 고유값(PK), 이메일, 비밀번호, 이미지, 이름, 생년월일, 모바일 번호, 생성일, 관리자 여부" +
-                    ", 주소, 닉네임, 포인트<br>"
+                    "우편번호, 주소, 상세주소, 닉네임, 포인트<br>"
     )
     public List<UserEntity1> getUser(){
         return service.selUser();
@@ -38,10 +37,11 @@ public class UserController {
             "name: 회원의 이름<br>" +
             "mobileNb: 회원의 전화번호<br>" +
             "birthday: 아기의 생년월일<br>" +
+            "zipCode: 우편번호<br>" +
             "address: 회원의 주소<br>" +
             "addressDetaile : 상세주소"
     )
-    public int patchUser(@RequestBody UserUpdDto dto){
+    public int patchUser(@RequestBody UserUpdDto1 dto){
         return service.updUser(dto);
     }
 
