@@ -6,13 +6,14 @@
     <insert id="InsBuy" useGeneratedKeys="true" keyProperty="orderId">
 
     INSERT INTO order_list
-    SET iuser = #{iuser},
-    payment = #{payment},
-    shipment = #{shipment},
-    call_user = #{call_user},
-    request = #{request},
-    reciever = #{receiver}
-
+        SET iuser = #{iuser},
+        payment = #{payment},
+        shipment = #{shipment},
+        call_user = #{callUser},
+        request = #{request},
+        reciever = #{receiver},
+        address = #{address},
+        address_detail = #{addressDetail}
     </insert>
 
     <insert id="InsBuyDetail">
@@ -29,33 +30,40 @@
         UPDATE product
         SET p_quantity = p_quantity - #{quantity},
         sale_volumn = sale_volumn + #{saleVolumn}
-        WHERE product_id = #{productId};
+        WHERE product_id = #{productId}
 
     </update>
 
     <delete id="delOrderbasket">
         DELETE FROM order_basket
-        WHERE cart_id = #{cartId};
+        WHERE cart_id = #{cartId}
     </delete>
 
     <update id="userpoint">
         UPDATE user
         SET POINT = POINT + #{point}
-        WHERE iuser = #{iuser};
+        WHERE iuser = #{iuser}
     </update>
     
     <select id="selorderproduct">
-        SELECT D.thumbnail thumbnail, C.p_title title,C.p_name name, C.p_price price, B.`count` count , E.name username, E.address address ,E.address_detail addressDetail, A.request, B.total_price totalPrice
+        SELECT D.thumbnail thumbnail, C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice
         FROM order_list A
         INNER JOIN order_detail B
         ON A.order_id = B.order_id
         INNER JOIN product C
         ON C.product_id = B.product_id
-        INNER JOIN product_img D
+        inner JOIN product_img D
         ON C.product_id = D.product_id
-        INNER JOIN user E
-        ON A.iuser = E.iuser
-        WHERE A.order_id = #{orderId};
+        WHERE B.order_id = #{orderId}
+    </select>
+
+    <select id="selorder">
+        SELECT A.reciever reciever, B.address,B.address_detail addressDetail, A.call_user phoneNm,A.request request
+        FROM order_list A
+        INNER JOIN user B
+        ON A.iuser = B.iuser
+        WHERE order_id = #{orderId};
+
     </select>
 
 

@@ -1,9 +1,13 @@
 package com.green.babyfood.buy;
 
 import com.green.babyfood.buy.model.*;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -17,46 +21,58 @@ public class BuyService {
         dto.setIuser(entity.getIuser());
         dto.setPayment(entity.getPayment());
         dto.setShipment(1);
-        dto.setCall_user(entity.getCalluser());
+        dto.setCallUser(entity.getCalluser());
         dto.setRequest(entity.getRequest());
         dto.setReceiver(entity.getReceiver());
+        dto.setAddress(entity.getAddress());
+        dto.setAddress(entity.getAddressDetail());
+        int result = Mapper.InsBuy(dto);
 
-        Mapper.InsBuy(dto);
-
-        BuyDetailInsDto detailInsDto = new BuyDetailInsDto();
 
 
-        detailInsDto.setProductId(entity.getProductId());
-        detailInsDto.setCount(entity.getCount());
-        detailInsDto.setOrderId(dto.getOrderId());
-        detailInsDto.setTotalPrice(entity.getTotalPrice());
 
-        BuyUpdDto updDto = new BuyUpdDto();
-
-        updDto.setQuantity(entity.getCount());
-        updDto.setSaleVolumn(entity.getCount());
-        updDto.setProductId(entity.getProductId());
-
-        BuyPointUpdDto pointdto = new BuyPointUpdDto();
-
-        pointdto.setIuser(entity.getIuser());
-        pointdto.setPoint(entity.getPoint());
-
-        int result = Mapper.InsBuyDetail(detailInsDto);
 
         if (result ==1){
+            BuyPointUpdDto pointdto = new BuyPointUpdDto();
+            int point = 0;
 
-            Mapper.updProduct(updDto);
-            Mapper.delOrderbasket(entity.getCartId());
+            for (int i = 0; i <entity.getOrderbasket().size(); i++) {
+
+                BuyDetailInsDto detaildto = new BuyDetailInsDto();
+                detaildto.setOrderId(dto.getOrderId());
+                detaildto.setProductId(entity.getOrderbasket().get(i).getProductId());
+                detaildto.setCount(entity.getOrderbasket().get(i).getCount());
+                detaildto.setTotalPrice(entity.getOrderbasket().get(i).getTotalprice());
+                Mapper.InsBuyDetail(detaildto);
+
+                BuyUpdDto updDto = new BuyUpdDto();
+                updDto.setProductId(entity.getOrderbasket().get(i).getProductId());
+                updDto.setSaleVolumn(entity.getOrderbasket().get(i).getCount());
+                updDto.setQuantity(entity.getOrderbasket().get(i).getCount());
+                Mapper.updProduct(updDto);
+
+                Mapper.delOrderbasket(entity.getOrderbasket().get(i).getCartId());
+
+                point += (entity.getOrderbasket().get(i).getTotalprice() / 5 );
+            }
+            pointdto.setIuser(entity.getIuser());
+            pointdto.setPoint(point);
+
             Mapper.userpoint(pointdto);
 
-        }
+        }else
+            return 0L;
+
 
         return dto.getOrderId();
     }
 
-    public BuySelOrderDto selorderproduct(int orderId){
-        return Mapper.selorderproduct(orderId);
+    public BuySelOrderlistDto selorderproduct(int orderId){
+        List<BuySelOrderDto> product = Mapper.selorderproduct(orderId);
+        BuySelUserDto user = Mapper.selorder(orderId);
 
+        BuySelOrderlistDto build = BuySelOrderlistDto.builder().user(user).order(product).build();
+
+        return build;
     }
 }
