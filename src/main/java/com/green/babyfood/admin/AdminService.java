@@ -97,7 +97,7 @@ public class AdminService {
 
     }
 
-    public int getProduct(int productId) {
+    public AdminProductEntity getProduct(int productId) {
         return mapper.getProduct(productId);
     }
 
