@@ -5,8 +5,10 @@ import com.green.babyfood.config.security.JwtTokenProvider;
 import com.green.babyfood.config.security.UserDetailsMapper;
 import com.green.babyfood.config.security.model.UserEntity;
 import com.green.babyfood.config.security.model.UserTokenEntity;
+import com.green.babyfood.sign.model.SignEntity;
 import com.green.babyfood.sign.model.SignInResultDto;
 import com.green.babyfood.sign.model.SignUpResultDto;
+import com.green.babyfood.sign.model.SigninDto;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -25,32 +27,10 @@ public class SignService {
     private final JwtTokenProvider JWT_PROVIDER;
     private final PasswordEncoder PW_ENCODER;
 
-    public SignUpResultDto signUp(String email, String pw, String nm, String mobileNb, String role
-                                    ,String address, String addressDetail, String nickNm) {
+    public SignUpResultDto signUp(SignEntity entity) {
         log.info("[getSignUpResult] signDataHandler로 회원 정보 요청");
-        /*
-        UserEntity user = UserEntity.builder()
-                .email(email)
-                .upw(PW_ENCODER.encode(pw))
-                .name(nm)
-                .mobileNb(mobileNb)
-                .role(String.format("ROLE_%s", role))
-                .address(address)
-                .addressDetail(addressDetail)
-                .nickNm(nickNm)
-                .build();
-
-         */
-        UserEntity user = new UserEntity();
-        user.setEmail(email);
-        user.setPassword(PW_ENCODER.encode(pw));
-        user.setName(nm);
-        user.setMobileNb(mobileNb);
-        user.setRole(role);
-        user.setAddress(address);
-        user.setAddressDetail(addressDetail);
-        user.setNickNm(nickNm);
-        int result = MAPPER.save(user);
+        entity.setPassword(PW_ENCODER.encode(entity.getPassword()));
+        int result = MAPPER.save(entity);
         SignUpResultDto dto = new SignUpResultDto();
 
         if(result == 1) {
@@ -63,14 +43,14 @@ public class SignService {
         return dto;
     }
 
-    public SignInResultDto signIn(String email, String upw, String ip) throws RuntimeException {
+    public SignInResultDto signIn(SigninDto dto1, String ip) throws RuntimeException {
         log.info("[getSignInResult] signDataHandler로 회원 정보 요청");
-        UserEntity user = MAPPER.getByUid(email);
+        UserEntity user = MAPPER.getByUid(dto1.getEmail());
 
-        log.info("[getSignInResult] email: {}", email);
+        log.info("[getSignInResult] email: {}", dto1.getEmail());
 
         log.info("[getSignInResult] 패스워드 비교");
-        if(!PW_ENCODER.matches(upw, user.getPassword())) {
+        if(!PW_ENCODER.matches(dto1.getPassword(), user.getPassword())) {
             throw new RuntimeException("비밀번호 다름");
         }
         log.info("[getSignInResult] 패스워드 일치");

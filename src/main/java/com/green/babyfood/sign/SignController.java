@@ -1,7 +1,9 @@
 package com.green.babyfood.sign;
 
+import com.green.babyfood.sign.model.SignEntity;
 import com.green.babyfood.sign.model.SignInResultDto;
 import com.green.babyfood.sign.model.SignUpResultDto;
+import com.green.babyfood.sign.model.SigninDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,12 +32,12 @@ public class SignController {
                     "참고사항 : password 가 틀릴경우 경고창이 나와요<br>"+
                     "참고사항 : 로그인시 액세스 토큰과 리프레시 토큰이 발급되요"
     )
-    public SignInResultDto signIn(HttpServletRequest req, @RequestParam String email, @RequestParam String password) throws RuntimeException {
+    public SignInResultDto signIn(HttpServletRequest req, @RequestBody SigninDto dto) throws RuntimeException {
 
         String ip = req.getRemoteAddr();
-        log.info("[signIn] 로그인을 시도하고 있습니다. email: {}, pw: {}, ip: {}", email, password, ip);
+//        log.info("[signIn] 로그인을 시도하고 있습니다. email: {}, pw: {}, ip: {}", email, password, ip);
 
-        return SERVICE.signIn(email, password, ip);
+        return SERVICE.signIn(dto, ip);
     }
 
     @PostMapping("/sign-up")
@@ -50,18 +52,11 @@ public class SignController {
                     "nickNm : 닉네임" +
                     "참고사항 : email 과 nickNm이 곁칠경우 경고창이 나와요"
     )
-    public SignUpResultDto signUp(@RequestParam String email
-                                , @RequestParam String password
-                                , @RequestParam String nm
-                                , @RequestParam String mobileNb
-                                , @RequestParam String role
-                                , @RequestParam String address
-                                , @RequestParam String addressDetail
-                                , @RequestParam String nickNm) {
-        log.info("[signUp] 회원가입을 수행합니다. email: {}, pw: {}, nm: {}, mobileNb: {}, role: {}" +
-                ", address : {}, addressDetail : {}, nickNm : {}", email, password, nm, mobileNb,role, address, addressDetail, nickNm);
-        SignUpResultDto dto = SERVICE.signUp(email, password, nm, mobileNb, role, address, addressDetail, nickNm);
-        log.info("[signUp] 회원가입 완료 email: {}", email);
+    public SignUpResultDto signUp(@RequestBody SignEntity entity) {
+        /*log.info("[signUp] 회원가입을 수행합니다. email: {}, pw: {}, nm: {}, mobileNb: {}, role: {}" +
+                ", address : {}, addressDetail : {}, nickNm : {}", email, password, nm, mobileNb,role, address, addressDetail, nickNm);*/
+        SignUpResultDto dto = SERVICE.signUp(entity);
+//        log.info("[signUp] 회원가입 완료 email: {}", email);
         return dto;
     }
 
