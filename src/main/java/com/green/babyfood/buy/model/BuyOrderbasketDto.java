@@ -3,9 +3,10 @@ package com.green.babyfood.buy.model;
 import lombok.Data;
 
 @Data
-public class BuyDetailInsDto {
-    private Long orderId;
+public class BuyOrderbasketDto {
+    private Long cartId;
     private Long productId;
+    private Long iuser;
     private int count;
-    private int totalPrice;
+    private int totalprice;
 }
