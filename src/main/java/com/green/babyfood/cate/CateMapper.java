@@ -8,8 +8,8 @@ import java.util.List;
 @Mapper
 public interface CateMapper {
 
-    int cateSelLevelmaxPaige(Long cateId,Long cateDetailId);
-    List<CateSelListVo> cateSelLevel(CateSelLevelDto dto);
+    int cateSelLevelmaxPage(CateSelLevelDto2 dto);
+    List<CateSelListVo> cateSelLevel(CateSelLevelDto2 dto);
 
 
     List<CateVo> selcate();

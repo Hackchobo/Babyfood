@@ -7,9 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @Tag(name = "카테고리")
@@ -30,8 +28,29 @@ public class CateController {
     "price : 해당상품의 가격<br>"+
     "quantity : 해당상품의 재고량<br>"+
     "volumn : 해당상품의 판매량")
-    public CateSelLevelVo getLevel(@RequestBody CateSelLevelDto dto){
-        return service.cateSelLevel(dto);
+    public CateSelLevelVo getLevel(@RequestBody CateSelLevelDto dto,
+                                   @RequestParam(required = false) String egg,
+                                   @RequestParam(required = false) String milk,
+                                   @RequestParam(required = false) String buckwheat,
+                                   @RequestParam(required = false) String peanut,
+                                   @RequestParam(required = false) String soybean,
+                                   @RequestParam(required = false) String wheat,
+                                   @RequestParam(required = false) String pine_nut,
+                                   @RequestParam(required = false) String walnut,
+                                   @RequestParam(required = false) String crab,
+                                   @RequestParam(required = false) String shrimp,
+                                   @RequestParam(required = false) String squid,
+                                   @RequestParam(required = false) String mackerel,
+                                   @RequestParam(required = false) String shellfish,
+                                   @RequestParam(required = false) String peach,
+                                   @RequestParam(required = false) String tomato,
+                                   @RequestParam(required = false) String chicken,
+                                   @RequestParam(required = false) String pork,
+                                   @RequestParam(required = false) String beef,
+                                   @RequestParam(required = false) String sulfur_dioxide,
+                                   @RequestParam(required = false) String fish){
+        return service.cateSelLevel(dto,egg, milk, buckwheat, peanut, soybean, wheat, pine_nut, walnut, crab,
+                shrimp, squid, mackerel, shellfish, peach, tomato, chicken, pork, beef, sulfur_dioxide, fish);
     }
 
 
