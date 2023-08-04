@@ -38,13 +38,18 @@ public class UserController {
             "name: 회원의 이름<br>" +
             "mobileNb: 회원의 전화번호<br>" +
             "birthday: 아기의 생년월일<br>" +
-            "address: 회원의 주소"
+            "address: 회원의 주소<br>" +
+            "addressDetaile : 상세주소"
     )
     public int patchUser(@RequestBody UserUpdDto dto){
         return service.updUser(dto);
     }
 
     @PatchMapping(value = "/pic", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "유저/관리자 사진등록",description =
+            "iuser : 회원의 고유값(PK) <- 해당 유저가 수정됨<br>"+
+            "pic : 사진 넣는 부분"
+    )
     public int patchPic(@RequestPart MultipartFile pic, @RequestParam Long iuser){
         CreatePicDto dto = new CreatePicDto();
         dto.setIuser(iuser);
