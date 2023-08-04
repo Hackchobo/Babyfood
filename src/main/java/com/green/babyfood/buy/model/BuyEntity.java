@@ -13,5 +13,6 @@ public class BuyEntity {
     private String request;
     private int payment;
     private Long iuser;
+    private int point;
     List<BuyOrderbasketDto> orderbasket;
 }
