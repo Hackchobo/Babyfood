@@ -46,7 +46,7 @@
     </update>
     
     <select id="selorderproduct">
-        SELECT D.thumbnail thumbnail, C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice
+        SELECT B.product_id productId,D.thumbnail thumbnail, C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice
         FROM order_list A
         INNER JOIN order_detail B
         ON A.order_id = B.order_id
@@ -58,12 +58,9 @@
     </select>
 
     <select id="selorder">
-        SELECT A.reciever reciever, B.address,B.address_detail addressDetail, A.call_user phoneNm,A.request request
-        FROM order_list A
-        INNER JOIN user B
-        ON A.iuser = B.iuser
+        SELECT reciever, address,address_detail addressDetail,call_user phoneNm, request
+        FROM order_list
         WHERE order_id = #{orderId};
-
     </select>
 
 
