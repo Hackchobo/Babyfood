@@ -15,21 +15,11 @@ public class MypageController {
 
     private final MypageService service;
 
-    @GetMapping()
-    @Operation(summary = "마이페이지에서 주문내역조회",description = ""+
-            "name: 상품이름<br>"+
-            "shipment: 상품배송상태 <br>"+
-            "nickNm : 닉네임<br>"+
-            "point : 포인트<br>")
-    List<MypageSelOrderListDto> getOrderList(int iuser){
-        return service.mypageOrderlist(iuser);
-    }
-
     @GetMapping("/orderlist")
     @Operation(summary = "주문내역조회",description = ""+
             "iuser: 유저PK <br>"+
             "num: 조회하고싶은 기간(개월) <br>")
-    List<OrderlistSelDto>getOrderlistMonths(OrderlistMonthsSelDto dto){
+    OrderlistSelDto[] getOrderlistMonths(OrderlistMonthsSelDto dto){
         return service.Orderlist(dto);
     }
     @GetMapping("/orderlist/detail")

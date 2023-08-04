@@ -8,8 +8,8 @@ import java.util.List;
 @Mapper
 public interface MainMapper {
 
-    List<MainSelVo> mainSelView(int startIdx,int row);
-    int maxPaige();
+    List<MainSelVo> mainSelView(int startIdx,int row,String strallergy);
+    int maxPaige(String strallergy);
 
     List<MainSelVo> random();
     List<MainSelVo> bestSell(String strallergy);

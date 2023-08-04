@@ -4,16 +4,14 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.babyfood.admin.AdminMapper">
     <insert id="productIns">
-        update product
+        insert into product
         SET p_title = #{title}
         , p_name = #{name}
         , p_price = #{price}
         , p_quantity = #{quantity}
         , description = #{description}
-        , sale_volumn = #{saleVolume}
         , allergy = #{allergy}
-        , updated_at = current_timestamp()
-        where product_id = #{productId}
+        , is_delete = 0
     </insert>
 
     <select id="productAll">
@@ -24,9 +22,9 @@
     </select>
 
     <select id="getProduct">
-        select p_title title, p_name name, p_price price, p_quantity quantity, description
-        from product
-        where product_id = #{productId}
+        select p_title title, p_name name, p_price price, p_quantity quantity, description,
+
+
     </select>
 
     <update id="updAdminProduct">
@@ -47,7 +45,6 @@
         SET is_delete = 1
         where product_id = #{productId}
     </update>
-
 
 
 
