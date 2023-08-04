@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,12 +23,15 @@ public class UserService {
     private String fileDir;
 
     private final UserMapper mapper;
+    private final PasswordEncoder PW_ENCODER;
 
     public List<UserEntity1> selUser(){
         return mapper.selUser();
     }
 
     public int updUser(UserUpdDto dto){
+        String password = dto.getPassword();
+        dto.setPassword(PW_ENCODER.encode(password));
         return mapper.updUser(dto);
     }
 

@@ -17,8 +17,8 @@
         name = #{name},
         birthday = #{birthday},
         mobile_nb = #{mobileNb},
-        admin = #{admin},
         address = #{address},
+        address_detail = #{addressDetail},
         nick_nm = #{nickNm}
         where iuser = #{iuser}
     </update>
