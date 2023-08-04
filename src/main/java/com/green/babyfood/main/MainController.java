@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
+
 
 
 @Tag(name = "메인페이지")
@@ -168,7 +168,7 @@ public class MainController {
             "volumn : 판매량<br>" +
             "maxPaige : 최대페이지수<br>" +
             "4개월 이하는 이유식이 먹을 나이가 아닙니다")
-    public MainSelVoMaxPaige postBirthfilter(Long iuser, int page, int row,
+    public MainSelVoMaxPaige postBirthFilter(Long iuser, int page, int row,
                                              @RequestParam(required = false) String egg,
                                              @RequestParam(required = false) String milk,
                                              @RequestParam(required = false) String buckwheat,
@@ -189,7 +189,7 @@ public class MainController {
                                              @RequestParam(required = false) String beef,
                                              @RequestParam(required = false) String sulfur_dioxide,
                                              @RequestParam(required = false) String fish) {
-        return service.birthRecommendFilter(iuser, page, row, egg, milk, buckwheat, peanut, soybean, wheat, pine_nut, walnut, crab, shrimp, squid, mackerel, shellfish, peach, tomato
-                , chicken, pork, beef, sulfur_dioxide, fish);
+        return service.birthRecommendFilter(iuser, page, row, egg, milk, buckwheat, peanut, soybean, wheat, pine_nut,
+                walnut, crab, shrimp, squid, mackerel, shellfish, peach, tomato, chicken, pork, beef, sulfur_dioxide, fish);
     }
 }

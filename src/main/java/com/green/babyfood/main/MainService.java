@@ -191,12 +191,13 @@ public class MainService {
         String strallergy = String.valueOf(allergy);
         String[] split = strallergy.split(",");
         String plus="";
-        String subAllergy="";
+
         for (String s : split) {
             if(!s.equals("null")){
                 plus+=s+",";
             }
         }
+        String subAllergy="";
         if(!plus.equals("")){
              subAllergy = plus.substring(0, plus.length()-1);
         }
