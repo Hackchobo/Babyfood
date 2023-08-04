@@ -35,7 +35,8 @@ public class OrderBasketController {
             "name : 상품의 이름"+
             "count : 수량 <br>"+
             "price : 해당상품 하나의 가격<br>"+
-            "thumbnail : 해당상품의 썸네일"
+            "thumbnail : 해당상품의 썸네일<br>"+
+            "createdAt : 상품이 장바구니에 담긴 날짜"
     )
     public List<OrderBasketSelVo> getUserOrderBasket(Long iuser){
         return service.selUserOrderBasket(iuser);
