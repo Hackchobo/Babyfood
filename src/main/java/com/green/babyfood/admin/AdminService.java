@@ -10,9 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.green.babyfood.util.FileUtils.getAbsolutePath;
 @Slf4j
@@ -128,6 +126,14 @@ public class AdminService {
             }
         }
         return mapper.searchAdminProduct(keyword);
+    }
+
+    public AdminProductUpdDto updProductInfo(int productId) {
+        log.info("카테고리 정보 획득 ");
+        List<Integer> cateDetailList = mapper.updProductInfoCate(productId); // 카테고리 정보 획득
+        AdminProductUpdDto adminProductUpdDto = mapper.updProductInfo(productId); // 상품 정보 획득
+        adminProductUpdDto.setCateDetail(cateDetailList); // 카테고리 정보를 AdminProductUpdDto에 설정
+        return adminProductUpdDto;
     }
 }
 

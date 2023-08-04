@@ -2,6 +2,7 @@ package com.green.babyfood.admin.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,5 +16,6 @@ public class AdminProductUpdDto {
     int saleVolume;
     int allergy;
     int category;
-    List<Integer> cateDetail;
+    List cateDetail = new ArrayList<>();
+
 }
