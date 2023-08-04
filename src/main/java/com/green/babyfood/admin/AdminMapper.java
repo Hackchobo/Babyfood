@@ -20,9 +20,11 @@ public interface AdminMapper {
     int insPk(PkVo pkVo);
 
     int insWebEditorImg(Long productId,String img);
-    int updAdminProduct(AdminProductUpdDto dto);
+    int updAdminProduct(AdminProductUpdDto dto); // 상품 등록
+    int changeAdminProduct(AdminProductUpdDto dto); // 상품 수정
     int delImg(Long productId);
     int delProduct(Long productId);
 
     int insWebEditorImgList(List img, Long productId);
+
 }

@@ -36,6 +36,19 @@
         , description = #{description}
         , sale_volumn = #{saleVolume}
         , allergy = #{allergy}
+        , created_at = current_timestamp()
+        where product_id = #{productId}
+    </update>
+
+    <update id="changeAdminProduct">
+        update product
+        SET p_title = #{title}
+        , p_name = #{name}
+        , p_price = #{price}
+        , p_quantity = #{quantity}
+        , description = #{description}
+        , sale_volumn = #{saleVolume}
+        , allergy = #{allergy}
         , updated_at = current_timestamp()
         where product_id = #{productId}
     </update>

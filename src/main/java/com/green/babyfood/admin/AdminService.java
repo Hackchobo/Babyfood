@@ -21,10 +21,6 @@ import static com.green.babyfood.util.FileUtils.getAbsolutePath;
 public class AdminService {
     private final AdminMapper mapper;
 
-    int productIns(AdminProductInsDto dto) {
-        return mapper.productIns(dto);
-    }
-
     public List<AdminProductEntity> productAll(AdminProductDto dto) {
         int ROW_PER_PAGE = dto.getRow();
         int startIdx = (dto.getPage() - 1) * ROW_PER_PAGE;
@@ -33,8 +29,6 @@ public class AdminService {
         return mapper.productAll(dto);
     }
 
-
-    // ------------웹에디터----------------
 
     @Value("${file.dir}")
     private String fileDir;
@@ -87,7 +81,21 @@ public class AdminService {
 
     public int updProduct(AdminProductUpdDto dto) {
         // 최종 상품 등록할때 사용되는 메소드
+        if (dto.getCategory() > 4){
+            log.info("카테고리는 1-4까지 설정 가능, 확인 후 다시 입력하세요");
+            return 0;
+        }
+
         return mapper.updAdminProduct(dto);
+    }
+
+    public int changeProduct(AdminProductUpdDto dto) {
+        // 상품 정보 수정
+        if (dto.getCategory() > 4){
+            log.info("카테고리는 1-4까지 설정 가능, 확인 후 다시 입력하세요");
+            return 0;
+        }
+        return mapper.changeAdminProduct(dto);
     }
 
     public int delProductImg(Long productId) {

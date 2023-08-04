@@ -96,6 +96,12 @@ public class AdminController {
         return service.updProduct(dto);
     }
 
+    @PatchMapping("/upd")
+    @Operation(summary = "상품 수정 메소드")
+    public int updProduct(@RequestBody AdminProductUpdDto dto){
+        return service.changeProduct(dto);
+    }
+
 
     @DeleteMapping
     @Operation(summary = "웹에디터에서 취소를 하면 테이블에서 이미지 데이터와 빈값의 상품테이블 데이터를 삭제")
