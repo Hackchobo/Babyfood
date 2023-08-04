@@ -8,7 +8,7 @@
         , password = #{password}
         , name = #{name}
         , mobile_nb = #{mobileNb}
-        , role = #{role}
+        , role = 'USER'
         , address = #{address}
         , address_detail = #{addressDetail}
         , nick_nm = #{nickNm}
