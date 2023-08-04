@@ -176,7 +176,7 @@ public class MainService {
 //   }
 
 
-    public MainSelVoMaxPaige birthRecommendFilter(Long iuser, int page, int row,String egg,
+    public List<MainSelVo> birthRecommendFilter(Long iuser, int row,String egg,
                                                   String milk, String buckwheat, String peanut, String soybean,
                                                   String wheat, String pine_nut, String walnut, String crab, String shrimp,
                                                   String squid, String mackerel, String shellfish, String peach,
@@ -218,13 +218,14 @@ public class MainService {
         } else if (month > 13) {
             cate = 4;
         }
-        int startIdx = (page - 1) * row;
-        int count = mapper.birthRecommendFilterMaxPaige(cate,subAllergy);
-        int maxPage = (int) (Math.ceil(count / (double) row));
-        MainSelVoMaxPaige voMaxPaige = new MainSelVoMaxPaige();
-        List<MainSelVo> mainSelVos = mapper.birthRecommendFilter(cate, startIdx, row,subAllergy);
-        voMaxPaige.setMaxPage(maxPage);
-        voMaxPaige.setList(mainSelVos);
-        return voMaxPaige;
+//        int startIdx = (page - 1) * row;
+//      int count = mapper.birthRecommendFilterMaxPaige(cate,subAllergy);
+//      int maxPage = (int) (Math.ceil(count / (double) row));
+//      MainSelVoMaxPaige voMaxPaige = new MainSelVoMaxPaige();
+        List<MainSelVo> mainSelVos = mapper.birthRecommendFilter(cate, row,subAllergy);
+//       voMaxPaige.setMaxPage(maxPage);
+//       voMaxPaige.setList(mainSelVos);
+//       return voMaxPaige;
+        return mainSelVos;
     }
 }

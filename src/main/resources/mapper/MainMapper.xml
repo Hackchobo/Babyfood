@@ -137,7 +137,7 @@
         </if>
         group by A.product_id
         order by A.sale_volumn desc,rand()
-        LIMIT #{startIdx},#{row}
+        LIMIT #{row}
     </select>
 
 

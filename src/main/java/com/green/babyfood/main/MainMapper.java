@@ -20,6 +20,6 @@ public interface MainMapper {
 //    List<MainSelVo> birthRecommend(int cate,int startIdx,int row);
 //    int birthMaxPage(int cate);
 
-    List<MainSelVo> birthRecommendFilter(int cate,int startIdx,int row,String strallergy);
+    List<MainSelVo> birthRecommendFilter(int cate,int row,String strallergy);
     int birthRecommendFilterMaxPaige(int cate,String strallergy);
 }
