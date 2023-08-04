@@ -3,6 +3,7 @@ package com.green.babyfood.admin;
 import com.green.babyfood.admin.model.*;
 import com.green.babyfood.util.FileUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.green.babyfood.util.FileUtils.getAbsolutePath;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminService {
@@ -84,7 +85,8 @@ public class AdminService {
 
     }
 
-    public int updProduct(ProductUpdDto dto) {
+    public int updProduct(AdminProductUpdDto dto) {
+        // 최종 상품 등록할때 사용되는 메소드
         return mapper.updAdminProduct(dto);
     }
 
@@ -99,10 +101,6 @@ public class AdminService {
 
     public AdminProductEntity getProduct(int productId) {
         return mapper.getProduct(productId);
-    }
-
-    public int updAdminProduct(AdminProductUpdDto dto) {
-        return mapper.updAdminProduct(dto);
     }
 
     public int delAdminProduct(int productId) {

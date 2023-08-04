@@ -10,7 +10,7 @@ public interface AdminMapper {
     int productIns(AdminProductInsDto dto);
     List<AdminProductEntity> productAll(AdminProductDto dto);
     AdminProductEntity getProduct(int productId);
-    int updAdminProduct(AdminProductUpdDto dto);
+    //int updAdminProduct(AdminProductUpdDto dto);
     int delAdminProduct(int productId);
     // 검색기능
     List<AdminProductEntity> searchAdminProduct(String keyword);
@@ -20,7 +20,7 @@ public interface AdminMapper {
     int insPk(PkVo pkVo);
 
     int insWebEditorImg(Long productId,String img);
-    int updAdminProduct(ProductUpdDto dto);
+    int updAdminProduct(AdminProductUpdDto dto);
     int delImg(Long productId);
     int delProduct(Long productId);
 

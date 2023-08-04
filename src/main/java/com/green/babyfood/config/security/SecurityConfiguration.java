@@ -36,6 +36,8 @@ public class SecurityConfiguration {
                                             , "/view/**"
                                             ,"/api/user/**"
                                     ,"/api/**"
+                                    , "/admin"
+                                    , "/admin/**"
                                     ).permitAll()
                                     .requestMatchers(HttpMethod.GET, "/sign-api/refresh-token").permitAll()
                                     .requestMatchers(HttpMethod.GET, "/product/**").permitAll()

@@ -22,9 +22,9 @@
     </select>
 
     <select id="getProduct">
-        select p_title title, p_name name, p_price price, p_quantity quantity, description,
-
-
+        select p_title title, p_name name, p_price price, p_quantity quantity, description
+        from product
+        where product_iD = #{productId}
     </select>
 
     <update id="updAdminProduct">
@@ -86,6 +86,8 @@
         ,p_quantity=#{quantity}
         ,description=#{description}
         ,allergy=#{allergy}
+        , category = #{category}
+        , cateDetail = #{category_detail};
         where product_id=#{productId}
     </update>
 

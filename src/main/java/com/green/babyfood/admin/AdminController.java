@@ -37,23 +37,23 @@ public class AdminController {
         return service.getProduct(productId);
     }
 
-    @PatchMapping("/product/ins")
-    @Operation(summary = "상품 등록", description = ""+
-            "title = 타이틀 <br>" +
-            "name = 이름 <br>" +
-            "price = 가격<br>" +
-            "quantity = 재고<br>" +
-            "description = 제품설명 <br>" +
-            "allergy = 알러지정보 <br>")
-    public int productIns(AdminProductInsDto dto){
-        return service.productIns(dto);
-    }
-
-    @PatchMapping("/product/patch")
-    @Operation(summary = "등록된 상품 정보 수정")
-    public int patchAdminProduct(AdminProductUpdDto dto){
-        return service.updAdminProduct(dto);
-    }
+//    @PatchMapping("/product/ins")
+//    @Operation(summary = "상품 등록", description = ""+
+//            "title = 타이틀 <br>" +
+//            "name = 이름 <br>" +
+//            "price = 가격<br>" +
+//            "quantity = 재고<br>" +
+//            "description = 제품설명 <br>" +
+//            "allergy = 알러지정보 <br>")
+//    public int productIns(AdminProductInsDto dto){
+//        return service.productIns(dto);
+//    }
+//
+//    @PatchMapping("/product/patch")
+//    @Operation(summary = "등록된 상품 정보 수정")
+//    public int patchAdminProduct(AdminProductUpdDto dto){
+//        return service.updAdminProduct(dto);
+//    }
 
     @PatchMapping("/product/delete")
     @Operation(summary = "등록된 상품 삭제")
@@ -92,7 +92,7 @@ public class AdminController {
 
     @PatchMapping
     @Operation(summary = "최종상품등록할때 저장하는 메소드")
-    public int insProduct(@RequestBody ProductUpdDto dto){
+    public int insProduct(@RequestBody AdminProductUpdDto dto){
         return service.updProduct(dto);
     }
 
