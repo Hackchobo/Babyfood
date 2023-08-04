@@ -1,5 +1,10 @@
 package com.green.babyfood.sign;
 
+import com.green.babyfood.CommonRes;
+import com.green.babyfood.config.security.model.UserEntity;
+import com.green.babyfood.config.security.otp.OtpRes;
+import com.green.babyfood.config.security.otp.TOTP;
+import com.green.babyfood.config.security.otp.TOTPTokenGenerator;
 import com.green.babyfood.sign.model.SignEntity;
 import com.green.babyfood.sign.model.SignInResultDto;
 import com.green.babyfood.sign.model.SignUpResultDto;
@@ -9,9 +14,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base32;
+import org.apache.commons.codec.binary.Hex;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -21,7 +33,7 @@ import org.springframework.web.bind.annotation.*;
 public class SignController {
 
     private final SignService SERVICE;
-
+    private final TOTPTokenGenerator totp;
     //ApiParam은 문서 자동화를 위한 Swagger에서 쓰이는 어노테이션이고
     //RequestParam은 http 로부터 요청 온 정보를 받아오기 위한 스프링 어노테이션이다.
 
@@ -32,7 +44,7 @@ public class SignController {
                     "참고사항 : password 가 틀릴경우 경고창이 나와요<br>"+
                     "참고사항 : 로그인시 액세스 토큰과 리프레시 토큰이 발급되요"
     )
-    public SignInResultDto signIn(HttpServletRequest req, @RequestBody SigninDto dto) throws RuntimeException {
+    public SignInResultDto signIn(HttpServletRequest req, @RequestBody SigninDto dto) throws Exception {
 
         String ip = req.getRemoteAddr();
 //        log.info("[signIn] 로그인을 시도하고 있습니다. email: {}, pw: {}, ip: {}", email, password, ip);
@@ -47,6 +59,7 @@ public class SignController {
                     "nm : 회원의 이름<br>" +
                     "mobileNb : 전화번호<br>" +
                     "role : 관리자 유무 <br>" +
+                    "zipCode : 우편번호 <br>" +
                     "address : 주소<br>" +
                     "addressDetail : 상세주소<br>" +
                     "nickNm : 닉네임" +
@@ -70,5 +83,47 @@ public class SignController {
             , @RequestParam String refreshToken) {
         SignUpResultDto dto = SERVICE.refreshToken(req, refreshToken);
         return dto == null ? ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null) : ResponseEntity.ok(dto);
+    }
+
+    @PostMapping("/logout")
+    @Operation(summary = "로그아웃",description =
+               "참고사항 : 로그인이 되어있는 상태에서 로그아웃을 하면 됩니다.(액티브토큰이 삭제됨)"
+    )
+    public ResponseEntity<?> logout(HttpServletRequest req) {
+        SERVICE.logout(req);
+        ResponseCookie responseCookie = ResponseCookie.from("refresh-token", "") // 프론트엔드에 쿠키에 저장하는값을 name의 이름으로 한다면
+                .maxAge(0)
+                .path("/")
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .build();
+    }
+
+    @GetMapping("/otp")
+    @Operation(summary = "otp(TEST), QR코드 발급",description =
+            "참고사항 : 테스트중입니다. 사용법은 따로 알려드리겠습니다."
+    )
+    public ResponseEntity<?> otp() {
+        // secretKey 생성
+        String secretKey = totp.generateSecretKey();
+        System.out.println(secretKey);
+        String account = "pirbak@google.com";
+        String issuer = "otpTest";
+        // secretKey + account + issuer => QR 바코드 생성
+        String barcodeUrl = totp.getGoogleAuthenticatorBarcode(secretKey, account, issuer);
+        OtpRes res = OtpRes.builder().secretKey(secretKey).barcodeUrl(barcodeUrl).build();
+        SERVICE.updSecretKey(1L, secretKey);
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
+    @GetMapping("/otp-valid")
+    @Operation(summary = "otp(TEST)",description =
+            "참고사항 : 테스트중입니다. 사용법은 따로 알려드리겠습니다."
+    )
+    public ResponseEntity<?> otpValid(@RequestParam String inputCode) {
+        return ResponseEntity.status(HttpStatus.OK).body(SERVICE.otpValid(inputCode));
     }
 }

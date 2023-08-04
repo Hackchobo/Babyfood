@@ -1,5 +1,6 @@
 package com.green.babyfood.config.security;
 
+import com.green.babyfood.config.RedisService;
 import com.green.babyfood.config.security.model.MyUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -7,6 +8,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,18 +26,23 @@ public class JwtTokenProvider {
     public final Key REFRESH_KEY;
     public final String TOKEN_TYPE;
 
-    public final long ACCESS_TOKEN_VALID_MS = 300_000L; // 1000L * 60 * 60 -> 1시간
+    public final long ACCESS_TOKEN_VALID_MS = 200_000L; // 1000L * 60 * 60 -> 1시간
     public final long REFRESH_TOKEN_VALID_MS = 1_296_000_000L; // 1000L * 60 * 60 * 24 * 15 -> 15일
 
+    private final RedisService redisService;
+
+    @Autowired
     public JwtTokenProvider(@Value("${springboot.jwt.access-secret}") String accessSecretKey
-                            , @Value("${springboot.jwt.refresh-secret}") String refreshSecretKey
-                            , @Value("${springboot.jwt.token-type}") String tokenType) {
+            , @Value("${springboot.jwt.refresh-secret}") String refreshSecretKey
+            , @Value("${springboot.jwt.token-type}") String tokenType
+            , RedisService redisService) {
         byte[] accessKeyBytes = Decoders.BASE64.decode(accessSecretKey);
         this.ACCESS_KEY = Keys.hmacShaKeyFor(accessKeyBytes);
 
         byte[] refreshKeyBytes = Decoders.BASE64.decode(refreshSecretKey);
         this.REFRESH_KEY = Keys.hmacShaKeyFor(refreshKeyBytes);
         this.TOKEN_TYPE = tokenType;
+        this.redisService = redisService;
     }
 
 
@@ -72,14 +79,19 @@ public class JwtTokenProvider {
     }
 
     private UserDetails getUserDetailsFromToken(String token, Key key) {
-        Claims claims = getClaims(token, key);
-        String strIuser = claims.getSubject();
-        List<String> roles = (List<String>)claims.get("roles");
-        return MyUserDetails
-                .builder()
-                .iuser(Long.valueOf(strIuser))
-                .roles(roles)
-                .build();
+        try {
+            Claims claims = getClaims(token, key);
+            String strIuser = claims.getSubject();
+            List<String> roles = (List<String>) claims.get("roles");
+            return MyUserDetails
+                    .builder()
+                    .iuser(Long.valueOf(strIuser))
+                    .roles(roles)
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public String resolveToken(HttpServletRequest req, String type) {
@@ -92,7 +104,8 @@ public class JwtTokenProvider {
 //            }
 //        }
         String headerAuth = req.getHeader("authorization");
-        return headerAuth == null ? null : headerAuth.substring(type.length()).trim();
+//        return headerAuth == null ? null : headerAuth.substring(type.length()).trim();
+        return headerAuth != null && headerAuth.startsWith(String.format("%s ", type)) ? headerAuth.substring(type.length()).trim() : null; // Bearer_!!!!! 문자열을 자르는 역활을 한다.
     }
 
     public Claims getClaims(String token, Key key) {
@@ -104,6 +117,15 @@ public class JwtTokenProvider {
                 .getBody();
     }
 
+    public long getTokenExpirationTime(String token, Key key) {
+        try {
+            return getClaims(token, key).getExpiration().getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0L;
+    }
+    // Filter에서 사용
     public boolean isValidateToken(String token, Key key) {
         log.info("JwtTokenProvider - isValidateToken: 토큰 유효 체크 시작");
         try {

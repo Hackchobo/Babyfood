@@ -1,21 +1,17 @@
-package com.green.babyfood.config.security.model;
+package com.green.babyfood.user.model;
 
 import lombok.Data;
 
 @Data
-public class UserEntity {
+public class UserUpdDto1 {
     private Long iuser;
     private String email;
     private String password;
-    private String img;
     private String name;
     private String birthday;
     private String mobileNb;
-    private String createdAt;
-    private String role;
-    private String secretKey;
+    private String zipCode;
     private String address;
     private String addressDetail;
     private String nickNm;
-    private int point;
 }

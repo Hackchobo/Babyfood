@@ -17,10 +17,17 @@ spring:
     username: team_a
     password: green502
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+# mybatis config
 mybatis:
-  type-aliases-package: com.green.babyfood #????? ??? ???
+  type-aliases-package: com.green.babyfood
   mapper-locations: mapper/*.xml
 
+# swagger
 springdoc:
   swagger-ui:
     path: /swagger.html

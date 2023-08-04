@@ -2,10 +2,8 @@ package com.green.babyfood.user;
 
 import com.green.babyfood.user.model.*;
 import com.green.babyfood.util.FileUtils;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,11 +23,28 @@ public class UserService {
     private final UserMapper mapper;
     private final PasswordEncoder PW_ENCODER;
 
+    /*@Autowired
+    public UserService(UserMapper mapper,@Value("${file.dir}")String fileDir) {
+        this.mapper = mapper;
+        this.fileDir=fileDir;
+    }*/
+
+    /*public int insUser(UserInsDto dto){
+        if (!dto.getPassword().equals(dto.getSecret())){
+            return -1;
+        }
+        return mapper.insUser(dto);
+    }
+
+    public int insAdmin(AdminInsDto dto){
+        return mapper.insAdmin(dto);
+    }*/
+
     public List<UserEntity1> selUser(){
         return mapper.selUser();
     }
 
-    public int updUser(UserUpdDto dto){
+    public int updUser(UserUpdDto1 dto){
         String password = dto.getPassword();
         dto.setPassword(PW_ENCODER.encode(password));
         return mapper.updUser(dto);
@@ -75,4 +90,6 @@ public class UserService {
         mapper.deltoken(dto);
         return mapper.delUser(dto);
     }
+
+
 }

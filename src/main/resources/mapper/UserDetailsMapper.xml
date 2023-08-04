@@ -8,17 +8,24 @@
         , password = #{password}
         , name = #{name}
         , mobile_nb = #{mobileNb}
-        , role = 'USER'
+        , role = 'ROLE_USER'
+        , zip_code = #{zipCode}
         , address = #{address}
         , address_detail = #{addressDetail}
         , nick_nm = #{nickNm}
     </insert>
 
     <select id="getByUid">
-        SELECT iuser, email, password, name, role
+        SELECT iuser, email, password, name, role, secret_key secretKey
         FROM user
         WHERE email = #{email}
     </select>
+
+    <update id="updSecretKey">
+        UPDATE user
+        SET secret_key = #{secretKey}
+        WHERE iuser = #{iuser}
+    </update>
 
 
     <!-- ///////////////////////////////////////// user_token /////////-->
