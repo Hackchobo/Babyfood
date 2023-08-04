@@ -9,13 +9,24 @@
     from product A
     left join product_img B
     ON A.product_id=B.product_id
+    LEFT JOIN product_allergy C
+    ON A.product_id=C.product_id
+        <if test="strallergy!=''">
+            where C.allergy_id not in(${strallergy})
+        </if>
     group by A.product_id
-    ORDER BY created_at desc
+    ORDER BY A.created_at desc
     LIMIT #{startIdx},#{row};
     </select>
 
     <select id="maxPaige">
-        SELECT count(product_id) FROM product
+        SELECT count(A.product_id)
+        FROM product A
+        left join product_allergy B
+        on A.product_id=B.product_id
+        <if test="strallergy!=''">
+            where B.allergy_id not in(${strallergy})
+        </if>
     </select>
 
 
