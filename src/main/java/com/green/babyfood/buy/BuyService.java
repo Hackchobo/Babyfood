@@ -28,12 +28,11 @@ public class BuyService {
         dto.setAddress(entity.getAddressDetail());
         int result = Mapper.InsBuy(dto);
 
-
-
-
-
-        if (result ==1){
-            BuyPointUpdDto pointdto = new BuyPointUpdDto();
+        if (result == 1){
+            BuyPointUpdDto addpoint = new BuyPointUpdDto();
+            BuyPointUpdDto remove = new BuyPointUpdDto();
+            remove.setIuser(entity.getIuser());
+            remove.setPoint(entity.getPoint());
             int point = 0;
 
             for (int i = 0; i <entity.getOrderbasket().size(); i++) {
@@ -53,16 +52,17 @@ public class BuyService {
 
                 Mapper.delOrderbasket(entity.getOrderbasket().get(i).getCartId());
 
+
                 point += (entity.getOrderbasket().get(i).getTotalprice() / 5 );
             }
-            pointdto.setIuser(entity.getIuser());
-            pointdto.setPoint(point);
+            addpoint.setIuser(entity.getIuser());
+            addpoint.setPoint(point);
 
-            Mapper.userpoint(pointdto);
+            Mapper.addpoint(remove);
+            Mapper.removepoint(addpoint);
 
         }else
             return 0L;
-
 
         return dto.getOrderId();
     }

@@ -39,9 +39,15 @@
         WHERE cart_id = #{cartId}
     </delete>
 
-    <update id="userpoint">
+    <update id="addpoint">
         UPDATE user
         SET POINT = POINT + #{point}
+        WHERE iuser = #{iuser}
+    </update>
+
+    <update id="removepoint">
+        UPDATE user
+        SET POINT = POINT - #{point}
         WHERE iuser = #{iuser}
     </update>
     
