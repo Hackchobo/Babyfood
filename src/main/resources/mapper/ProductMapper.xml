@@ -5,8 +5,16 @@
 <mapper namespace="com.green.babyfood.product.ProductMapper">
 
     <select id="selProduct">
-        select p_title title, p_name name, p_price price, p_quantity quantity, description from product
-        where product_id=#{productId}
+        SELECT A.p_title title, A.p_name name, A.p_price price, A.p_quantity quantity,
+        A.description, D.allergy_name allergy, C.cate_id step
+        from product A
+        INNER JOIN product_category_relation B
+        ON A.product_id = B.product_id
+        INNER JOIN category C
+        ON C.cate_id = B.cate_id
+        INNER JOIN allergy D
+        ON A.allergy = D.allergy_id
+        WHERE A.product_id = #{productId};
     </select>
 
     <insert id="postReview">

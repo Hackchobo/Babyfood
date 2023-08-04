@@ -72,10 +72,10 @@ public class AdminController {
         return service.insWebEditorImgList(img,productId);
     }
 
-    @PatchMapping
+    @PostMapping("/product/list")
     @Operation(summary = "최종상품등록할때 저장하는 메소드")
-    public int insProduct(@RequestBody AdminProductUpdDto dto){
-        return service.updProduct(dto);
+    public int insProduct(@RequestBody AdminProductUpdDto dto, @RequestPart List<MultipartFile> thumbnail){
+        return service.updProduct(dto, thumbnail);
     }
 
     @GetMapping("/product/upd/get")

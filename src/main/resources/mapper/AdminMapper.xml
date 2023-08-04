@@ -40,6 +40,15 @@
         where product_id = #{productId}
     </update>
 
+    <update id="insThumbnail">
+        insert into product_img
+        (product_id,img)
+        values
+        <foreach collection="img" item="item" separator=",">
+            (#{productId},#{item})
+        </foreach>
+    </update>
+
     <update id="changeAdminProduct">
         update product
         SET p_title = #{title}

@@ -77,13 +77,15 @@ public class AdminService {
 
     }
 
-    public int updProduct(AdminProductUpdDto dto) {
+    public int updProduct(AdminProductUpdDto dto, List<MultipartFile> thumbnail) {
         // 최종 상품 등록할때 사용되는 메소드
         if (dto.getCategory() > 4){
             log.info("카테고리는 1-4까지 설정 가능, 확인 후 다시 입력하세요");
             return 0;
         }
-
+        // 상품 썸네일 등록
+        mapper.insThumbnail(thumbnail);
+        // 상품 정보 등록
         return mapper.updAdminProduct(dto);
     }
 

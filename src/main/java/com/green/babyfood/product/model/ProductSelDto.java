@@ -9,5 +9,6 @@ public class ProductSelDto {
     String price;
     String quantity;
     String description;
-    int productId;
+    String allergy;
+    String step;
 }

@@ -2,6 +2,7 @@ package com.green.babyfood.admin;
 
 import com.green.babyfood.admin.model.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,5 +29,5 @@ public interface AdminMapper {
     int delProduct(Long productId);
 
     int insWebEditorImgList(List img, Long productId);
-
+    int insThumbnail(List<MultipartFile> thumbnail);
 }
