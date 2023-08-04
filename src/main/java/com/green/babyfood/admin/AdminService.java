@@ -10,9 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.green.babyfood.util.FileUtils.getAbsolutePath;
 @Slf4j
@@ -20,10 +18,6 @@ import static com.green.babyfood.util.FileUtils.getAbsolutePath;
 @RequiredArgsConstructor
 public class AdminService {
     private final AdminMapper mapper;
-
-    int productIns(AdminProductInsDto dto) {
-        return mapper.productIns(dto);
-    }
 
     public List<AdminProductEntity> productAll(AdminProductDto dto) {
         int ROW_PER_PAGE = dto.getRow();
@@ -33,8 +27,6 @@ public class AdminService {
         return mapper.productAll(dto);
     }
 
-
-    // ------------웹에디터----------------
 
     @Value("${file.dir}")
     private String fileDir;
@@ -87,8 +79,21 @@ public class AdminService {
 
     public int updProduct(AdminProductUpdDto dto) {
         // 최종 상품 등록할때 사용되는 메소드
-        categorySel(dto.getProductId(), dto.getCategory(), dto.getCateDetail()); // 카테고리 분류 메소드 호출
+        if (dto.getCategory() > 4){
+            log.info("카테고리는 1-4까지 설정 가능, 확인 후 다시 입력하세요");
+            return 0;
+        }
+
         return mapper.updAdminProduct(dto);
+    }
+
+    public int changeProduct(AdminProductUpdDto dto) {
+        // 상품 정보 수정
+        if (dto.getCategory() > 4){
+            log.info("카테고리는 1-4까지 설정 가능, 확인 후 다시 입력하세요");
+            return 0;
+        }
+        return mapper.changeAdminProduct(dto);
     }
 
     public int delProductImg(Long productId) {
@@ -123,11 +128,12 @@ public class AdminService {
         return mapper.searchAdminProduct(keyword);
     }
 
-
-    public int categorySel(int product_id, int category, List<Integer> cateDetail){
-        mapper.categorySel(product_id, category, cateDetail);
-        return 0;
+    public AdminProductUpdDto updProductInfo(int productId) {
+        log.info("카테고리 정보 획득 ");
+        List<Integer> cateDetailList = mapper.updProductInfoCate(productId); // 카테고리 정보 획득
+        AdminProductUpdDto adminProductUpdDto = mapper.updProductInfo(productId); // 상품 정보 획득
+        adminProductUpdDto.setCateDetail(cateDetailList); // 카테고리 정보를 AdminProductUpdDto에 설정
+        return adminProductUpdDto;
     }
-
 }
 
