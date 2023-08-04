@@ -9,7 +9,7 @@ import java.util.List;
 public interface AdminMapper {
     int productIns(AdminProductInsDto dto);
     List<AdminProductEntity> productAll(AdminProductDto dto);
-    int getProduct(int productId);
+    AdminProductEntity getProduct(int productId);
     int updAdminProduct(AdminProductUpdDto dto);
     int delAdminProduct(int productId);
     // 검색기능

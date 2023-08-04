@@ -33,11 +33,11 @@ public class AdminController {
 
     @GetMapping("/product/get")
     @Operation(summary = "상품 상세조회", description = "상품 코드 입력")
-    public int getProduct(@RequestParam int productId){
+    public AdminProductEntity getProduct(@RequestParam int productId){
         return service.getProduct(productId);
     }
 
-    @PostMapping("/product/ins")
+    @PatchMapping("/product/ins")
     @Operation(summary = "상품 등록", description = ""+
             "title = 타이틀 <br>" +
             "name = 이름 <br>" +

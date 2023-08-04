@@ -20,7 +20,9 @@ import static com.green.babyfood.util.FileUtils.getAbsolutePath;
 public class AdminService {
     private final AdminMapper mapper;
 
-    int productIns(AdminProductInsDto dto){
+    public int productIns(AdminProductInsDto dto){
+
+
         return mapper.productIns(dto);
     }
 
@@ -32,6 +34,17 @@ public class AdminService {
         return mapper.productAll(dto);
     }
 
+    public AdminProductEntity getProduct(int productId) {
+        return mapper.getProduct(productId);
+    }
+
+    public int updAdminProduct(AdminProductUpdDto dto) {
+        return mapper.updAdminProduct(dto);
+    }
+
+    public int delAdminProduct(int productId) {
+        return mapper.delAdminProduct(productId);
+    }
 
 
 
@@ -99,17 +112,10 @@ public class AdminService {
 
     }
 
-    public int getProduct(int productId) {
-        return mapper.getProduct(productId);
-    }
 
-    public int updAdminProduct(AdminProductUpdDto dto) {
-        return mapper.updAdminProduct(dto);
-    }
 
-    public int delAdminProduct(int productId) {
-        return mapper.delAdminProduct(productId);
-    }
+    //----------------------------
+
 
     public List<AdminProductEntity> searchAdminProduct(String keyword) {
         //입력된 모든 단어가 영어인지 검사

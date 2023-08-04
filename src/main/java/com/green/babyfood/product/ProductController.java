@@ -19,7 +19,7 @@ public class ProductController {
 
     private final ProductService service;
 
-    @PostMapping
+    @GetMapping
     @Operation(summary = "상품 상세보기 페이지",description = ""+
             "productId = 상품 코드")
     ProductSelDto selProduct(int productId){
