@@ -2,6 +2,9 @@ package com.green.babyfood.product.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class ProductSelDto {
     String title;
@@ -10,5 +13,7 @@ public class ProductSelDto {
     String quantity;
     String description;
     String allergy;
-    String step;
+    int step;
+    List<String> img =new ArrayList<>();
+    List<String> thumbnail =new ArrayList<>();
 }

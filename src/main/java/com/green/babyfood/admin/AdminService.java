@@ -158,8 +158,8 @@ public class AdminService {
     }
 
 
-    public int updPicTest(MultipartFile pic, CreatePicDto dto) {
-        String centerPath = String.format("%s/user/%d", FileUtils.getAbsolutePath(fileDir),dto.getIuser());
+    public int updPicTest(MultipartFile pic, CreatePicProduct dto) {
+        String centerPath = getAbsolutePath(fileDir) + "/product/" + dto.getProductId();
 
         File dic = new File(centerPath);
         if(!dic.exists()){
@@ -168,7 +168,7 @@ public class AdminService {
 
         String originFileName = pic.getOriginalFilename();
         String savedFileName = FileUtils.makeRandomFileNm(originFileName);
-        String savedFilePath = String.format("%s/%s",centerPath, savedFileName);
+        String savedFilePath = centerPath+"/"+savedFileName;
 
         File target = new File(savedFilePath);
         try {
@@ -176,18 +176,11 @@ public class AdminService {
         }catch (Exception e) {
             return 0;
         }
-        dto.setImage(savedFileName);
-        try {
-            int result = mapper.updPicTest(dto);
-            if(result == 0) {
-                throw new Exception("사진을 등록할 수 없습니다.");
-            }
-        } catch (Exception e) {
-            //파일 삭제
-            target.delete();
-            return 0;
-        }
-        return 1;
+        dto.setImg(savedFileName);
+
+          return mapper.updPicTest(dto);
+
     }
+
 }
 

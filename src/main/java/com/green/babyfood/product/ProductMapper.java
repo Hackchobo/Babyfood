@@ -12,4 +12,7 @@ public interface ProductMapper {
     ProductSelDto selProduct(int productId);
     int postReview(ProductReviewDto dto);
     List<ReviewEntity> selReview(int productId);
+
+    void selProductImg(int productId);
+    void selProductthumbnailint(int productId);
 }

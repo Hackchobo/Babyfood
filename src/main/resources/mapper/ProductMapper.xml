@@ -6,16 +6,34 @@
 
     <select id="selProduct">
         SELECT A.p_title title, A.p_name name, A.p_price price, A.p_quantity quantity,
-        A.description, D.allergy_name allergy, C.cate_id step
+        A.description description, D.allergy_name allergy, C.cate_id step
         from product A
-        INNER JOIN product_category_relation B
+        left JOIN product_category_relation B
         ON A.product_id = B.product_id
-        INNER JOIN category C
+        left JOIN category C
         ON C.cate_id = B.cate_id
-        INNER JOIN allergy D
+        left JOIN allergy D
         ON A.allergy = D.allergy_id
         WHERE A.product_id = #{productId};
     </select>
+
+    <select id="selProductImg">
+        SELECT A.product_id, B.img img
+        FROM product A
+        LEFT JOIN product_img B
+        ON A.product_id = B.product_id
+        where A.product_id = #{productId};
+    </select>
+
+    <select id="selProductthumbnail">
+        SELECT A.product_id, B.thumbnail thumbnail
+        FROM product A
+        LEFT JOIN product_img B
+        ON A.product_id = B.product_id
+        where A.product_id = #{productId};
+    </select>
+
+
 
     <insert id="postReview">
         insert into review

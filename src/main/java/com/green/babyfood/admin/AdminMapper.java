@@ -31,6 +31,7 @@ public interface AdminMapper {
 
     int insWebEditorImgList(List img, Long productId);
     int insThumbnail(List<MultipartFile> thumbnail);
+    int updPicTest(CreatePicProduct dto);
 
-    int updPicTest(CreatePicDto dto);
+    int updPicTestThumb(CreatePicProduct dto);
 }

@@ -22,9 +22,12 @@
     </select>
 
     <select id="getProduct">
-        select p_title title, p_name name, p_price price, p_quantity quantity, description
-        from product
-        where product_iD = #{productId}
+        SELECT A.p_title title, A.p_name name, A.p_price price, A.p_quantity quantity, A.description,
+        B.img, B.thumbnail
+        from product A
+        INNER JOIN product_img B
+        ON A.product_id = B.product_id
+        WHERE A.product_id = #{product_ID};
     </select>
 
     <update id="updAdminProduct">
@@ -98,9 +101,6 @@
 
 
 
-
-
-
     <insert id="insPk" useGeneratedKeys="true" keyProperty="productId">
         insert into product
         (p_title,p_name,p_price,p_quantity,description,created_at,updated_at)
@@ -151,7 +151,14 @@
 
     <update id="insImgTest">
         insert into product_img
-        set product_id = {productId}
+        set product_id = #{productId}
     </update>
+
+    <insert id="updPicTest">
+        insert into product_img
+        set img = #{img},
+        product_id = #{productId}
+    </insert>
+
 
 </mapper>

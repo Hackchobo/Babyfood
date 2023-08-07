@@ -15,6 +15,8 @@ public class ProductService {
     private final ProductMapper mapper;
 
     public ProductSelDto selProduct(int productId){
+        mapper.selProductImg(productId);
+        mapper.selProductthumbnailint (productId);
         return mapper.selProduct(productId);
     }
 

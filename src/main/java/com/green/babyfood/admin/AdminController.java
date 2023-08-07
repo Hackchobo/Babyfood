@@ -104,11 +104,9 @@ public class AdminController {
     @Operation(summary = "테스트용 사진등록",description =
             "<br>"
     )
-    public int postPic(@RequestPart MultipartFile pic, @RequestParam Long iuser){
-        CreatePicDto dto = new CreatePicDto();
-        dto.setIuser(iuser);
+    public int postPic(@RequestPart MultipartFile pic, @RequestParam Long productId){
+        CreatePicProduct dto = new CreatePicProduct();
+        dto.setProductId(productId);
         return service.updPicTest(pic, dto);
     }
-
-
 }
