@@ -31,8 +31,9 @@ public class OrderBasketController {
     @GetMapping
     @Operation(summary = "장바구니 목록",description = ""+
             "cartId : 장바구니의 번호<br>"+
+            "productId : 상품의 번호<br>"+
             "title : 상품의 title<br>"+
-            "name : 상품의 이름"+
+            "name : 상품의 이름<br>"+
             "count : 수량 <br>"+
             "price : 해당상품 하나의 가격<br>"+
             "thumbnail : 해당상품의 썸네일<br>"+

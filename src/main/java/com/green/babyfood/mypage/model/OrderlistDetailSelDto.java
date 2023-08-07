@@ -8,6 +8,7 @@ public class OrderlistDetailSelDto {
     private Long productId;
     private String thumbnail;
     private String title;
+    private String createdAt;
     private String name;
     private String price;
     private String count;

@@ -59,16 +59,21 @@ public class AdminController {
         return service.insPk(pkVo);
     }
 
+
     @PostMapping(value = "/img",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "웹에디터 이미지 넣기")
-    public Long insWebEditorImg(@RequestPart MultipartFile img, @RequestParam Long productId){
+    @Operation(summary = "웹에디터 이미지 넣기",description = ""+
+    "img : 이미지 풀 경로<br>"+
+    "pimgId : 웹에디터 이미지의 pk값")
+    public ProductImgPkFull insWebEditorImg(@RequestPart MultipartFile img, @RequestParam Long productId){
         return service.insWebEditorImg(img,productId);
     }
 
 
     @PostMapping(value = "/imglist",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "웹에디터 이미지리스트로 넣기")
-    public List insWebEditorImgList(@RequestPart List<MultipartFile> img, @RequestParam Long productId){
+    @Operation(summary = "웹에디터 이미지리스트로 넣기",description = ""+
+    "img : 이미지 풀 경로<br>"+
+    "pimgId : 웹에디터 이미지의 pk값")
+    public List<ProductImgPkFull> insWebEditorImgList(@RequestPart List<MultipartFile> img, @RequestParam Long productId){
         return service.insWebEditorImgList(img,productId);
     }
 
