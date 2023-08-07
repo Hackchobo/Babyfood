@@ -18,11 +18,10 @@
     </select>
 
     <select id="selProductImg">
-        SELECT A.product_id, B.img img
+        SELECT A.product_id, B.img
         FROM product A
-        LEFT JOIN product_img B
-        ON A.product_id = B.product_id
-        where A.product_id = #{productId};
+        inner JOIN product_img B ON A.product_id = B.product_id
+        WHERE A.product_id = #{productId}
     </select>
 
     <select id="selProductthumbnail">
@@ -30,7 +29,7 @@
         FROM product A
         LEFT JOIN product_img B
         ON A.product_id = B.product_id
-        where A.product_id = #{productId};
+        where A.product_id = #{productId}
     </select>
 
 
