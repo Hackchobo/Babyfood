@@ -19,7 +19,7 @@ public interface AdminMapper {
 
     int insPk(PkVo pkVo);
 
-    int insWebEditorImg(Long productId,String img);
+    int insWebEditorImg(AdminProductImgDto dto);
     int updAdminProduct(AdminProductUpdDto dto); // 상품 등록
     int changeAdminProduct(AdminProductUpdDto dto); // 상품 수정
     AdminProductUpdDto updProductInfo(int productId); // 상품 수정버튼 클릭시 기존 정보 가져오기
@@ -27,6 +27,8 @@ public interface AdminMapper {
     int delImg(Long productId);
     int delProduct(Long productId);
 
-    int insWebEditorImgList(List img, Long productId);
+    int insWebEditorImgList(AdminProductImgDto dto);
+    int delWebEditorCancel(Long pImgId);
+    ProductImgPk selProductImgPk(Long pImgId);
 
 }
