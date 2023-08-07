@@ -6,30 +6,31 @@
 
     <select id="selProduct">
         SELECT A.p_title title, A.p_name name, A.p_price price, A.p_quantity quantity,
-        A.description description, D.allergy_name allergy, C.cate_id step
+        A.description description, D.allergy_id allergy, C.cate_id step
         from product A
         left JOIN product_category_relation B
         ON A.product_id = B.product_id
         left JOIN category C
         ON C.cate_id = B.cate_id
-        left JOIN allergy D
+        left JOIN product_allergy D
         ON A.allergy = D.allergy_id
         WHERE A.product_id = #{productId};
     </select>
 
     <select id="selProductImg">
-        SELECT A.product_id, B.img
-        FROM product A
-        inner JOIN product_img B ON A.product_id = B.product_id
-        WHERE A.product_id = #{productId}
-    </select>
-
-    <select id="selProductthumbnail">
-        SELECT A.product_id, B.thumbnail thumbnail
+        SELECT A.product_id, B.img img
         FROM product A
         LEFT JOIN product_img B
         ON A.product_id = B.product_id
-        where A.product_id = #{productId}
+        WHERE A.product_id = #{productId} AND B.img != null
+    </select>
+
+    <select id="selProductthumbnail">
+        SELECT A.product_id, B.thumbnail img
+        FROM product A
+        LEFT JOIN product_img B
+        ON A.product_id = B.product_id
+        where A.product_id = #{productId} AND B.thumbnail != null
     </select>
 
 

@@ -1,11 +1,13 @@
 package com.green.babyfood.product.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Builder
 public class ProductSelDto {
     String title;
     String name;
@@ -14,6 +16,6 @@ public class ProductSelDto {
     String description;
     String allergy;
     int step;
-    List<String> img =new ArrayList<>();
-    List<String> thumbnail =new ArrayList<>();
+    List<ProductImgDto> img;
+    List<ProductImgDto> thumbnail;
 }
