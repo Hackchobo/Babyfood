@@ -22,7 +22,7 @@
     </select>
 
     <select id="OrderlistDetail">
-        SELECT B.product_id productId,D.thumbnail thumbnail, C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice
+        SELECT B.product_id productId,D.thumbnail thumbnail, C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice, DATE(A.created_at) createdAt
         FROM order_list A
         INNER JOIN order_detail B
         ON A.order_id = B.order_id

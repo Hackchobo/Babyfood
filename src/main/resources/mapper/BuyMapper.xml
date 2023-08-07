@@ -9,7 +9,7 @@
         SET iuser = #{iuser},
         payment = #{payment},
         shipment = #{shipment},
-        call_user = #{callUser},
+        call_user = #{phoneNm},
         request = #{request},
         reciever = #{receiver},
         address = #{address},
@@ -50,6 +50,10 @@
         SET POINT = POINT - #{point}
         WHERE iuser = #{iuser}
     </update>
+    
+    <select id="selorderId">
+        SELECT MAX(order_id) orderID FROM order_list
+    </select>
     
     <select id="selorderproduct">
         SELECT B.product_id productId,D.thumbnail thumbnail, C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice

@@ -8,7 +8,7 @@ public class BuyInsDto {
     private Long iuser;
     private int payment;
     private int shipment;
-    private String callUser;
+    private String phoneNm;
     private String request;
     private String receiver;
     private String address;
