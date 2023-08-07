@@ -12,7 +12,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.twitter.penguin.korean.TwitterKoreanProcessorJava;
+import com.twitter.penguin.korean.phrase_extractor.KoreanPhraseExtractor;
+import com.twitter.penguin.korean.tokenizer.KoreanTokenizer;
+import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
+import scala.collection.Seq;
 
 
 import java.util.List;
