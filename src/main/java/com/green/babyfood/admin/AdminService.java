@@ -36,7 +36,7 @@ public class AdminService {
         return pkVo.getProductId();
     }
 
-    public int insWebEditorImg(MultipartFile img, Long productId) {
+    public Long insWebEditorImg(MultipartFile img, Long productId) {
 
         String path = getAbsolutePath(fileDir) + "/webeditor/" + productId;
         File file = new File(path);
@@ -51,16 +51,22 @@ public class AdminService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return mapper.insWebEditorImg(productId, randomName);
+        AdminProductImgDto dto=new AdminProductImgDto();
+        dto.setProductId(productId);
+        dto.setRandomName(randomName);
+
+        mapper.insWebEditorImg(dto);
+       return dto.getPImgId();
     }
 
-    public int insWebEditorImgList(List<MultipartFile> img, Long productId) {
+
+    public List insWebEditorImgList(List<MultipartFile> img, Long productId) {
         String path = getAbsolutePath(fileDir) + "/webeditor/" + productId;
         File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
         }
-        List list = new ArrayList();
+        List<Long> list = new ArrayList();
         for (MultipartFile imgfile : img) {
             String randomName = FileUtils.makeRandomFileNm(imgfile.getOriginalFilename());
             String fileUpload = path + "/" + randomName;
@@ -70,12 +76,16 @@ public class AdminService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            list.add(randomName);
+            AdminProductImgDto dto=new AdminProductImgDto();
+            dto.setProductId(productId);
+            dto.setRandomName(randomName);
+            mapper.insWebEditorImgList(dto);
+            list.add(dto.getPImgId());
         }
-        return mapper.insWebEditorImgList(list, productId);
+        return list;
 
     }
+
 
     public int updProduct(AdminProductUpdDto dto) {
         // 최종 상품 등록할때 사용되는 메소드
@@ -134,6 +144,15 @@ public class AdminService {
         AdminProductUpdDto adminProductUpdDto = mapper.updProductInfo(productId); // 상품 정보 획득
         adminProductUpdDto.setCateDetail(cateDetailList); // 카테고리 정보를 AdminProductUpdDto에 설정
         return adminProductUpdDto;
+    }
+
+    public int delWebEditorCancel(Long pImgId){
+        ProductImgPk productImgPk = mapper.selProductImgPk(pImgId);
+        System.out.println(productImgPk.getImg());
+        String path = getAbsolutePath(fileDir) + "/webeditor/" + productImgPk.getProductId()+"/"+productImgPk.getImg();
+        File file=new File(path);
+        file.delete();
+        return mapper.delWebEditorCancel(pImgId);
     }
 }
 

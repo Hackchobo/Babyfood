@@ -59,16 +59,19 @@ public class AdminController {
         return service.insPk(pkVo);
     }
 
+
     @PostMapping(value = "/img",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "웹에디터 이미지 넣기")
-    public int insWebEditorImg(@RequestPart MultipartFile img, @RequestParam Long productId){
+    @Operation(summary = "웹에디터 이미지 넣기",description = ""+
+            "Response 로 pk값")
+    public Long insWebEditorImg(@RequestPart MultipartFile img, @RequestParam Long productId){
         return service.insWebEditorImg(img,productId);
     }
 
 
     @PostMapping(value = "/imglist",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "웹에디터 이미지리스트로 넣기")
-    public int insWebEditorImgList(@RequestPart List<MultipartFile> img, @RequestParam Long productId){
+    @Operation(summary = "웹에디터 이미지리스트로 넣기",description = ""+
+    "Response 로 pk값")
+    public List insWebEditorImgList(@RequestPart List<MultipartFile> img, @RequestParam Long productId){
         return service.insWebEditorImgList(img,productId);
     }
 
@@ -92,9 +95,15 @@ public class AdminController {
     }
 
 
-    @DeleteMapping
+    @DeleteMapping("/product/cancel")
     @Operation(summary = "웹에디터에서 취소를 하면 테이블에서 이미지 데이터와 빈값의 상품테이블 데이터를 삭제")
     public int delProductImg(@RequestParam Long product){
         return service.delProductImg(product);
+    }
+
+    @DeleteMapping("/webeditor/cancel")
+    @Operation(summary = "웹에디터 등록하기전 이미지 삭제")
+    public int delProductWebImg(@RequestParam Long pImgId){
+        return service.delWebEditorCancel(pImgId);
     }
 }
