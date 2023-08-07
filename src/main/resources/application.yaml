@@ -19,7 +19,7 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: 192.168.0.144
       port: 6379
 
 # mybatis config
@@ -34,7 +34,7 @@ springdoc:
 
 
 file:
-  dir: /home/download
+  dir: /home/download/babyfood
 
 
 
@@ -51,3 +51,18 @@ spring:
       mode: always
       schema-locations: classpath:init/schema.sql
       data-locations: classpath:init/data.sql
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+  data:
+    redis:
+      host: 192.168.0.144
+  datasource:
+    url: jdbc:mariadb://192.168.0.144:3306/team_a
+file:
+  dir: /home/download/babyfood
+server:
+  port: 8080

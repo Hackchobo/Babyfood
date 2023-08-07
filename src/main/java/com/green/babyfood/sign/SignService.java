@@ -71,7 +71,7 @@ public class SignService {
         log.info("[getSignInResult] 패스워드 일치");
 
         // RT가 이미 있을 경우
-        String redisKey = String.format("RT(%s):%s:%s", "Server", user.getIuser(), ip);
+        String redisKey = String.format("a:RT(%s):%s:%s", "Server", user.getIuser(), ip);
         if(REDIS_SERVICE.getValues(redisKey) != null) {
             REDIS_SERVICE.deleteValues(redisKey); // 삭제
         }
@@ -117,7 +117,7 @@ public class SignService {
         String ip = req.getRemoteAddr();
 
         // Redis에 저장되어 있는 RT 삭제
-        String redisKey = String.format("RT(%s):%s:%s", "Server", iuser, ip);
+        String redisKey = String.format("a:RT(%s):%s:%s", "Server", iuser, ip);
         String refreshTokenInRedis = REDIS_SERVICE.getValues(redisKey);
         if (refreshTokenInRedis != null) {
             REDIS_SERVICE.deleteValues(redisKey);
@@ -153,7 +153,7 @@ public class SignService {
         String strIuser = claims.getSubject();
         Long iuser = Long.valueOf(strIuser);
 
-        String redisKey = String.format("RT(%s):%s:%s", "Server", iuser, ip);
+        String redisKey = String.format("a:RT(%s):%s:%s", "Server", iuser, ip);
         String value = REDIS_SERVICE.getValues(redisKey);
         if (value == null) { // Redis에 저장되어 있는 RT가 없을 경우
             return null; // -> 재로그인 요청
