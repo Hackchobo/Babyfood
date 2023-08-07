@@ -1,6 +1,7 @@
 package com.green.babyfood.admin;
 
 import com.green.babyfood.admin.model.*;
+import com.green.babyfood.user.model.CreatePicDto;
 import com.green.babyfood.util.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -84,6 +85,24 @@ public class AdminService {
             return 0;
         }
         // 상품 썸네일 등록
+        String path = getAbsolutePath(fileDir) + "/webeditor/" + dto.getProductId();
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        List list = new ArrayList();
+        for (MultipartFile imgfile : thumbnail) {
+            String randomName = FileUtils.makeRandomFileNm(imgfile.getOriginalFilename());
+            String fileUpload = path + "/" + randomName;
+            File file1 = new File(fileUpload);
+            try {
+                imgfile.transferTo(file1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            list.add(randomName);
+        }
         mapper.insThumbnail(thumbnail);
         // 상품 정보 등록
         return mapper.updAdminProduct(dto);
@@ -136,6 +155,39 @@ public class AdminService {
         AdminProductUpdDto adminProductUpdDto = mapper.updProductInfo(productId); // 상품 정보 획득
         adminProductUpdDto.setCateDetail(cateDetailList); // 카테고리 정보를 AdminProductUpdDto에 설정
         return adminProductUpdDto;
+    }
+
+
+    public int updPicTest(MultipartFile pic, CreatePicDto dto) {
+        String centerPath = String.format("%s/user/%d", FileUtils.getAbsolutePath(fileDir),dto.getIuser());
+
+        File dic = new File(centerPath);
+        if(!dic.exists()){
+            dic.mkdirs();
+        }
+
+        String originFileName = pic.getOriginalFilename();
+        String savedFileName = FileUtils.makeRandomFileNm(originFileName);
+        String savedFilePath = String.format("%s/%s",centerPath, savedFileName);
+
+        File target = new File(savedFilePath);
+        try {
+            pic.transferTo(target);
+        }catch (Exception e) {
+            return 0;
+        }
+        dto.setImage(savedFileName);
+        try {
+            int result = mapper.updPicTest(dto);
+            if(result == 0) {
+                throw new Exception("사진을 등록할 수 없습니다.");
+            }
+        } catch (Exception e) {
+            //파일 삭제
+            target.delete();
+            return 0;
+        }
+        return 1;
     }
 }
 

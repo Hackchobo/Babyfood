@@ -1,6 +1,7 @@
 package com.green.babyfood.admin;
 
 import com.green.babyfood.admin.model.*;
+import com.green.babyfood.user.model.CreatePicDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
@@ -72,7 +73,7 @@ public class AdminController {
         return service.insWebEditorImgList(img,productId);
     }
 
-    @PostMapping("/product/list")
+    @PostMapping(value = "/product/list", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "최종상품등록할때 저장하는 메소드")
     public int insProduct(@RequestBody AdminProductUpdDto dto, @RequestPart List<MultipartFile> thumbnail){
         return service.updProduct(dto, thumbnail);
@@ -97,4 +98,17 @@ public class AdminController {
     public int delProductImg(@RequestParam Long product){
         return service.delProductImg(product);
     }
+
+    // 테스트용 사진등록 메소드
+    @PostMapping(value = "/imgtest",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "테스트용 사진등록",description =
+            "<br>"
+    )
+    public int postPic(@RequestPart MultipartFile pic, @RequestParam Long iuser){
+        CreatePicDto dto = new CreatePicDto();
+        dto.setIuser(iuser);
+        return service.updPicTest(pic, dto);
+    }
+
+
 }

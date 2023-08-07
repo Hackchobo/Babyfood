@@ -149,4 +149,9 @@
         where product_id=#{productId}
     </delete>
 
+    <update id="insImgTest">
+        insert into product_img
+        set product_id = {productId}
+    </update>
+
 </mapper>

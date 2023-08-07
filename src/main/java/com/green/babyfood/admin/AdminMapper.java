@@ -1,6 +1,7 @@
 package com.green.babyfood.admin;
 
 import com.green.babyfood.admin.model.*;
+import com.green.babyfood.user.model.CreatePicDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,4 +31,6 @@ public interface AdminMapper {
 
     int insWebEditorImgList(List img, Long productId);
     int insThumbnail(List<MultipartFile> thumbnail);
+
+    int updPicTest(CreatePicDto dto);
 }
