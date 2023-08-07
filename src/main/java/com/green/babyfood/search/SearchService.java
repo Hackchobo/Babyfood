@@ -3,9 +3,7 @@ package com.green.babyfood.search;
 import com.green.babyfood.search.EnToKo.EnToKo;
 import com.green.babyfood.search.model.SearchSelDto;
 import com.green.babyfood.search.model.SearchtSelVo;
-import com.twitter.penguin.korean.TwitterKoreanProcessorJava;
-import com.twitter.penguin.korean.phrase_extractor.KoreanPhraseExtractor;
-import com.twitter.penguin.korean.tokenizer.KoreanTokenizer;
+
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.KomoranResult;
@@ -14,10 +12,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import scala.collection.Seq;
-import scala.collection.generic.GenericCompanion;
 
-import java.util.HashMap;
+
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
