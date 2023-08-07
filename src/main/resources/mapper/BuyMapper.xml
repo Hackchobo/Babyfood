@@ -73,5 +73,12 @@
         WHERE order_id = #{orderId};
     </select>
 
+    <select id="point">
+        SELECT point
+        FROM user
+        WHERE iuser = #{iuser};
+
+    </select>
+
 
 </mapper>

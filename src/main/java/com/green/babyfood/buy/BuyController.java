@@ -1,9 +1,7 @@
 package com.green.babyfood.buy;
 
+import com.green.babyfood.buy.model.*;
 import com.green.babyfood.buy.model.BuyEntity;
-import com.green.babyfood.buy.model.BuyEntity;
-import com.green.babyfood.buy.model.BuySelOrderDto;
-import com.green.babyfood.buy.model.BuySelOrderlistDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -31,13 +29,11 @@ public class BuyController {
     public Long BuyProduct(@RequestBody BuyEntity entity){
         return SERVICE.BuyProduct(entity);
     }
-
-
-    @GetMapping("/orderlist")
-    @Operation(summary = "상품조회",description = ""+
-            "orderId : 상품 PK 번호<br>" +
-            "1~4까지 있음!")
-    public BuySelOrderlistDto GetBuyProduct(int orderId){
-        return SERVICE.selorderproduct(orderId);
+    @GetMapping("/point")
+    public BuyPoint GetPoint(@RequestParam Long iuser){
+        return SERVICE.point(iuser);
     }
+
+
+
 }

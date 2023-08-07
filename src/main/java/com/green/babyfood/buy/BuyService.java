@@ -22,6 +22,7 @@ public class BuyService {
     public Long BuyProduct(BuyEntity entity){
 
         final int shipment = 1;
+        final float earnedPercent = 0.03F;
 
         // 결제할때 orderID 를 2023080400001
 
@@ -41,10 +42,13 @@ public class BuyService {
 
         if (result == 1){
             BuyPointUpdDto addpoint = new BuyPointUpdDto();
-            BuyPointUpdDto remove = new BuyPointUpdDto();
-            remove.setIuser(entity.getIuser());
-            remove.setPoint(entity.getPoint());
-            int point = 0;
+            BuyPointUpdDto updpoint = new BuyPointUpdDto();
+            updpoint.setIuser(entity.getIuser());
+            updpoint.setPoint(entity.getPoint());
+            System.out.println(entity.getPoint());
+
+
+            float point = 0;
 
             for (int i = 0; i <entity.getOrderbasket().size(); i++) {
 
@@ -64,13 +68,15 @@ public class BuyService {
                 Mapper.delOrderbasket(entity.getOrderbasket().get(i).getCartId());
 
 
-                point += (entity.getOrderbasket().get(i).getTotalprice() / 5 );
+                point += (entity.getOrderbasket().get(i).getTotalprice() * earnedPercent );
+
+                System.out.println("point: " + point);
             }
             addpoint.setIuser(entity.getIuser());
             addpoint.setPoint(point);
 
-            Mapper.addpoint(remove);
-            Mapper.removepoint(addpoint);
+            Mapper.addpoint(addpoint);
+            Mapper.removepoint(updpoint);
 
         }else
             return 0L;
@@ -78,32 +84,9 @@ public class BuyService {
         return dto.getOrderId();
     }
 
-    public BuySelOrderlistDto selorderproduct(int orderId){
-
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyyMMdd");
-        Date date = new Date(System.currentTimeMillis());
-        String format = formatter.format(date);
-
-
-        log.info("formatter : {}",formatter.format(date));
-
-        BuySelorderIdDto buySelorderIdDto = Mapper.selorderId();
-        String selorderId = buySelorderIdDto.getOrderId();
-        String substring = selorderId.substring(8,12);
-        String str = format + substring;
-
-        Long result = (long) Integer.parseInt(str);
-
-        Long orderId2 = result +1;
-
-        System.out.println(orderId2);
-
-
-        List<BuySelOrderDto> product = Mapper.selorderproduct(orderId);
-        BuySelUserDto user = Mapper.selorder(orderId);
-
-        BuySelOrderlistDto build = BuySelOrderlistDto.builder().user(user).order(product).build();
-
-        return build;
+    public BuyPoint point(Long iuser){
+        return Mapper.point(iuser);
     }
+
+
 }

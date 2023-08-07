@@ -84,7 +84,6 @@ public class SearchService {
                 .append(mackerel+",").append(shellfish+",").append(peach+",").append(tomato+",").append(chicken+",").append(pork+",")
                 .append(beef+",").append(sulfur_dioxide+",").append(fish+",");
         String strallergy = String.valueOf(allergy);
-        System.out.println(strallergy);
         String[] split = strallergy.split(",");
         String plus="";
         for (String s : split) {
@@ -117,13 +116,27 @@ public class SearchService {
         }
 
 
+
         CharSequence normalized = TwitterKoreanProcessorJava.normalize(msg);
 
         // Tokenize
         Seq<KoreanTokenizer.KoreanToken> tokens = TwitterKoreanProcessorJava.tokenize(normalized);
-        List<String> text = TwitterKoreanProcessorJava.tokensToJavaStringList(tokens);
+        //List<String> text = TwitterKoreanProcessorJava.tokensToJavaStringList(tokens);
 
-        dto.setMsg(text.toString());
+        Seq<KoreanTokenizer.KoreanToken> stemmed = TwitterKoreanProcessorJava.stem(tokens);
+        List<String> text = TwitterKoreanProcessorJava.tokensToJavaStringList(stemmed);
+
+        StringBuffer sb = new StringBuffer();
+
+        if ( text.size() > 0){
+            for (int i = 0; i <text.size()-1; i++) {
+                sb.append(text.get(i)).append("|");
+            }
+        }
+        sb.append(text.get(text.size()-1));
+
+        log.info("text : {}  ", sb);
+        dto.setMsg(String.valueOf(sb));
 
 
         List<SearchtSelVo> productDtos = mapper.selfilter(dto);
