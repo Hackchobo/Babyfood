@@ -25,7 +25,10 @@ public class BuyController {
             "payment : 결제방법 <br>"+
             "무통장입금(0)/카드(1)/계좌이체(2) <br>"+
             "request: 요청사항 <br>"+
-            "receiver: 수령인 <br>")
+            "receiver: 수령인 <br>"+
+            " 제품의 수량이 없을때 return 0 <br>"+
+            " 결제가 완료 되면 주문내역의 PK 값을 return 시켜줌<br>"
+    )
     public Long BuyProduct(@RequestBody BuyEntity entity){
         return SERVICE.BuyProduct(entity);
     }

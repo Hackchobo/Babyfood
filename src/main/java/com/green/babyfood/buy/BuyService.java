@@ -1,15 +1,9 @@
 package com.green.babyfood.buy;
 
 import com.green.babyfood.buy.model.*;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.substring;
 
@@ -38,17 +32,25 @@ public class BuyService {
         dto.setAddress(entity.getAddress());
         dto.setAddressDetail(entity.getAddressDetail());
 
+        //제품의 수량이 0개이하이면 return 0
+        for (int i = 0; i <entity.getOrderbasket().size(); i++) {
+            BuySelquantityDto quantity = Mapper.quantity(entity.getOrderbasket().get(i).getProductId());
+            if (quantity.getQuantity() < 1){
+                return 0L;
+            }
+        }
+
         int result = Mapper.InsBuy(dto);
 
         if (result == 1){
-            BuyPointUpdDto addpoint = new BuyPointUpdDto();
-            BuyPointUpdDto updpoint = new BuyPointUpdDto();
+            BuyUpdPointDto addpoint = new BuyUpdPointDto();
+            BuyUpdPointDto updpoint = new BuyUpdPointDto();
             updpoint.setIuser(entity.getIuser());
             updpoint.setPoint(entity.getPoint());
             System.out.println(entity.getPoint());
 
 
-            float point = 0;
+            int point = 0;
 
             for (int i = 0; i <entity.getOrderbasket().size(); i++) {
 
@@ -79,7 +81,7 @@ public class BuyService {
             Mapper.removepoint(updpoint);
 
         }else
-            return 0L;
+            return -1L;
 
         return dto.getOrderId();
     }
