@@ -3,6 +3,9 @@ package com.green.babyfood.search;
 import com.green.babyfood.search.EnToKo.EnToKo;
 import com.green.babyfood.search.model.SearchSelDto;
 import com.green.babyfood.search.model.SearchtSelVo;
+import com.twitter.penguin.korean.TwitterKoreanProcessorJava;
+import com.twitter.penguin.korean.phrase_extractor.KoreanPhraseExtractor;
+import com.twitter.penguin.korean.tokenizer.KoreanTokenizer;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.KomoranResult;
@@ -11,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import scala.collection.Seq;
+import scala.collection.generic.GenericCompanion;
 
 import java.util.HashMap;
 import java.util.List;
@@ -110,24 +115,30 @@ public class SearchService {
             msg = typoText;
         }
 
-        Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
-        KomoranResult analyzeResultList = komoran.analyze(msg);
 
-        List<Token> tokenList = analyzeResultList.getTokenList();
+
+        CharSequence normalized = TwitterKoreanProcessorJava.normalize(msg);
+
+        // Tokenize
+        Seq<KoreanTokenizer.KoreanToken> tokens = TwitterKoreanProcessorJava.tokenize(normalized);
+        //List<String> text = TwitterKoreanProcessorJava.tokensToJavaStringList(tokens);
+
+        Seq<KoreanTokenizer.KoreanToken> stemmed = TwitterKoreanProcessorJava.stem(tokens);
+        List<String> text = TwitterKoreanProcessorJava.tokensToJavaStringList(stemmed);
 
         StringBuffer sb = new StringBuffer();
 
-
-        if (tokenList.size()!=1) {
-            for (int i = 0; i < tokenList.size() - 1; i++) {
-                sb.append(tokenList.get(i).getMorph() + "|");
+        if ( text.size() > 0){
+            for (int i = 0; i <text.size()-1; i++) {
+                sb.append(text.get(i)).append("|");
             }
         }
-        StringBuffer append = sb.append(tokenList.get(tokenList.size() - 1).getMorph());
-        String str = String.valueOf(append);
+        sb.append(text.get(text.size()-1));
 
-        log.info("str: {}", str);
-        dto.setMsg(str);
+        log.info("text : {}  ", sb);
+        dto.setMsg(String.valueOf(sb));
+
+
         List<SearchtSelVo> productDtos = mapper.selfilter(dto);
 
         return productDtos;
