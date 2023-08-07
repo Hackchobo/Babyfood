@@ -1,6 +1,7 @@
 package com.green.babyfood.admin;
 
 import com.green.babyfood.admin.model.*;
+import com.green.babyfood.user.model.CreatePicDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
@@ -59,28 +60,23 @@ public class AdminController {
         return service.insPk(pkVo);
     }
 
-
     @PostMapping(value = "/img",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "웹에디터 이미지 넣기",description = ""+
-    "img : 이미지 풀 경로<br>"+
-    "pimgId : 웹에디터 이미지의 pk값")
-    public ProductImgPkFull insWebEditorImg(@RequestPart MultipartFile img, @RequestParam Long productId){
+    @Operation(summary = "웹에디터 이미지 넣기")
+    public int insWebEditorImg(@RequestPart MultipartFile img, @RequestParam Long productId){
         return service.insWebEditorImg(img,productId);
     }
 
 
     @PostMapping(value = "/imglist",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "웹에디터 이미지리스트로 넣기",description = ""+
-    "img : 이미지 풀 경로<br>"+
-    "pimgId : 웹에디터 이미지의 pk값")
-    public List<ProductImgPkFull> insWebEditorImgList(@RequestPart List<MultipartFile> img, @RequestParam Long productId){
+    @Operation(summary = "웹에디터 이미지리스트로 넣기")
+    public int insWebEditorImgList(@RequestPart List<MultipartFile> img, @RequestParam Long productId){
         return service.insWebEditorImgList(img,productId);
     }
 
-    @PatchMapping
+    @PostMapping(value = "/product/list", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "최종상품등록할때 저장하는 메소드")
-    public int insProduct(@RequestBody AdminProductUpdDto dto){
-        return service.updProduct(dto);
+    public int insProduct(@RequestBody AdminProductUpdDto dto, @RequestPart List<MultipartFile> thumbnail){
+        return service.updProduct(dto, thumbnail);
     }
 
     @GetMapping("/product/upd/get")
@@ -97,15 +93,20 @@ public class AdminController {
     }
 
 
-    @DeleteMapping("/product/cancel")
+    @DeleteMapping
     @Operation(summary = "웹에디터에서 취소를 하면 테이블에서 이미지 데이터와 빈값의 상품테이블 데이터를 삭제")
     public int delProductImg(@RequestParam Long product){
         return service.delProductImg(product);
     }
 
-    @DeleteMapping("/webeditor/cancel")
-    @Operation(summary = "웹에디터 등록하기전 이미지 삭제")
-    public int delProductWebImg(@RequestParam Long pImgId){
-        return service.delWebEditorCancel(pImgId);
+    // 테스트용 사진등록 메소드
+    @PostMapping(value = "/imgtest",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "테스트용 사진등록",description =
+            "<br>"
+    )
+    public int postPic(@RequestPart MultipartFile pic, @RequestParam Long productId){
+        CreatePicProduct dto = new CreatePicProduct();
+        dto.setProductId(productId);
+        return service.updPicTest(pic, dto);
     }
 }

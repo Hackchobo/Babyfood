@@ -22,9 +22,12 @@
     </select>
 
     <select id="getProduct">
-        select p_title title, p_name name, p_price price, p_quantity quantity, description
-        from product
-        where product_iD = #{productId}
+        SELECT A.p_title title, A.p_name name, A.p_price price, A.p_quantity quantity, A.description,
+        B.img, B.thumbnail
+        from product A
+        INNER JOIN product_img B
+        ON A.product_id = B.product_id
+        WHERE A.product_id = #{product_ID};
     </select>
 
     <update id="updAdminProduct">
@@ -38,6 +41,15 @@
         , allergy = #{allergy}
         , created_at = current_timestamp()
         where product_id = #{productId}
+    </update>
+
+    <update id="insThumbnail">
+        insert into product_img
+        (product_id,img)
+        values
+        <foreach collection="img" item="item" separator=",">
+            (#{productId},#{item})
+        </foreach>
     </update>
 
     <update id="changeAdminProduct">
@@ -89,9 +101,6 @@
 
 
 
-
-
-
     <insert id="insPk" useGeneratedKeys="true" keyProperty="productId">
         insert into product
         (p_title,p_name,p_price,p_quantity,description,created_at,updated_at)
@@ -100,19 +109,20 @@
     </insert>
 
 
-    <insert id="insWebEditorImg" useGeneratedKeys="true"  keyProperty="pImgId">
+    <insert id="insWebEditorImg">
         insert into product_img
         (product_id,img)
         values
-        (#{productId},#{randomName})
+        (#{productId},#{img})
     </insert>
 
-    <insert id="insWebEditorImgList" useGeneratedKeys="true" keyProperty="pImgId">
+    <insert id="insWebEditorImgList">
         insert into product_img
         (product_id,img)
         values
-            (#{productId},#{randomName})
-
+        <foreach collection="img" item="item" separator=",">
+            (#{productId},#{item})
+        </foreach>
     </insert>
 
     <update id="updProduct">
@@ -139,17 +149,16 @@
         where product_id=#{productId}
     </delete>
 
+    <update id="insImgTest">
+        insert into product_img
+        set product_id = #{productId}
+    </update>
 
-    <delete id="delWebEditorCancel">
-        delete from product_img
-        where p_img_id=#{pImgId}
-    </delete>
+    <insert id="updPicTest">
+        insert into product_img
+        set img = #{img},
+        product_id = #{productId}
+    </insert>
 
-
-    <select id="selProductImgPk">
-        select product_id productId,img
-        from product_img
-        where p_img_id=#{pImgId}
-    </select>
 
 </mapper>

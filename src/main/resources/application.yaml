@@ -45,7 +45,7 @@ spring:
     activate:
       on-profile: test
   datasource:
-    url: jdbc:mariadb://192.168.0.144:3306/babyfood
+    url: jdbc:mariadb://192.168.0.144:3306
   sql:
     init:
       mode: always
@@ -63,6 +63,6 @@ spring:
   datasource:
     url: jdbc:mariadb://192.168.0.144:3306/team_a
 file:
-  dir: /home/download/babyfood
+  dir: /home/download
 server:
   port: 8080
