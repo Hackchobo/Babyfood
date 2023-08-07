@@ -36,7 +36,7 @@ public class AdminService {
         return pkVo.getProductId();
     }
 
-    public Long insWebEditorImg(MultipartFile img, Long productId) {
+    public ProductImgPkFull insWebEditorImg(MultipartFile img, Long productId) {
 
         String path = getAbsolutePath(fileDir) + "/webeditor/" + productId;
         File file = new File(path);
@@ -56,17 +56,21 @@ public class AdminService {
         dto.setRandomName(randomName);
 
         mapper.insWebEditorImg(dto);
-       return dto.getPImgId();
+        ProductImgPkFull full=new ProductImgPkFull();
+        full.setPImgId(dto.getPImgId());
+        String fullPath="192.168.0.144:5001/img/webeditor/"+productId+"/"+randomName;
+        full.setImg(fullPath);
+       return full;
     }
 
 
-    public List insWebEditorImgList(List<MultipartFile> img, Long productId) {
+    public List<ProductImgPkFull> insWebEditorImgList(List<MultipartFile> img, Long productId) {
         String path = getAbsolutePath(fileDir) + "/webeditor/" + productId;
         File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
         }
-        List<Long> list = new ArrayList();
+        List<ProductImgPkFull> list = new ArrayList();
         for (MultipartFile imgfile : img) {
             String randomName = FileUtils.makeRandomFileNm(imgfile.getOriginalFilename());
             String fileUpload = path + "/" + randomName;
@@ -80,7 +84,11 @@ public class AdminService {
             dto.setProductId(productId);
             dto.setRandomName(randomName);
             mapper.insWebEditorImgList(dto);
-            list.add(dto.getPImgId());
+            ProductImgPkFull full=new ProductImgPkFull();
+            full.setPImgId(dto.getPImgId());
+            String fullPath="192.168.0.144:5001/img/webeditor/"+productId+"/"+randomName;
+            full.setImg(fullPath);
+            list.add(full);
         }
         return list;
 
