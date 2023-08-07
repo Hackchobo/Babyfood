@@ -16,6 +16,8 @@ public interface BuyMapper {
     int addpoint(BuyPointUpdDto dto);
     int removepoint(BuyPointUpdDto dto);
 
+    BuySelorderIdDto selorderId();
+
     List<BuySelOrderDto> selorderproduct(int orderId);
     BuySelUserDto selorder(int orderId);
 

@@ -6,8 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static org.apache.commons.lang3.StringUtils.substring;
 
 @Slf4j
 @Service
@@ -16,16 +20,23 @@ public class BuyService {
     private final BuyMapper Mapper;
 
     public Long BuyProduct(BuyEntity entity){
+
+        final int shipment = 1;
+
+        // 결제할때 orderID 를 2023080400001
+
         BuyInsDto dto = new BuyInsDto();
+
 
         dto.setIuser(entity.getIuser());
         dto.setPayment(entity.getPayment());
-        dto.setShipment(1);
-        dto.setCallUser(entity.getCalluser());
+        dto.setShipment(shipment);
+        dto.setPhoneNm(entity.getPhoneNm());
         dto.setRequest(entity.getRequest());
         dto.setReceiver(entity.getReceiver());
         dto.setAddress(entity.getAddress());
-        dto.setAddress(entity.getAddressDetail());
+        dto.setAddressDetail(entity.getAddressDetail());
+
         int result = Mapper.InsBuy(dto);
 
         if (result == 1){
@@ -68,6 +79,26 @@ public class BuyService {
     }
 
     public BuySelOrderlistDto selorderproduct(int orderId){
+
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyyMMdd");
+        Date date = new Date(System.currentTimeMillis());
+        String format = formatter.format(date);
+
+
+        log.info("formatter : {}",formatter.format(date));
+
+        BuySelorderIdDto buySelorderIdDto = Mapper.selorderId();
+        String selorderId = buySelorderIdDto.getOrderId();
+        String substring = selorderId.substring(8,12);
+        String str = format + substring;
+
+        Long result = (long) Integer.parseInt(str);
+
+        Long orderId2 = result +1;
+
+        System.out.println(orderId2);
+
+
         List<BuySelOrderDto> product = Mapper.selorderproduct(orderId);
         BuySelUserDto user = Mapper.selorder(orderId);
 

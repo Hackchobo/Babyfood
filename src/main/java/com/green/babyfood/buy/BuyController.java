@@ -25,7 +25,7 @@ public class BuyController {
             "totalPrice : 주문한 상품의 가격 <br>"+
             "point : 포인트 사용 금액 <br>"+
             "payment : 결제방법 <br>"+
-            "준비중(1)/배송중(2)/배송완료(0)/주문취소(3) <br>"+
+            "무통장입금(0)/카드(1)/계좌이체(2) <br>"+
             "request: 요청사항 <br>"+
             "receiver: 수령인 <br>")
     public Long BuyProduct(@RequestBody BuyEntity entity){

@@ -150,6 +150,14 @@
 			<version>1.4.7</version>
 		</dependency>
 
+		<!-- 트위터 api -->
+
+		<dependency>
+			<groupId>com.twitter.penguin</groupId>
+			<artifactId>korean-text</artifactId>
+			<version>4.4</version>
+		</dependency>
+
 
 
 		<dependency>
@@ -165,6 +173,8 @@
 			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
+
+
 
 	<build>
 		<plugins>
