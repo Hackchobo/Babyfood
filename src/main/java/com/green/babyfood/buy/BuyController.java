@@ -26,17 +26,17 @@ public class BuyController {
             "무통장입금(0)/카드(1)/계좌이체(2) <br>"+
             "request: 요청사항 <br>"+
             "receiver: 수령인 <br>"+
-            " 제품의 수량이 없을때 return 0 <br>"+
-            " 결제가 완료 되면 주문내역의 PK 값을 return 시켜줌<br>"
+            " 제품의 수량이 없거나 오류가 나면 return null <br>"+
+            " 결제가 완료 되면 주문내역의 PK 값과 사용자가 사용한 point 를 return 시켜줌<br>" +
+            "point: 포인트 사용금액<br>"+
+            "price: 구매한 상품들의 총 가격<br>"+
+            "orderId: 주문번호 PK<br>"
     )
-    public Long BuyProduct(@RequestBody BuyEntity entity){
+    public BuyProductRes BuyProduct(@RequestBody BuyEntity entity){
         return SERVICE.BuyProduct(entity);
     }
     @GetMapping("/point")
     public BuyPoint GetPoint(@RequestParam Long iuser){
         return SERVICE.point(iuser);
     }
-
-
-
 }
