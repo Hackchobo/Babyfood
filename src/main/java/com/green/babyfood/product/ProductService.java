@@ -32,15 +32,21 @@ public class ProductService {
 
         List<String> imgUrls = new ArrayList<>();
         for (String imgName : imgList) {
-            String imgUrl = createImageUrl(productId, imgName); // URL 생성
-            imgUrls.add(imgUrl);
+            if(imgName != null) {
+                String imgUrl = createImageUrl(productId, imgName); // URL 생성
+                imgUrls.add(imgUrl);
+            }
         }
+        imgList = imgUrls;
 
         List<String> thumbnailUrls = new ArrayList<>();
         for (String thumbnailName : thumbnailList) {
-            String thumbnailUrl = createImageUrl(productId, thumbnailName); //URL 생성
-            thumbnailUrls.add(thumbnailUrl);
+            if(thumbnailName != null) {
+                String thumbnailUrl = createImageUrl(productId, thumbnailName); //URL 생성
+                thumbnailUrls.add(thumbnailUrl);
+            }
         }
+        thumbnailList = thumbnailUrls;
         
         ProductSelDto dto = new ProductSelDto();
         dto.setImg(imgList);
@@ -50,10 +56,10 @@ public class ProductService {
         return dto;
     }
 
-    private String createImageUrl(int ProductId, String imgName) {
-        String path = getAbsolutePath(fileDir) + "/product/" + ProductId+ imgName;
-        log.info("테스트 : {}", getAbsolutePath(fileDir) + "/product/" + ProductId+ imgName);
-        return path + "/product/" + ProductId+ imgName;
+    private String createImageUrl(int productId, String imgName) {
+        String path = getAbsolutePath(fileDir) + "/product/" + productId +"/"+imgName;
+        log.info("테스트 : {}", getAbsolutePath(fileDir) + "/product/" + productId+"/"+ imgName);
+        return path;
     }
 
     public int postReview(ProductReviewDto dto){
