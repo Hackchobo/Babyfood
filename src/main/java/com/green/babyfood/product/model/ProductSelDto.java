@@ -5,7 +5,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Builder
 public class ProductSelDto {
     private String title;
     private String name;
@@ -14,6 +13,7 @@ public class ProductSelDto {
     private String description;
     private String allergy;
     private int step;
-    private List<ProductImgDto> img;
-    private List<ProductImgDto> thumbnail;
+    private List<String> img;
+    private List<String> thumbnail;
+//    private String thumbnail;
 }

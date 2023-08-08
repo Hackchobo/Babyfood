@@ -11,6 +11,8 @@ public interface ProductMapper {
     int postReview(ProductReviewDto dto);
     List<ReviewEntity> selReview(int productId);
 
-    List<ProductImgDto> selProductImg(int productId);
-    List<ProductImgDto> selProductthumbnail(int productId);
+    List<String> selProductImg(int productId);
+    List<String> selProductThumbnail(int productId);
+
+//    List<ProductImgDto> selProductthumbnail(int productId);
 }

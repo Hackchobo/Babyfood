@@ -17,18 +17,15 @@ public class ProductService {
 
     private final ProductMapper mapper;
 
-    public ProductSelDto selProduct(int productId){
-
-        List<ProductImgDto> productImgDto = mapper.selProductImg(productId);
-        List<ProductImgDto> productthumbnailDto = mapper.selProductthumbnail(productId);
+    public ProductSelDto selProduct(int productId) {
         log.info("테스트");
-        ProductSelDto dto = mapper.selProduct(productId);
-        ProductSelDto build = ProductSelDto.builder()
-                .allergy(dto.getAllergy()).price(dto.getPrice()).step(dto.getStep())
-                .name(dto.getName()).title(dto.getTitle())
-                .img(productImgDto).thumbnail(productthumbnailDto)
-                .quantity(dto.getQuantity()).build();
-        return build;
+
+        List<String> imgList = mapper.selProductImg(productId);
+        List<String> thumbnailList = mapper.selProductThumbnail(productId);
+        ProductSelDto dto=new ProductSelDto();
+        dto.setImg(imgList);
+        dto.setThumbnail(thumbnailList);
+        return dto;
     }
 
     public int postReview(ProductReviewDto dto){

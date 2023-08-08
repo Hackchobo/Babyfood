@@ -39,20 +39,20 @@ public class EmailController {
     }
 
 
-    @PostMapping("/send/Reservation")
-    @Operation(summary = "주1회 자동으로 메일 발송을 위해 메일 내용 작성",description = "매주 월요일 오전10시 자동발송 <br>"+
-            "title : 메일 제목<br>"+
-            "ctnt : 내용 <br>")
-    public void reservationMailPost(@RequestBody MailReservation dto){
-        reserveMail = dto;
-    }
-
-    //@Scheduled(cron = "1 0 15 ? * ?")
-    @Scheduled(cron = "0 6 * * * *") // 테스트용, 모든 시간의 n분마다 발송
-    @PostMapping("/send/Reservation/mail") // 주 1회 자동발송 메일
-    @Operation(summary = "주1회 자동으로 메일 발송")
-    public void cycleMail(){
-        service.cycleMail(reserveMail); // 미리 저장해둔 예약내용으로 발송
-    }
+//    @PostMapping("/send/Reservation")
+//    @Operation(summary = "주1회 자동으로 메일 발송을 위해 메일 내용 작성",description = "매주 월요일 오전10시 자동발송 <br>"+
+//            "title : 메일 제목<br>"+
+//            "ctnt : 내용 <br>")
+//    public void reservationMailPost(@RequestBody MailReservation dto){
+//        reserveMail = dto;
+//    }
+//
+////    //@Scheduled(cron = "1 0 15 ? * ?")
+////    @Scheduled(cron = "0 6 * * * *") // 테스트용, 모든 시간의 n분마다 발송
+////    @PostMapping("/send/Reservation/mail") // 주 1회 자동발송 메일
+////    @Operation(summary = "주1회 자동으로 메일 발송")
+////    public void cycleMail(){
+////        service.cycleMail(reserveMail); // 미리 저장해둔 예약내용으로 발송
+////    }
 
 }
