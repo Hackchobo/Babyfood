@@ -64,7 +64,7 @@ public class EmailService {
     public void cycleMail(MailReservation dto) {
         log.info("주1회 월요일 오전 10시 메일 자동 발송");
         MailSendDto dto1 = new MailSendDto();
-        dto1.setCtnt(dto.getCtnt());
+        dto1.setCtnt("111");
         dto1.setMailAddress(dto.getMailAddress());
         dto1.setTitle(dto.getTitle());
         send(dto1); // 메일 발송 메소드 호출
