@@ -11,7 +11,7 @@
     ON A.product_id=B.product_id
     LEFT JOIN product_allergy C
     ON A.product_id=C.product_id
-    where A.p_quantity!=0
+    where A.p_quantity!=0 AND A.is_delete=0
         <if test="strallergy!=''">
             and C.allergy_id not in(${strallergy})
         </if>
@@ -25,13 +25,13 @@
         FROM product A
         left join product_allergy B
         on A.product_id=B.product_id
-        where A.p_quantity!=0
+        where A.p_quantity!=0 AND A.is_delete=0
         <if test="strallergy!=''">
             and B.allergy_id not in(${strallergy})
         </if>
     </select>
 
-
+<!--
     <select id="random">
         select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
         from product A
@@ -41,6 +41,7 @@
         ORDER BY RAND()
         limit 5
     </select>
+-->
 
     <select id="bestSell">
         select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
@@ -49,7 +50,7 @@
         ON A.product_id=B.product_id
         LEFT JOIN product_allergy C
         ON A.product_id=C.product_id
-        where A.p_quantity!=0
+        where A.p_quantity!=0 and A.is_delete=0
         <if test="strallergy!=''">
             and C.allergy_id not in(${strallergy})
         </if>
@@ -66,7 +67,7 @@
         ON A.product_id=B.product_id
         LEFT JOIN product_allergy C
         ON A.product_id=C.product_id
-        where A.p_quantity!=0
+        where A.p_quantity!=0 and A.is_delete=0
         <if test="strallergy!=''">
             and C.allergy_id not in(${strallergy})
         </if>
@@ -83,7 +84,7 @@
         ON A.product_id=B.product_id
         LEFT JOIN product_allergy C
         ON A.product_id=C.product_id
-        where A.p_quantity!=0
+        where A.p_quantity!=0 and A.is_delete=0
         <if test="strallergy!=''">
             and C.allergy_id not in(${strallergy})
         </if>
@@ -96,7 +97,7 @@
         FROM user
         WHERE iuser=#{iuser};
     </select>
-
+<!--
     <select id="birthRecommend">
         select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
         from product A
@@ -120,7 +121,7 @@
         WHERE C.cate_id=#{cate}
         order by A.sale_volumn desc,rand()
     </select>
-
+-->
 
     <select id="birthRecommendFilter">
         select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
@@ -131,7 +132,7 @@
         ON A.product_id=C.product_id
         LEFT JOIN product_allergy D
         ON A.product_id=D.product_id
-        WHERE C.cate_id=#{cate} and A.p_quantity!=0
+        WHERE C.cate_id=#{cate} and A.p_quantity!=0 and A.is_delete=0
         <if test="strallergy!=''">
             and D.allergy_id not in(${strallergy})
         </if>
@@ -151,7 +152,7 @@
         LEFT JOIN product_allergy D
         ON A.product_id=D.product_id
 
-        WHERE C.cate_id=#{cate} and A.p_quantity!=0
+        WHERE C.cate_id=#{cate} and A.p_quantity!=0 and A.is_delete=0
         <if test="strallergy!=''">
         and !(D.allergy_id in(${strallergy}))
         </if>

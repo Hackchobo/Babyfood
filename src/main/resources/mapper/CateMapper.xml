@@ -14,7 +14,7 @@
         ON A.product_id=C.product_id
         LEFT JOIN product_allergy D
         ON A.product_id=D.product_id
-        WHERE A.cate_id=#{cateId} and C.p_quantity!=0 AND A.cate_detail_id=#{cateDetailId}
+        WHERE A.cate_id=#{cateId} and C.p_quantity!=0 AND A.cate_detail_id=#{cateDetailId} AND C.is_delete=0
         <if test="strallergy!=''">
            and D.allergy_id not in(${strallergy})
         </if>
@@ -29,7 +29,7 @@
         ON A.product_id=C.product_id
         LEFT JOIN product_allergy D
         ON A.product_id=D.product_id
-        WHERE A.cate_id=#{cateId} and C.p_quantity!=0 AND A.cate_detail_id=#{cateDetailId}
+        WHERE A.cate_id=#{cateId} and C.p_quantity!=0 AND A.cate_detail_id=#{cateDetailId} AND C.is_delete=0
         <if test="strallergy!=''">
             and D.allergy_id not in(${strallergy})
         </if>
