@@ -1,8 +1,10 @@
 package com.green.babyfood.mypage;
 
+import com.green.babyfood.config.security.PasswordEncoderConfiguration;
 import com.green.babyfood.mypage.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +16,11 @@ import java.util.List;
 @Slf4j
 public class MypageService {
     private final MypageMapper mapper;
+    private final PasswordEncoder PW_ENCODER;
 
     public  OrderlistSelDto[] Orderlist(OrderlistMonthsSelDto dto){
 
-        List<OrderlistCountSelDto> orderlist = mapper.Orderlist(dto);
+        List<OrderlistCountSelDto> orderlist = mapper.orderlist(dto);
 
         OrderlistSelDto[] orderlistSelDto = new OrderlistSelDto[orderlist.size()];
 
@@ -57,23 +60,34 @@ public class MypageService {
         return orderlistSelDto;
     }
 
-    public OrderlistSelUserDto OrderlistDetail(int orderId){
+    public OrderlistSelUserDto OrderlistDetail(Long orderId){
 
-        List<OrderlistDetailSelDto> orderlist = mapper.OrderlistDetail(orderId);
+        List<OrderlistDetailSelDto> orderlist = mapper.orderlistDetail(orderId);
         OrderlistUserDto user = mapper.selUser(orderId);
         OrderlistSelUserDto build = OrderlistSelUserDto.builder().orderlist(orderlist).user(user).build();
 
         return build;
     }
+    public int delorder(Long orderId){
 
-    ProfileSelDto profile(int iuser){
+        int delorder = 0;
+//        for (int num:orderId) {
+//             delorder = mapper.delorder(num);
+//        }
+
+
+         return mapper.delorder(orderId);
+    }
+
+    ProfileSelDto profile(Long iuser){
         ProfileSelDto profile = mapper.profile(iuser);
         return profile;
     }
 
     public int UpdProfileDto(ProfileUpdDto dto){
+        String encode = PW_ENCODER.encode(dto.getPassword());
+        dto.setPassword(encode);
 
-        log.info("입력한 닉네임:{}",dto.getNickNm());
         MypageNickNmDto selNickNmDto = mapper.SelNickNm(dto.getNickNm());
 
         if (!(selNickNmDto == null)){
@@ -83,8 +97,9 @@ public class MypageService {
         return mapper.Updprofile(dto);
     }
 
-    public int delUser(int iuser){
+    public int delUser(Long iuser){
         return mapper.delUser(iuser);
     }
+
 
 }

@@ -48,7 +48,8 @@
     <update id="removepoint">
         UPDATE user
         SET POINT = POINT - #{point}
-        WHERE iuser = #{iuser}
+        WHERE iuser = #{iuser} and
+        POINT - #{point} >= 0
     </update>
     
     <select id="selorderId">
@@ -78,6 +79,13 @@
         FROM user
         WHERE iuser = #{iuser};
 
+    </select>
+
+    <select id="quantity">
+
+        SELECT product_id productId, p_quantity quantity
+        FROM product
+        WHERE product_id  = #{productId};
     </select>
 
 
