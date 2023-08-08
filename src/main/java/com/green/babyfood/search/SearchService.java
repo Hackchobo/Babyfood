@@ -2,7 +2,8 @@ package com.green.babyfood.search;
 
 import com.green.babyfood.search.EnToKo.EnToKo;
 import com.green.babyfood.search.model.SearchSelDto;
-import com.green.babyfood.search.model.SearchtSelVo;
+import com.green.babyfood.search.model.SearchSelRes;
+import com.green.babyfood.search.model.SearchSelVo;
 
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
@@ -13,9 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.twitter.penguin.korean.TwitterKoreanProcessorJava;
-import com.twitter.penguin.korean.phrase_extractor.KoreanPhraseExtractor;
 import com.twitter.penguin.korean.tokenizer.KoreanTokenizer;
-import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import scala.collection.Seq;
 
 
@@ -29,10 +28,12 @@ import java.util.regex.Pattern;
 @Slf4j
 public class SearchService {
     private final SearchMapper mapper;
-    List<SearchtSelVo> selproduct(String product, int page, int row){
+
+    public SearchSelRes selproduct(String product, int page, int row){
         SearchSelDto dto = new SearchSelDto();
         dto.setPage(page);
         dto.setRow(row);
+        String allergy = "";
 
         int startIdx = (dto.getPage() - 1) * dto.getRow();
         dto.setStartIdx(startIdx);
@@ -50,32 +51,42 @@ public class SearchService {
             msg = typoText;
         }
 
-        Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
-        KomoranResult analyzeResultList = komoran.analyze(msg);
-        List<Token> tokenList = analyzeResultList.getTokenList();
+        CharSequence normalized = TwitterKoreanProcessorJava.normalize(msg);
+
+        // Tokenize
+        Seq<KoreanTokenizer.KoreanToken> tokens = TwitterKoreanProcessorJava.tokenize(normalized);
+
+        Seq<KoreanTokenizer.KoreanToken> stemmed = TwitterKoreanProcessorJava.stem(tokens);
+        List<String> text = TwitterKoreanProcessorJava.tokensToJavaStringList(stemmed);
 
         StringBuffer sb = new StringBuffer();
 
-
-        if (tokenList.size()!=1) {
-            for (int i = 0; i < tokenList.size() - 1; i++) {
-                sb.append(tokenList.get(i).getMorph() + "|");
+        if ( text.size() > 0){
+            for (int i = 0; i <text.size()-1; i++) {
+                sb.append(text.get(i)).append("|");
             }
         }
-        StringBuffer append = sb.append(tokenList.get(tokenList.size() - 1).getMorph());
-        String str = String.valueOf(append);
+        sb.append(text.get(text.size()-1));
 
-        log.info("str: {}", str);
-        dto.setMsg(str);
-        List<SearchtSelVo> productDtos = mapper.selproduct(dto);
+        dto.setMsg(String.valueOf(sb));
+        List<SearchSelVo> productDto = mapper.selproduct(dto);
 
-        return productDtos;
+        int num = mapper.maxpage(allergy);
+        int maxpage = (int) Math.ceil((double) num / row);
+
+
+
+        SearchSelRes res = new SearchSelRes();
+        res.setDto(productDto);
+        res.setMaxpage(maxpage);
+
+        return res;
     }
 
-    public List<SearchtSelVo>selfilter(String product,int page, int row, int sorter,
-                                       String egg, String milk, String buckwheat,String peanut, String soybean,String wheat
-            ,String pine_nut,String walnut,String crab,String shrimp,String squid,String mackerel,String shellfish,String peach
-            ,String tomato,String chicken,String pork,String beef,String sulfur_dioxide,String fish){
+    public SearchSelRes selfilter(String product, int page, int row, int sorter,
+                                      String egg, String milk, String buckwheat, String peanut, String soybean, String wheat
+            , String pine_nut, String walnut, String crab, String shrimp, String squid, String mackerel, String shellfish, String peach
+            , String tomato, String chicken, String pork, String beef, String sulfur_dioxide, String fish){
 
 
         StringBuffer allergy = new StringBuffer();
@@ -136,13 +147,19 @@ public class SearchService {
         }
         sb.append(text.get(text.size()-1));
 
-        log.info("text : {}  ", sb);
         dto.setMsg(String.valueOf(sb));
 
 
-        List<SearchtSelVo> productDtos = mapper.selfilter(dto);
+        List<SearchSelVo> productDto = mapper.selproduct(dto);
 
-        return productDtos;
+        int num = mapper.maxpage(String.valueOf(allergy));
+        int maxpage = (int) Math.ceil((double) num / row);
+
+        SearchSelRes res = new SearchSelRes();
+        res.setDto(productDto);
+        res.setMaxpage(maxpage);
+
+        return res;
 
     }
 }

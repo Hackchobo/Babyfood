@@ -79,7 +79,6 @@ public class BuyService {
 
             res.setPoint(entity.getPoint());
             res.setOrderId(dto.getOrderId());
-
             res.setTotalprice(totalprice);
             res.setPaymentprice(totalprice-entity.getPoint()); // 결제금액구하기
             int point = (int) (res.getPaymentprice() * earnedPercent);

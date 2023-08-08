@@ -28,8 +28,9 @@ public class BuyController {
             "receiver: 수령인 <br>"+
             " 제품의 수량이 없거나 오류가 나면 return null <br>"+
             " 결제가 완료 되면 주문내역의 PK 값과 사용자가 사용한 point 를 return 시켜줌<br>" +
+            "totalprice: 상품들의 총 가격"+
             "point: 포인트 사용금액<br>"+
-            "price: 구매한 상품들의 총 가격<br>"+
+            "paymentprice: 결제한 금액<br>"+
             "orderId: 주문번호 PK<br>"
     )
     public BuyProductRes BuyProduct(@RequestBody BuyEntity entity){

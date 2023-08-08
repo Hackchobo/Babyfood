@@ -51,5 +51,17 @@
 
     </select>
 
+    <select id="maxpage">
+        SELECT count(A.product_id)
+        FROM product A
+        left join product_allergy B
+        on A.product_id=B.product_id
+        where A.p_quantity!=0 AND A.is_delete=0
+        <if test="strallergy!=''">
+            and B.allergy_id not in(#{strallergy})
+        </if>
+
+    </select>
+
 
 </mapper>

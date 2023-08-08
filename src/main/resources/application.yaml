@@ -34,7 +34,7 @@ springdoc:
 
 
 file:
-  dir: /home/download/babyfood
+  dir: /home/download
 
 
 

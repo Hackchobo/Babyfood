@@ -21,5 +21,5 @@ public interface MainMapper {
 //    int birthMaxPage(int cate);
 
     List<MainSelVo> birthRecommendFilter(int cate,int row,String strallergy);
-    int birthRecommendFilterMaxPaige(int cate,String strallergy);
+//    int birthRecommendFilterMaxPaige(int cate,String strallergy);
 }

@@ -109,20 +109,19 @@
     </insert>
 
 
-    <insert id="insWebEditorImg">
+    <insert id="insWebEditorImg" useGeneratedKeys="true"  keyProperty="pImgId">
         insert into product_img
         (product_id,img)
         values
-        (#{productId},#{img})
+        (#{productId},#{randomName})
     </insert>
 
-    <insert id="insWebEditorImgList">
+    <insert id="insWebEditorImgList" useGeneratedKeys="true" keyProperty="pImgId">
         insert into product_img
         (product_id,img)
         values
-        <foreach collection="img" item="item" separator=",">
-            (#{productId},#{item})
-        </foreach>
+        (#{productId},#{randomName})
+
     </insert>
 
     <update id="updProduct">
@@ -159,6 +158,16 @@
         set img = #{img},
         product_id = #{productId}
     </insert>
+    <delete id="delWebEditorCancel">
+        delete from product_img
+        where p_img_id=#{pImgId}
+    </delete>
 
+
+    <select id="selProductImgPk">
+        select product_id productId,img
+        from product_img
+        where p_img_id=#{pImgId}
+    </select>
 
 </mapper>
