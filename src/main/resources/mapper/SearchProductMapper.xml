@@ -33,7 +33,9 @@
         WHERE p_name REGEXP #{msg}
         AND A.p_quantity !=0
         AND A.is_delete = 0
+        <if test="strallergy!=''">
         AND E.allergy_id NOT IN (${allergy})
+        </if>
 
         <choose>
             <when test="sorter == 0">
