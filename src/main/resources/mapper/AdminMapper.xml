@@ -169,5 +169,4 @@
         from product_img
         where p_img_id=#{pImgId}
     </select>
-
 </mapper>

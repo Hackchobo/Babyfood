@@ -19,6 +19,7 @@
         inner join product_img C
         on B.product_id=C.product_id
         where A.iuser=#{iuser}
+        group by B.product_id
         order by A.created_at desc
     </select>
 
