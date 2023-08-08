@@ -15,6 +15,7 @@
         ON D.product_id = A.product_id
         WHERE p_name REGEXP #{msg}
         AND A.p_quantity !=0
+        AND A.is_delete = 0
         LIMIT #{startIdx}, #{row}
     </select>
 
@@ -31,6 +32,7 @@
         ON E.allergy_id = B.allergy_id
         WHERE p_name REGEXP #{msg}
         AND A.p_quantity !=0
+        AND A.is_delete = 0
         AND E.allergy_id NOT IN (${allergy})
 
         <choose>

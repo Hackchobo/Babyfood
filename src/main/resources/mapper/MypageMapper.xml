@@ -14,6 +14,7 @@
         LEFT JOIN product_img D
         ON D.product_id = C.product_id
         where iuser = #{iuser}
+        AND A.cancel = 0
         <if test="month !=0">
             and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{month} MONTH) AND NOW()
         </if>
@@ -42,7 +43,8 @@
     <select id="selUser">
         SELECT reciever, address,address_detail addressDetail,call_user phoneNm, request
         FROM order_list
-        WHERE order_id = #{orderId};
+        WHERE order_id = #{orderId}
+        AND cancel = 0
     </select>
 
 
