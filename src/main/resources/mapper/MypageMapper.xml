@@ -22,15 +22,16 @@
     </select>
 
     <select id="OrderlistDetail">
-        SELECT B.product_id productId,D.thumbnail thumbnail, C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice, DATE(A.created_at) createdAt
+        SELECT B.product_id productId,COALESCE(D.thumbnail, "이미지없음")thumbnail,C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice, DATE(A.created_at) createdAt
         FROM order_list A
-        INNER JOIN order_detail B
+        left JOIN order_detail B
         ON A.order_id = B.order_id
-        INNER JOIN product C
+        left JOIN product C
         ON C.product_id = B.product_id
-        inner JOIN product_img D
+        left JOIN product_img D
         ON C.product_id = D.product_id
-        WHERE B.order_id = #{orderId}
+        WHERE A.order_id =  #{orderId}
+        AND A.cancel = 0
     </select>
 
     <select id="selUser">
