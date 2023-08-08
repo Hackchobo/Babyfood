@@ -7,7 +7,6 @@ public class ProfileUpdDto {
     private int iuser;
     private String nickNm;
     private String password;
-    private String passwordcheck;
     private String phoneNumber;
     private String birthday;
     private String address;
