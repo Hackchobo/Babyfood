@@ -36,7 +36,6 @@ public class BuyService {
 
 
 
-
         //제품의 수량이 0개이하이면 return 0
         for (int i = 0; i <entity.getOrderbasket().size(); i++) {
             BuySelquantityDto quantity = Mapper.quantity(entity.getOrderbasket().get(i).getProductId());
@@ -45,12 +44,7 @@ public class BuyService {
             }
         }
 
-
-
         int result = Mapper.InsBuy(dto);
-
-
-
 
         if (result == 1){
             BuyUpdPointDto addpoint = new BuyUpdPointDto();
@@ -85,8 +79,10 @@ public class BuyService {
 
             res.setPoint(entity.getPoint());
             res.setOrderId(dto.getOrderId());
-            res.setPrice(totalprice-entity.getPoint()); // 결제금액구하기
-            int point = (int) (res.getPrice() * earnedPercent);
+
+            res.setTotalprice(totalprice);
+            res.setPaymentprice(totalprice-entity.getPoint()); // 결제금액구하기
+            int point = (int) (res.getPaymentprice() * earnedPercent);
 
             addpoint.setIuser(entity.getIuser());
             addpoint.setPoint(point);

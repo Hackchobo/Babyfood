@@ -6,5 +6,6 @@ import lombok.Data;
 public class BuyProductRes {
     private Long OrderId;
     private int point;
-    private int price;
+    private int totalprice;
+    private int paymentprice;
 }

@@ -7,13 +7,14 @@ import java.util.List;
 
 @Mapper
 public interface MypageMapper {
-    ProfileSelDto profile(int iuser);
+    ProfileSelDto profile(Long iuser);
     int Updprofile(ProfileUpdDto dto);
     MypageNickNmDto SelNickNm(String nickNm);
-    int delUser(int iuser);
-    List<OrderlistCountSelDto> Orderlist(OrderlistMonthsSelDto dto);
-    List<OrderlistDetailSelDto> OrderlistDetail(int orderId);
-    OrderlistUserDto selUser(int orderId);
+    int delUser(Long iuser);
+    List<OrderlistCountSelDto> orderlist(OrderlistMonthsSelDto dto);
+    List<OrderlistDetailSelDto> orderlistDetail(Long orderId);
+    OrderlistUserDto selUser(Long orderId);
+    int delorder(Long orderId);
 
 
 
