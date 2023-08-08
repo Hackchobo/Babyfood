@@ -1,7 +1,6 @@
 package com.green.babyfood.admin;
 
 import com.green.babyfood.admin.model.*;
-import com.green.babyfood.user.model.CreatePicDto;
 import com.green.babyfood.util.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +36,7 @@ public class AdminService {
         return pkVo.getProductId();
     }
 
-    public int insWebEditorImg(MultipartFile img, Long productId) {
+    public ProductImgPkFull insWebEditorImg(MultipartFile img, Long productId) {
 
         String path = getAbsolutePath(fileDir) + "/webeditor/" + productId;
         File file = new File(path);
@@ -52,16 +51,25 @@ public class AdminService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return mapper.insWebEditorImg(productId, randomName);
+        AdminProductImgDto dto=new AdminProductImgDto();
+        dto.setProductId(productId);
+        dto.setRandomName(randomName);
+        mapper.insWebEditorImg(dto);
+        ProductImgPkFull full=new ProductImgPkFull();
+        full.setPImgId(dto.getPImgId());
+        String fullPath="192.168.0.144:5001/img/webeditor/"+productId+"/"+randomName;
+        full.setImg(fullPath);
+       return full;
     }
 
-    public int insWebEditorImgList(List<MultipartFile> img, Long productId) {
+
+    public List<ProductImgPkFull> insWebEditorImgList(List<MultipartFile> img, Long productId) {
         String path = getAbsolutePath(fileDir) + "/webeditor/" + productId;
         File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
         }
-        List list = new ArrayList();
+        List<ProductImgPkFull> list = new ArrayList();
         for (MultipartFile imgfile : img) {
             String randomName = FileUtils.makeRandomFileNm(imgfile.getOriginalFilename());
             String fileUpload = path + "/" + randomName;
@@ -71,40 +79,28 @@ public class AdminService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            list.add(randomName);
+            AdminProductImgDto dto=new AdminProductImgDto();
+            dto.setProductId(productId);
+            dto.setRandomName(randomName);
+            mapper.insWebEditorImgList(dto);
+            ProductImgPkFull full=new ProductImgPkFull();
+            full.setPImgId(dto.getPImgId());
+            String fullPath="192.168.0.144:5001/img/webeditor/"+productId+"/"+randomName;
+            full.setImg(fullPath);
+            list.add(full);
         }
-        return mapper.insWebEditorImgList(list, productId);
+        return list;
 
     }
 
-    public int updProduct(AdminProductUpdDto dto, List<MultipartFile> thumbnail) {
+
+    public int updProduct(AdminProductUpdDto dto) {
         // 최종 상품 등록할때 사용되는 메소드
         if (dto.getCategory() > 4){
             log.info("카테고리는 1-4까지 설정 가능, 확인 후 다시 입력하세요");
             return 0;
         }
-        // 상품 썸네일 등록
-        String path = getAbsolutePath(fileDir) + "/webeditor/" + dto.getProductId();
-        File file = new File(path);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        List list = new ArrayList();
-        for (MultipartFile imgfile : thumbnail) {
-            String randomName = FileUtils.makeRandomFileNm(imgfile.getOriginalFilename());
-            String fileUpload = path + "/" + randomName;
-            File file1 = new File(fileUpload);
-            try {
-                imgfile.transferTo(file1);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            list.add(randomName);
-        }
-        mapper.insThumbnail(thumbnail);
-        // 상품 정보 등록
         return mapper.updAdminProduct(dto);
     }
 
@@ -157,30 +153,13 @@ public class AdminService {
         return adminProductUpdDto;
     }
 
-
-    public int updPicTest(MultipartFile pic, CreatePicProduct dto) {
-        String centerPath = getAbsolutePath(fileDir) + "/product/" + dto.getProductId();
-
-        File dic = new File(centerPath);
-        if(!dic.exists()){
-            dic.mkdirs();
-        }
-
-        String originFileName = pic.getOriginalFilename();
-        String savedFileName = FileUtils.makeRandomFileNm(originFileName);
-        String savedFilePath = centerPath+"/"+savedFileName;
-
-        File target = new File(savedFilePath);
-        try {
-            pic.transferTo(target);
-        }catch (Exception e) {
-            return 0;
-        }
-        dto.setImg(savedFileName);
-
-          return mapper.updPicTest(dto);
-
+    public int delWebEditorCancel(Long pImgId){
+        ProductImgPk productImgPk = mapper.selProductImgPk(pImgId);
+        System.out.println(productImgPk.getImg());
+        String path = getAbsolutePath(fileDir) + "/webeditor/" + productImgPk.getProductId()+"/"+productImgPk.getImg();
+        File file=new File(path);
+        file.delete();
+        return mapper.delWebEditorCancel(pImgId);
     }
-
 }
 
