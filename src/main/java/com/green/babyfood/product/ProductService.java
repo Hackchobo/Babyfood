@@ -52,8 +52,6 @@ public class ProductService {
         dto.setImg(imgList);
         dto.setThumbnail(thumbnailList);
 
-
-        
         return dto;
     }
 
