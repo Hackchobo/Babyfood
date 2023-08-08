@@ -15,7 +15,8 @@
         ON A.product_id = B.product_id
         LEFT JOIN product_category_relation C
         ON A.product_id = C.product_id
-        WHERE A.product_id = #{productId};
+        WHERE A.product_id = #{productId}
+        GROUP BY A.product_id
     </select>
 
     <select id="selProductImg">

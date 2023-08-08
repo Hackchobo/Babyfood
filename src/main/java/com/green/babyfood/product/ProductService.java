@@ -47,10 +47,11 @@ public class ProductService {
             }
         }
         thumbnailList = thumbnailUrls;
-        
-        ProductSelDto dto = new ProductSelDto();
+
+        ProductSelDto dto = mapper.selProduct(productId);
         dto.setImg(imgList);
         dto.setThumbnail(thumbnailList);
+
 
         
         return dto;
