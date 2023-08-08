@@ -91,6 +91,7 @@ public class SearchService {
 
         StringBuffer allergy = new StringBuffer();
 
+
         allergy.append(egg+",").append(milk+",").append(buckwheat).append(",").append(peanut+",").append(soybean + ",")
                 .append(wheat+",").append(pine_nut+",").append(walnut+",").append(crab+",").append(shrimp+",").append(squid+",")
                 .append(mackerel+",").append(shellfish+",").append(peach+",").append(tomato+",").append(chicken+",").append(pork+",")
@@ -98,12 +99,16 @@ public class SearchService {
         String strallergy = String.valueOf(allergy);
         String[] split = strallergy.split(",");
         String plus="";
+        String subAllergy = "";
         for (String s : split) {
             if(!s.equals("null")){
                 plus+=s+",";
             }
         }
-        String subAllergy = plus.substring(0, plus.length()-1);
+        if(!plus.equals("")) {
+            subAllergy = plus.substring(0, plus.length() - 1);
+        }
+
 
         SearchSelDto dto = new SearchSelDto();
         dto.setPage(page);
@@ -126,6 +131,8 @@ public class SearchService {
         } else {
             msg = typoText;
         }
+
+
 
 
 
