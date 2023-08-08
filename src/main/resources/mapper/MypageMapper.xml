@@ -5,7 +5,7 @@
 <mapper namespace="com.green.babyfood.mypage.MypageMapper">
 
     <select id="Orderlist">
-        SELECT A.order_id orderId,DATE_FORMAT(A.created_at,'%Y-%m-%d') createdAt,C.p_name name,D.thumbnail thumbnail,B.total_price price,A.shipment shipment,COUNT(A.order_id)-1 count
+        SELECT A.order_id orderId,DATE_FORMAT(A.created_at,'%Y-%m-%d') createdAt,C.p_name name,COALESCE(D.thumbnail, "이미지없음") thumbnail,B.total_price price,A.shipment shipment,COUNT(A.order_id)-1 count
         FROM order_list A
         INNER JOIN order_detail B
         ON A.order_id = B.order_id
