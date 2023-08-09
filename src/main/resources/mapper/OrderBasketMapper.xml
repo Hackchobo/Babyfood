@@ -44,4 +44,10 @@
         delete from order_basket
         where cart_id=#{cartId}
     </delete>
+
+
+    <select id="countUpd">
+        select cart_id cartId from order_basket
+        where iuser=#{iuser} and product_id=#{productId}
+    </select>
 </mapper>

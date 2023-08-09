@@ -16,4 +16,5 @@ public interface OrderBasketMapper {
     int updCountPlus(Long cartId);
     int updCountMinus(Long cartId);
     int delOrderBasket(Long cartId);
+    Long countUpd(Long iuser,Long productId);
 }

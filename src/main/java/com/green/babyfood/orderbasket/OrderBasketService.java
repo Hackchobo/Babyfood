@@ -22,6 +22,8 @@ public class OrderBasketService {
         entity.setProductId(dto.getProductId());
         entity.setCount(dto.getCount());
 
+        Long aLong = mapper.countUpd(dto.getIuser(), dto.getProductId());
+
         int result=mapper.insOrderBasket(entity);
         if(result==1){
             return entity.getCartId();

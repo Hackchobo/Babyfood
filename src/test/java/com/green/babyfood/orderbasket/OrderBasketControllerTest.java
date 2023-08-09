@@ -8,6 +8,7 @@ import com.green.babyfood.config.security.SecurityConfiguration;
 import com.green.babyfood.config.security.model.MyUserDetails;
 import com.green.babyfood.orderbasket.model.OrderBasketDto;
 import com.green.babyfood.orderbasket.model.OrderBasketSelVo;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,14 +34,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @WebMvcTest(OrderBasketController.class)
 @Import({SecurityConfiguration.class, JwtTokenProvider.class})
+@Slf4j
 public class OrderBasketControllerTest {
 
     @Autowired
@@ -83,7 +84,6 @@ public class OrderBasketControllerTest {
         dto.setProductId(1L);
         dto.setCount(2);
 
-
         given(service.insOrderBasket(any())).willReturn(10L);
 
         mvc.perform(post("/api/orderbasket")
@@ -100,8 +100,28 @@ public class OrderBasketControllerTest {
     @Test
     void orerBasketSel() throws Exception {
         List<OrderBasketSelVo> list=new ArrayList<>();
-        list.add(new OrderBasketSelVo(1L,1L,"테스트1","홍길동1",3,10000,"main.jpg","2023-01-01 12:12:12"));
-        list.add(new OrderBasketSelVo(2L,2L,"테스트2","홍길동2",3,10000,"main.jpg","2023-01-01 12:12:12"));
+        OrderBasketSelVo vo1=new OrderBasketSelVo();
+        vo1.setCartId(1L);
+        vo1.setProductId(1L);
+        vo1.setTitle("테스트1");
+        vo1.setName("홍길동1");
+        vo1.setCount(3);
+        vo1.setPrice(10000);
+        vo1.setThumbnail("main.jpg");
+        vo1.setCreatedAt("2023-01-01 12:12:12");
+
+        OrderBasketSelVo vo2=new OrderBasketSelVo();
+        vo2.setCartId(2L);
+        vo2.setProductId(2L);
+        vo2.setTitle("테스트2");
+        vo2.setName("홍길동2");
+        vo2.setCount(3); vo2.setPrice(10000);
+        vo2.setThumbnail("main.jpg");
+        vo2.setCreatedAt("2023-01-01 12:12:12");
+
+
+        list.add(vo1);
+        list.add(vo2);
 
         given(service.selUserOrderBasket(any())).willReturn(list);
 
@@ -121,5 +141,18 @@ public class OrderBasketControllerTest {
                 .andDo(print());
 
         verify(service).selUserOrderBasket(any());
+    }
+
+    @Test
+    void delOrderBasket() throws Exception {
+        Long cartId=1L;
+        given(service.delOrderBasket(any())).willReturn(1);
+
+        ResultActions ra = mvc.perform(delete("/api/orderbasket")
+                .param("cartId",String.valueOf(cartId)));
+        ra.andExpect(status().isOk())
+                .andExpect(content().string(String.valueOf(cartId)))
+                        .andDo(print());
+        verify(service).delOrderBasket(any());
     }
 }

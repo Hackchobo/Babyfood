@@ -95,7 +95,7 @@ public class BuyService {
             Mapper.addpoint(addpoint);
 
         }else
-            return null;
+            throw new RuntimeException();
 
 
         return res;
