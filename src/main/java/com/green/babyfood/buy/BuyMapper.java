@@ -16,7 +16,5 @@ public interface BuyMapper {
 
 
     BuySelquantityDto quantity(Long productId);
-    BuyPoint point(Long iuser);
-
 
 }
