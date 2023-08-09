@@ -8,4 +8,6 @@ public interface SignMapper {
     SignPwDto findPassword(String mail, String mobileNb);
 
     void updPassword(Long iuser, String pw);
+    String emailCheck(String email);
+    String SelNickNm(String nickNm);
 }

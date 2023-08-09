@@ -304,5 +304,24 @@ public class SignService {
 
         return password.toString();
     }
+
+
+    public int emailCheck(String email){
+        String result=SIGN_MAPPER.emailCheck(email);
+
+        if(email.equals(result)){
+            return 1;
+        }
+        return 0;
+    }
+
+    public int nicknmcheck(String nickNm){
+        String result = SIGN_MAPPER.SelNickNm(nickNm);
+        if (nickNm.equals(result)){
+            return 1;
+        }
+        return 0;
+
+    }
 }
 

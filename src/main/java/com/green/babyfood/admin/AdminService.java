@@ -57,7 +57,7 @@ public class AdminService {
         mapper.insWebEditorImg(dto);
         ProductImgPkFull full=new ProductImgPkFull();
         full.setPImgId(dto.getPImgId());
-        String fullPath="192.168.0.144:5001/img/webeditor/"+productId+"/"+randomName;
+        String fullPath="http://192.168.0.144:5001/img/webeditor/"+productId+"/"+randomName;
         full.setImg(fullPath);
        return full;
     }

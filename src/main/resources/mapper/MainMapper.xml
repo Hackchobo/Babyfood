@@ -56,7 +56,7 @@
         </if>
         group by A.product_id
         order by A.sale_volumn desc,rand()
-        limit 4
+        limit 8
     </select>
 
 

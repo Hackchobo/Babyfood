@@ -13,4 +13,5 @@ public interface UserMapper {
     int updPointUser(UserPointDto dto);
     int delUser(UserDelDto dto);
     int deltoken(UserDelDto dto);
+
 }
