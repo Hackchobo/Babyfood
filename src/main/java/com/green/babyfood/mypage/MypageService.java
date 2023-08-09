@@ -69,13 +69,6 @@ public class MypageService {
         return build;
     }
     public int delorder(Long orderId){
-
-        int delorder = 0;
-//        for (int num:orderId) {
-//             delorder = mapper.delorder(num);
-//        }
-
-
          return mapper.delorder(orderId);
     }
 
@@ -88,13 +81,16 @@ public class MypageService {
         String encode = PW_ENCODER.encode(dto.getPassword());
         dto.setPassword(encode);
 
-        MypageNickNmDto selNickNmDto = mapper.SelNickNm(dto.getNickNm());
-
-        if (!(selNickNmDto == null)){
-            return 0;
-        }
 
         return mapper.Updprofile(dto);
+    }
+
+    public int nicknm(String nickname){
+        MypageNickNmDto mypageNickNmDto = mapper.SelNickNm(nickname);
+        if (mypageNickNmDto.getNickNm().equals(nickname)){
+            return 1;
+        }else
+            return 0;
     }
 
     public int delUser(Long iuser){

@@ -1,5 +1,6 @@
 package com.green.babyfood.user;
 
+import com.green.babyfood.mypage.model.MypageNickNmDto;
 import com.green.babyfood.user.model.*;
 import com.green.babyfood.util.FileUtils;
 import lombok.RequiredArgsConstructor;

@@ -45,11 +45,14 @@ public class MypageController {
     }
 
     @PatchMapping("/profile")
-    @Operation(summary = "내정보 수정" , description = ""+
-            "return 0 : 이미 있는 닉네임 <br>"+
-            "return 1 : 수정완료")
+    @Operation(summary = "내정보(유저 정보) 수정" , description = "")
     int patchprofile(@RequestBody ProfileUpdDto dto){
         return service.UpdProfileDto(dto);
+    }
+    @GetMapping("/profile/nickname")
+    @Operation(summary = "닉네임 중복체크" , description = "")
+    int getNickName(@RequestParam String nickname){
+        return service.nicknm(nickname);
     }
 
     @DeleteMapping("/profile")

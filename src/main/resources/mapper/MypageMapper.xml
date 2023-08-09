@@ -47,7 +47,6 @@
         AND cancel = 0
     </select>
 
-
     <select id="profile">
         SELECT A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb mobileNb,A.address address,A.address_detail addressDetail,A.nick_nm nickNm,A.point point
         FROM user A
@@ -69,7 +68,6 @@
         SELECT nick_nm nickNm FROM user
         WHERE nick_nm =#{nickNm}
     </select>
-
 
     <delete id="delUser">
         delete from user
