@@ -1,4 +1,4 @@
-package com.green.babyfood.orderbaskettest;
+package com.green.babyfood.orderbasket;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,8 +6,6 @@ import com.green.babyfood.config.RedisService;
 import com.green.babyfood.config.security.JwtTokenProvider;
 import com.green.babyfood.config.security.SecurityConfiguration;
 import com.green.babyfood.config.security.model.MyUserDetails;
-import com.green.babyfood.orderbasket.OrderBasketController;
-import com.green.babyfood.orderbasket.OrderBasketService;
 import com.green.babyfood.orderbasket.model.OrderBasketDto;
 import com.green.babyfood.orderbasket.model.OrderBasketSelVo;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,9 +29,12 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
+
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
