@@ -35,7 +35,6 @@ public class BuyService {
         dto.setAddressDetail(entity.getAddressDetail());
 
 
-
         //제품의 수량이 0개이하이면 return 0
         for (int i = 0; i <entity.getOrderbasket().size(); i++) {
             BuySelquantityDto quantity = Mapper.quantity(entity.getOrderbasket().get(i).getProductId());
@@ -43,6 +42,8 @@ public class BuyService {
                 return null;
             }
         }
+
+            Mapper.InsBuy(dto);
 
         int result = Mapper.InsBuy(dto);
 
@@ -89,7 +90,7 @@ public class BuyService {
             int removepoint = Mapper.removepoint(updpoint);
 
             if (removepoint!=1){
-                return null;
+                throw new RuntimeException();
             }
 
             Mapper.addpoint(addpoint);
@@ -100,10 +101,5 @@ public class BuyService {
 
         return res;
     }
-
-    public BuyPoint point(Long iuser){
-        return Mapper.point(iuser);
-    }
-
 
 }

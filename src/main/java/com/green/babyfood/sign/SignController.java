@@ -5,10 +5,7 @@ import com.green.babyfood.config.security.model.UserEntity;
 import com.green.babyfood.config.security.otp.OtpRes;
 import com.green.babyfood.config.security.otp.TOTP;
 import com.green.babyfood.config.security.otp.TOTPTokenGenerator;
-import com.green.babyfood.sign.model.SignEntity;
-import com.green.babyfood.sign.model.SignInResultDto;
-import com.green.babyfood.sign.model.SignUpResultDto;
-import com.green.babyfood.sign.model.SigninDto;
+import com.green.babyfood.sign.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -126,4 +123,21 @@ public class SignController {
     public ResponseEntity<?> otpValid(@RequestParam String inputCode) {
         return ResponseEntity.status(HttpStatus.OK).body(SERVICE.otpValid(inputCode));
     }
+
+
+    // -----------------비밀번호 찾기 테스트용
+    // 임시로 진행하는 코드이므로 다른 내용과 호환되지 않을 수 있습니다
+    // 관련해서 오류가 날 경우 이 아래 전부 주석처리해주면 됩니다.
+
+    @GetMapping("/password/find")
+    @Operation(summary = "비밀번호 찾기 페이지",description =
+            "테스트용 : 아이디(이메일)과 휴대폰 번호를 입력해주세요.<br>" +
+                    "비교하여 회원정보와 일치 시 등록된 메일 주소로 임시 비밀번호를 발송합니다"
+    )
+    public String findPassword(@RequestParam String mail, @RequestParam String mobileNb){
+        log.info("테스트");
+        SERVICE.findPassword(mail, mobileNb);
+        return SERVICE.findPassword(mail, mobileNb);
+    }
+
 }

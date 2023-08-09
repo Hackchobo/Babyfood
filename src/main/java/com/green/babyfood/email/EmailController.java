@@ -19,12 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/mail")
 public class EmailController {
 
-    private final EmailService service;
+    private static final EmailService EMAIL_SERVICE = new EmailService();
 
-
-    public EmailController(EmailService service) {
-        this.service = service;
-    }
     private MailReservation reserveMail;
 
 
@@ -33,8 +29,8 @@ public class EmailController {
             "mailAddress : 수신자 메일 주소<br>"+
             "title : 메일 제목<br>"+
             "ctnt : 내용 <br>")
-    public void postSend(@RequestBody MailSendDto dto) {
-        service.send(dto);
+    public static void postSend(@RequestBody MailSendDto dto) {
+        EMAIL_SERVICE.send(dto);
         // 보내고 싶은 메일이 있다면 dto 객체에 내용 맞춰서 넣은 후 해당 메소드 호출
     }
 

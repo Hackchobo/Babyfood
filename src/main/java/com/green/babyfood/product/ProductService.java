@@ -56,7 +56,7 @@ public class ProductService {
     }
 
     private String createImageUrl(int productId, String imgName) {
-        String path = getAbsolutePath(fileDir) + "/product/" + productId +"/"+imgName;
+        String path = "192.168.0.144:5001/img/webeditor/"+productId+"/"+imgName;
         log.info("테스트 : {}", getAbsolutePath(fileDir) + "/product/" + productId+"/"+ imgName);
         return path;
     }
