@@ -51,7 +51,7 @@
     </select>
 
     <select id="profile">
-        SELECT A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb mobileNb,A.address address,A.address_detail addressDetail,A.nick_nm nickNm,A.point point
+        SELECT A.iuser,A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb mobileNb,A.address address,A.address_detail addressDetail,A.nick_nm nickNm,A.point point,A.zip_code zipcode
         FROM user A
         WHERE iuser = #{iuser}
     </select>
@@ -63,8 +63,9 @@
         mobile_nb = #{phoneNumber},
         birthday= #{birthday},
         address = #{address},
-        address_detail = #{addressDetail}
-        WHERE iuser = #{iuser};
+        address_detail = #{addressDetail},
+        zip_code = #{zipcode}
+        WHERE iuser = #{iuser}
     </update>
 
     <select id="SelNickNm">
@@ -76,5 +77,11 @@
         delete from user
         where iuser =#{iuser}
     </delete>
+
+    <update id="patchProfile">
+        update user
+        set image = #{img}
+        where iuser = #{iuser}
+    </update>
 
 </mapper>

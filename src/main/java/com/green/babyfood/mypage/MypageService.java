@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -90,10 +93,26 @@ public class MypageService {
     }
 
     public int UpdProfileDto(ProfileUpdDto dto){
+        ProfileSelDto profile = mapper.profile(dto.getIuser());
+
+        if (dto.getZipcode()==null) {
+            dto.setZipcode(profile.getZipcode());
+        } else if (dto.getAddress()==null){
+            dto.setAddress(profile.getAddress());
+        } else if (dto.getAddressDetail()==null) {
+            dto.setAddressDetail(profile.getAddressDetail());
+        } else if (dto.getBirthday()==null) {
+            dto.setBirthday(profile.getBirthday());
+        } else if (dto.getZipcode()==null) {
+            dto.setZipcode(profile.getZipcode());
+        } else if (dto.getNickNm()==null) {
+            dto.setNickNm(profile.getNickNm());
+        } else if (dto.getPhoneNumber()==null){
+            dto.setPhoneNumber(profile.getMobileNb());
+        }
+
         String encode = PW_ENCODER.encode(dto.getPassword());
         dto.setPassword(encode);
-
-
         return mapper.Updprofile(dto);
     }
 
@@ -110,4 +129,7 @@ public class MypageService {
     }
 
 
+    public int patchProfile(MultipartFile img, Long iuser) {
+        return mapper.patchProfile(img, iuser);
+    }
 }

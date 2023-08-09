@@ -4,11 +4,12 @@ import lombok.Data;
 
 @Data
 public class ProfileUpdDto {
-    private int iuser;
+    private Long iuser;
     private String nickNm;
     private String password;
     private String phoneNumber;
     private String birthday;
+    private String zipcode;
     private String address;
     private String addressDetail;
 }
