@@ -21,13 +21,22 @@ public class OrderBasketService {
         entity.setIuser(dto.getIuser());
         entity.setProductId(dto.getProductId());
         entity.setCount(dto.getCount());
-
-        int result=mapper.insOrderBasket(entity);
+        int result=0;
+        Long aLong = mapper.countUpd(dto.getIuser(), dto.getProductId());
+        System.out.println(aLong);
+        if(aLong==null){
+             result=mapper.insOrderBasket(entity);
+        }
+        else {
+            mapper.updCount(aLong,dto.getCount());
+            return aLong;
+        }
         if(result==1){
             return entity.getCartId();
         }
         throw new RuntimeException();
     }
+
 
     public List<OrderBasketSelVo> selUserOrderBasket(Long iuser){
         return mapper.selUserOrderBasket(iuser);

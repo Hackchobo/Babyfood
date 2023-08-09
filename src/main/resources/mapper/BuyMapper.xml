@@ -74,13 +74,6 @@
         WHERE order_id = #{orderId};
     </select>
 
-    <select id="point">
-        SELECT point
-        FROM user
-        WHERE iuser = #{iuser};
-
-    </select>
-
     <select id="quantity">
 
         SELECT product_id productId, p_quantity quantity

@@ -36,8 +36,4 @@ public class BuyController {
     public BuyProductRes BuyProduct(@RequestBody BuyEntity entity){
         return SERVICE.BuyProduct(entity);
     }
-    @GetMapping("/point")
-    public BuyPoint GetPoint(@RequestParam Long iuser){
-        return SERVICE.point(iuser);
-    }
 }
