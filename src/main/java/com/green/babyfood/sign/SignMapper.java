@@ -9,4 +9,5 @@ public interface SignMapper {
 
     void updPassword(Long iuser, String pw);
     String emailCheck(String email);
+    String SelNickNm(String nickNm);
 }

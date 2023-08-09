@@ -50,9 +50,10 @@ public class MypageController {
         return service.UpdProfileDto(dto);
     }
     @GetMapping("/profile/nickname")
-    @Operation(summary = "닉네임 중복체크" , description = "")
-    int getNickName(@RequestParam String nickname){
-        return service.nicknm(nickname);
+    @Operation(summary = "닉네임 중복체크" ,
+            description = "return : 1이면 중복인것")
+    int getNickNamecheck(@RequestParam String nickname){
+        return service.nicknmcheck(nickname);
     }
 
     @DeleteMapping("/profile")

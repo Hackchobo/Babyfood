@@ -85,9 +85,9 @@ public class MypageService {
         return mapper.Updprofile(dto);
     }
 
-    public int nicknm(String nickname){
-        MypageNickNmDto mypageNickNmDto = mapper.SelNickNm(nickname);
-        if (mypageNickNmDto.getNickNm().equals(nickname)){
+    public int nicknmcheck(String nickname){
+        String Nicknm = mapper.SelNickNm(nickname);
+        if (nickname.equals(Nicknm)){
             return 1;
         }else
             return 0;

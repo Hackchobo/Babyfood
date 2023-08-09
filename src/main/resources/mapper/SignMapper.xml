@@ -20,4 +20,9 @@
         select email from user
         where email=#{email}
     </select>
+
+    <select id="SelNickNm">
+        SELECT nick_nm nickNm FROM user
+        WHERE nick_nm =#{nickNm}
+    </select>
 </mapper>

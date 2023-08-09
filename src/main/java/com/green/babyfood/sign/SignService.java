@@ -314,5 +314,14 @@ public class SignService {
         }
         return 1;
     }
+
+    public int nicknmcheck(String nickNm){
+        String result = SIGN_MAPPER.SelNickNm(nickNm);
+        if (nickNm.equals(result)){
+            return 1;
+        }
+        return 0;
+
+    }
 }
 

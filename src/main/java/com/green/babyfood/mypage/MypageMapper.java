@@ -9,7 +9,7 @@ import java.util.List;
 public interface MypageMapper {
     ProfileSelDto profile(Long iuser);
     int Updprofile(ProfileUpdDto dto);
-    MypageNickNmDto SelNickNm(String nickNm);
+    String SelNickNm(String nickNm);
     int delUser(Long iuser);
     List<OrderlistCountSelDto> orderlist(OrderlistMonthsSelDto dto);
     List<OrderlistDetailSelDto> orderlistDetail(Long orderId);
