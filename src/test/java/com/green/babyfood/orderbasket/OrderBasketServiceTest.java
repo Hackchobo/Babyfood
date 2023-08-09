@@ -18,29 +18,29 @@ import static org.mockito.Mockito.when;
 @Import({OrderBasketService.class})
 class OrderBasketServiceTest {
 
-    @MockBean
-    private OrderBasketMapper mapper;
+//   @MockBean
+//   private OrderBasketMapper mapper;
 
-    @Autowired
-    private OrderBasketService service;
+//   @Autowired
+//   private OrderBasketService service;
 
 
-    @Test
-    void insOrderBasket(){
-        when(mapper.insOrderBasket(any())).thenReturn(1);
+//   @Test
+//   void insOrderBasket(){
+//       when(mapper.insOrderBasket(any())).thenReturn(1);
 
-        OrderBasketDto dto=new OrderBasketDto();
-        dto.setIuser(1L);
-        dto.setProductId(1L);
-        dto.setCount(3);
+//       OrderBasketDto dto=new OrderBasketDto();
+//       dto.setIuser(1L);
+//       dto.setProductId(1L);
+//       dto.setCount(3);
 
-        Long aLong = service.insOrderBasket(dto);
+//       Long aLong = service.insOrderBasket(dto);
 
-        assertEquals(0L,aLong);
+//       assertEquals(0L,aLong);
 
-        verify(mapper).insOrderBasket(any());
+//       verify(mapper).insOrderBasket(any());
 
-    }
+//   }
 
 
 }

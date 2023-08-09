@@ -11,6 +11,13 @@
         (#{iuser},#{productId},#{count})
     </insert>
 
+    <update id="updCount">
+        update order_basket
+        set count=count+#{count}
+        where cart_id=#{cartId}
+    </update>
+
+
     <select id="selUserOrderBasket">
         select A.cart_id cartId,B.product_id productId,B.p_name name,A.count,B.p_title title,B.p_price price,C.thumbnail,A.created_at createdAt
         from order_basket A
