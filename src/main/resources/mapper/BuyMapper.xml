@@ -71,14 +71,14 @@
     <select id="selorder">
         SELECT reciever, address,address_detail addressDetail,call_user phoneNm, request
         FROM order_list
-        WHERE order_id = #{orderId};
+        WHERE order_id = #{orderId}
     </select>
 
     <select id="quantity">
 
         SELECT product_id productId, p_quantity quantity
         FROM product
-        WHERE product_id  = #{productId};
+        WHERE product_id  = #{productId}
     </select>
 
 
