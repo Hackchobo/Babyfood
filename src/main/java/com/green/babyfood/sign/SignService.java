@@ -308,11 +308,11 @@ public class SignService {
 
     public int emailCheck(String email){
         String result=SIGN_MAPPER.emailCheck(email);
-        System.out.println(result);
-        if(result==null){
-            return 0;
+
+        if(email.equals(result)){
+            return 1;
         }
-        return 1;
+        return 0;
     }
 }
 
