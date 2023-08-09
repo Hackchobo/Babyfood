@@ -11,6 +11,8 @@ import com.green.babyfood.config.security.model.RedisJwtVo;
 import com.green.babyfood.config.security.model.UserEntity;
 import com.green.babyfood.config.security.model.UserTokenEntity;
 import com.green.babyfood.config.security.otp.TOTP;
+import com.green.babyfood.email.EmailController;
+import com.green.babyfood.email.model.MailSendDto;
 import com.green.babyfood.sign.model.*;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,8 +30,10 @@ import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import static com.green.babyfood.util.EmailValidator.emailValidator;
+import static com.green.babyfood.email.EmailController.*;
 
 @Slf4j
 @Service
@@ -41,6 +45,7 @@ public class SignService {
     private final RedisService REDIS_SERVICE;
     private final AuthenticationFacade FACADE;
     private final ObjectMapper OBJECT_MAPPER;
+    private final SignMapper SIGN_MAPPER; // 비번찾기용
 
     public SignUpResultDto signUp(SignEntity entity) {
         log.info("[getSignUpResult] signDataHandler로 회원 정보 요청");
@@ -242,6 +247,62 @@ public class SignService {
         result.setSuccess(false);
         result.setCode(CommonRes.FAIL.getCode());
         result.setMsg(CommonRes.FAIL.getMsg());
+    }
+
+    // 이 아래로 비밀번호 찾기용 테스트코드
+    // 문제 발생시 아래구간 전체 주석처리해주세요
+
+    public String findPassword(String mail, String mobileNb) {
+
+        SignPwDto inputDto = new SignPwDto();
+        inputDto.setMail(mail);
+        inputDto.setMobileNb(mobileNb); // 유저가 입력한 정보 넣는 객체
+
+        SignPwDto dataDto = SIGN_MAPPER.findPassword(mail, mobileNb);
+        // email을 기준으로 DB의 유저 정보와 비교
+
+        if (inputDto.equals(dataDto)){
+            log.info("회원정보 일치, 비밀번호 변경 시작");
+            MailSendDto dto = new MailSendDto();
+            String pw = updPassword(); // 임시 비밀번호 생성
+            SIGN_MAPPER.updPassword(dataDto.getIuser(), pw); // DB의 비밀번호 변경
+            dto.setTitle("비밀번호 변경 메일입니다");
+            dto.setCtnt("임시 비밀번호 : " + pw);
+            dto.setMailAddress(mail);
+            EmailController.postSend(dto);
+            return "회원정보 일치 / 임시 비밀번호 메일 발송";
+        }
+        else {
+            return "회원정보 불일치 / 확인 후 다시 시도하세요";
+        }
+    }
+
+    public String updPassword() {
+        // 임시 비밀번호 생성
+        int index = 0;
+        char[] charSet = new char[] {
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+        };
+
+        StringBuffer password = new StringBuffer();
+        Random random = new Random();
+
+        final int PASSWORDLENGTH = 10; // 임시비밀번호 길이
+
+        for (int i = 0; i < PASSWORDLENGTH ; i++) {
+            double rd = random.nextDouble();
+            index = (int) (charSet.length * rd);
+
+            password.append(charSet[index]);
+
+            System.out.println("index::" + index + "	charSet::"+ charSet[index]);
+        }
+
+        return password.toString();
     }
 }
 
