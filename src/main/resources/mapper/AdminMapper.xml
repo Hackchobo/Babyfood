@@ -27,7 +27,8 @@
         from product A
         INNER JOIN product_img B
         ON A.product_id = B.product_id
-        WHERE A.product_id = #{product_ID};
+        WHERE A.product_id = #{product_ID}
+        GROUP BY A.product_id
     </select>
 
     <update id="updAdminProduct">
@@ -119,6 +120,13 @@
     <insert id="insWebEditorImgList" useGeneratedKeys="true" keyProperty="pImgId">
         insert into product_img
         (product_id,img)
+        values
+        (#{productId},#{randomName})
+    </insert>
+
+    <insert id="insImgList" useGeneratedKeys="true" keyProperty="pImgId">
+        insert into product_img
+        (product_id,thumbnail)
         values
         (#{productId},#{randomName})
 
