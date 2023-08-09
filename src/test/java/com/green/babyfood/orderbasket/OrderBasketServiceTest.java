@@ -11,6 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,25 +28,40 @@ class OrderBasketServiceTest {
 
    @Test
    void insOrderBasket() {
+      when(mapper.countUpd(any(),any())).thenReturn(10L);
 
+      OrderBasketDto dto=new OrderBasketDto();
+      dto.setIuser(1L);
+      dto.setProductId(1L);
+      dto.setCount(3);
+      Long aLong = service.insOrderBasket(dto);
+      OrderBasketEntity entity=new OrderBasketEntity();
+      entity.setIuser(dto.getIuser());
+      entity.setProductId(dto.getProductId());
+      entity.setCount(dto.getCount());
 
-//      OrderBasketEntity entity = new OrderBasketEntity();
-//      entity.setIuser(dto.getIuser());
-//      entity.setProductId(dto.getProductId());
-//      entity.setCount(dto.getCount());
-//      int result = 0;
-//      Long aLong = mapper.countUpd(dto.getIuser(), dto.getProductId());
-//      System.out.println(aLong);
-//      if (aLong == null) {
-//         result = mapper.insOrderBasket(entity);
-//      } else {
-//         mapper.updCount(aLong, dto.getCount());
-//         return aLong;
-//      }
-//      if (result == 1) {
-//         return entity.getCartId();
-//      }
-//      throw new RuntimeException();
-//   }
-   }
+      Long cartId=mapper.countUpd(dto.getIuser(),dto.getProductId());
+      assertEquals(aLong,cartId);
+
+      int result = mapper.insOrderBasket(entity);
+
+      //     OrderBasketEntity entity = new OrderBasketEntity();
+ //     entity.setIuser(dto.getIuser());
+ //     entity.setProductId(dto.getProductId());
+ //     entity.setCount(dto.getCount());
+ //     int result = 0;
+ //     Long aLong = mapper.countUpd(dto.getIuser(), dto.getProductId());
+ //     System.out.println(aLong);
+ //     if (aLong == null) {
+ //        result = mapper.insOrderBasket(entity);
+ //     } else {
+ //        mapper.updCount(aLong, dto.getCount());
+ //        return aLong;
+ //     }
+ //     if (result == 1) {
+ //        return entity.getCartId();
+ //     }
+ //     throw new RuntimeException();
+ //  }
+}
  }
