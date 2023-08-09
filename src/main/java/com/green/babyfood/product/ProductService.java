@@ -52,12 +52,17 @@ public class ProductService {
         dto.setImg(imgList);
         dto.setThumbnail(thumbnailList);
 
+
+        log.info("예상 배송일정 확인 시작");
+
+
+
+
         return dto;
     }
 
     private String createImageUrl(int productId, String imgName) {
-        String path = "192.168.0.144:5001/img/webeditor/"+productId+"/"+imgName;
-        log.info("테스트 : {}", getAbsolutePath(fileDir) + "/product/" + productId+"/"+ imgName);
+        String path = "http://192.168.0.144:5001/img/webeditor/"+productId+"/"+imgName;
         return path;
     }
 
