@@ -122,7 +122,7 @@ public class AdminService {
 
     }
 
-    public AdminProductEntity getProduct(int productId) {
+    public List<AdminProductEntity> getProduct(int productId) {
         return mapper.getProduct(productId);
     }
 
@@ -160,6 +160,35 @@ public class AdminService {
         File file=new File(path);
         file.delete();
         return mapper.delWebEditorCancel(pImgId);
+    }
+
+    public List<ProductImgPkFull> insImgList(List<MultipartFile> img, Long productId) {
+        String path = getAbsolutePath(fileDir) + "/product/" + productId;
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        List<ProductImgPkFull> list = new ArrayList();
+        for (MultipartFile imgfile : img) {
+            String randomName = FileUtils.makeRandomFileNm(imgfile.getOriginalFilename());
+            String fileUpload = path + "/" + randomName;
+            File file1 = new File(fileUpload);
+            try {
+                imgfile.transferTo(file1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            AdminProductImgDto dto=new AdminProductImgDto();
+            dto.setProductId(productId);
+            dto.setRandomName(randomName);
+            mapper.insImgList(dto);
+            ProductImgPkFull full=new ProductImgPkFull();
+            full.setPImgId(dto.getPImgId());
+            String fullPath="192.168.0.144:5001/img/product/"+productId+"/"+randomName;
+            full.setImg(fullPath);
+            list.add(full);
+        }
+        return list;
     }
 }
 

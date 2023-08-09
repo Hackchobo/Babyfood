@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
+@Slf4j
 public class AdminController {
     private final AdminService service;
 
@@ -33,7 +35,7 @@ public class AdminController {
 
     @GetMapping("/product/get")
     @Operation(summary = "상품 상세조회", description = "상품 코드 입력")
-    public AdminProductEntity getProduct(@RequestParam int productId){
+    public List<AdminProductEntity> getProduct(@RequestParam int productId){
         return service.getProduct(productId);
     }
 
@@ -77,12 +79,6 @@ public class AdminController {
         return service.insWebEditorImgList(img,productId);
     }
 
-    @PatchMapping
-    @Operation(summary = "최종상품등록할때 저장하는 메소드")
-    public int insProduct(@RequestBody AdminProductUpdDto dto){
-        return service.updProduct(dto);
-    }
-
     @GetMapping("/product/upd/get")
     @Operation(summary = "상품 수정 버튼 메소드", description = "수정버튼 클릭시 기존 상품의 정보를 가져온다<br>"+
     "상품코드(pk) 입력해주세요")
@@ -107,5 +103,20 @@ public class AdminController {
     @Operation(summary = "웹에디터 등록하기전 이미지 삭제")
     public int delProductWebImg(@RequestParam Long pImgId){
         return service.delWebEditorCancel(pImgId);
+    }
+
+    @PostMapping(value = "/product/imglist",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "썸네일 이미지리스트로 넣기",description = "본문 등록할 때 함께 보내주세요"+
+            "img : 이미지 풀 경로<br>"+
+            "pimgId : 웹에디터 이미지의 pk값")
+    public List<ProductImgPkFull> insImgList(@RequestPart List<MultipartFile> img, @RequestParam Long productId){
+        return service.insImgList(img,productId);
+    }
+
+    @PatchMapping("/product/input")
+    @Operation(summary = "최종상품등록할때 저장하는 메소드")
+    public int insProduct(@RequestBody AdminProductUpdDto dto){
+        log.info("테스트");
+        return service.updProduct(dto);
     }
 }
