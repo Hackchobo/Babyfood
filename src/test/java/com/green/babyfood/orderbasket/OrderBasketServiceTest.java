@@ -18,29 +18,38 @@ import static org.mockito.Mockito.when;
 @Import({OrderBasketService.class})
 class OrderBasketServiceTest {
 
-//   @MockBean
-//   private OrderBasketMapper mapper;
+   @MockBean
+   private OrderBasketMapper mapper;
 
-//   @Autowired
-//   private OrderBasketService service;
+   @Autowired
+   private OrderBasketService service;
 
 
-//   @Test
-//   void insOrderBasket(){
-//       when(mapper.insOrderBasket(any())).thenReturn(1);
+   @Test
+   void insOrderBasket(){
 
-//       OrderBasketDto dto=new OrderBasketDto();
-//       dto.setIuser(1L);
-//       dto.setProductId(1L);
-//       dto.setCount(3);
 
-//       Long aLong = service.insOrderBasket(dto);
+//     OrderBasketEntity entity=new OrderBasketEntity();
+//     entity.setIuser(dto.getIuser());
+//     entity.setProductId(dto.getProductId());
+//     entity.setCount(dto.getCount());
+//     int result=0;
+//     Long aLong = mapper.countUpd(dto.getIuser(), dto.getProductId());
+//     System.out.println(aLong);
+//     if(aLong==null){
+//         result=mapper.insOrderBasket(entity);
+//     }
+//     else {
+//         mapper.updCount(aLong,dto.getCount());
+//         return aLong;
+//     }
+//     if(result==1){
+//         return entity.getCartId();
+//     }
+//     throw new RuntimeException();
+// }
 
-//       assertEquals(0L,aLong);
-
-//       verify(mapper).insOrderBasket(any());
-
-//   }
+   }
 
 
 }

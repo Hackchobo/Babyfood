@@ -140,4 +140,11 @@ public class SignController {
         return SERVICE.findPassword(mail, mobileNb);
     }
 
+
+    @PostMapping("/email")
+    @Operation(summary = "이메일 중복체크")
+    public int emailCheck(String email){
+        return SERVICE.emailCheck(email);
+    }
+
 }

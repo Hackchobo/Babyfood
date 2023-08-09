@@ -304,5 +304,15 @@ public class SignService {
 
         return password.toString();
     }
+
+
+    public int emailCheck(String email){
+        String result=SIGN_MAPPER.emailCheck(email);
+        System.out.println(result);
+        if(result==null){
+            return 0;
+        }
+        return 1;
+    }
 }
 

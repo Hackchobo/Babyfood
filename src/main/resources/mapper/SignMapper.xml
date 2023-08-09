@@ -15,4 +15,9 @@
         where iuser = #{iuser}
     </update>
 
+
+    <select id="emailCheck">
+        select email from user
+        where email=#{email}
+    </select>
 </mapper>
