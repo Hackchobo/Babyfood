@@ -19,6 +19,14 @@ public class BuyService {
         final float earnedPercent = 0.03F;
         int totalprice = 0;
 
+        // 값이 없을때
+        for (int i = 0; i <entity.getOrderbasket().size(); i++) {
+            if (entity.getRequest().equals("")){
+                entity.setRequest("요청사항 없음");
+            }
+
+        }
+
         // 결제할때 orderID 를 2023080400001
 
 

@@ -6,12 +6,13 @@ import lombok.Data;
 public class OrderlistDetailSelDto {
 
     private Long productId;
+    private Long iuser;
     private String thumbnail;
     private String title;
     private String createdAt;
     private String name;
-    private String price;
-    private String count;
-    private String totalPrice;
+    private int price;
+    private int count;
+    private int totalPrice;
 
 }

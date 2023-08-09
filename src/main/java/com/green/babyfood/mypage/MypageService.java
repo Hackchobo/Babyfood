@@ -62,8 +62,17 @@ public class MypageService {
 
     public OrderlistSelUserDto OrderlistDetail(Long orderId){
 
+
         List<OrderlistDetailSelDto> orderlist = mapper.orderlistDetail(orderId);
         OrderlistUserDto user = mapper.selUser(orderId);
+
+        for (int i = 0; i <orderlist.size(); i++) {
+
+            String thumbnail = orderlist.get(i).getThumbnail();
+            String path = "http://192.168.0.144:5001/img/webeditor/"+orderlist.get(i).getIuser()+"/"+thumbnail;
+            orderlist.get(i).setThumbnail(path);
+
+        }
         OrderlistSelUserDto build = OrderlistSelUserDto.builder().orderlist(orderlist).user(user).build();
 
         return build;
@@ -72,8 +81,11 @@ public class MypageService {
          return mapper.delorder(orderId);
     }
 
-    ProfileSelDto profile(Long iuser){
+    public ProfileSelDto profile(Long iuser){
         ProfileSelDto profile = mapper.profile(iuser);
+
+        String path = "http://192.168.0.144:5001/img/webeditor/"+iuser+"/"+profile.getImage();
+        profile.setImage(path);
         return profile;
     }
 
