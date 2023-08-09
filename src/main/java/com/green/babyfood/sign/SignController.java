@@ -146,7 +146,7 @@ public class SignController {
     public int emailCheck(String email){
         return SERVICE.emailCheck(email);
     }
-    @GetMapping("/nickname")
+    @PostMapping("/nickname")
     @Operation(summary = "닉네임 중복체크" ,
             description = "return : 1이면 중복인것")
     int getNickNamecheck(@RequestParam String nickname){

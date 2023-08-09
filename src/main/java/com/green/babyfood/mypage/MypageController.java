@@ -49,7 +49,7 @@ public class MypageController {
     int patchprofile(@RequestBody ProfileUpdDto dto){
         return service.UpdProfileDto(dto);
     }
-    @GetMapping("/profile/nickname")
+    @PostMapping("/profile/nickname")
     @Operation(summary = "닉네임 중복체크" ,
             description = "return : 1이면 중복인것")
     int getNickNamecheck(@RequestParam String nickname){
