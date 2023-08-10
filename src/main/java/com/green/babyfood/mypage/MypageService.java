@@ -97,7 +97,7 @@ public class MypageService {
     public ProfileSelDto profile(Long iuser){
         ProfileSelDto profile = mapper.profile(iuser);
 
-        String path = "http://192.168.0.144:5001/img/webeditor/"+iuser+"/"+profile.getImage();
+        String path = "http://192.168.0.144:5001/img/user/"+iuser+"/"+profile.getImage();
         profile.setImage(path);
         return profile;
     }
