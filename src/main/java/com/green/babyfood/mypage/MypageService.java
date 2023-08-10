@@ -1,9 +1,13 @@
 package com.green.babyfood.mypage;
 
+import com.green.babyfood.config.security.AuthenticationFacade;
 import com.green.babyfood.config.security.PasswordEncoderConfiguration;
 import com.green.babyfood.mypage.model.*;
+import com.green.babyfood.user.model.CreatePicDto;
+import com.green.babyfood.util.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,17 +15,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
 public class MypageService {
+
+    @Value("${file.dir}")
+    private String fileDir;
+
     private final MypageMapper mapper;
     private final PasswordEncoder PW_ENCODER;
+    private final AuthenticationFacade USERPK;
 
     public  OrderlistSelDto[] Orderlist(OrderlistMonthsSelDto dto){
+        //dto.setIuser(USERPK.getLoginUserPk());
 
         List<OrderlistCountSelDto> orderlist = mapper.orderlist(dto);
 
@@ -54,7 +66,8 @@ public class MypageService {
             orderlistSelDto[i]=new OrderlistSelDto();
             orderlistSelDto[i].setOrderId(orderlist.get(i).getOrderId());
             orderlistSelDto[i].setCreatedAt(orderlist.get(i).getCreatedAt());
-            orderlistSelDto[i].setThumbnail(orderlist.get(i).getThumbnail());
+            String path = "192.168.0.144:5001/img/webeditor/"+dto.getIuser()+"/"+orderlist.get(i).getThumbnail();
+            orderlistSelDto[i].setThumbnail(path);
             orderlistSelDto[i].setName(orderlist.get(i).getName());
             orderlistSelDto[i].setPrice(orderlist.get(i).getPrice());
             orderlistSelDto[i].setShipment(orderlist.get(i).getShipment());
@@ -64,7 +77,6 @@ public class MypageService {
     }
 
     public OrderlistSelUserDto OrderlistDetail(Long orderId){
-
 
         List<OrderlistDetailSelDto> orderlist = mapper.orderlistDetail(orderId);
         OrderlistUserDto user = mapper.selUser(orderId);
@@ -85,34 +97,21 @@ public class MypageService {
     }
 
     public ProfileSelDto profile(Long iuser){
+        //iuser = USERPK.getLoginUserPk();
         ProfileSelDto profile = mapper.profile(iuser);
 
-        String path = "http://192.168.0.144:5001/img/webeditor/"+iuser+"/"+profile.getImage();
+        String path = "http://192.168.0.144:5001/img/user/"+iuser+"/"+profile.getImage();
         profile.setImage(path);
         return profile;
     }
 
     public int UpdProfileDto(ProfileUpdDto dto){
-        ProfileSelDto profile = mapper.profile(dto.getIuser());
 
-        if (dto.getZipcode()==null) {
-            dto.setZipcode(profile.getZipcode());
-        } else if (dto.getAddress()==null){
-            dto.setAddress(profile.getAddress());
-        } else if (dto.getAddressDetail()==null) {
-            dto.setAddressDetail(profile.getAddressDetail());
-        } else if (dto.getBirthday()==null) {
-            dto.setBirthday(profile.getBirthday());
-        } else if (dto.getZipcode()==null) {
-            dto.setZipcode(profile.getZipcode());
-        } else if (dto.getNickNm()==null) {
-            dto.setNickNm(profile.getNickNm());
-        } else if (dto.getPhoneNumber()==null){
-            dto.setPhoneNumber(profile.getMobileNb());
+        if (dto.getPassword()!=null || dto.getPassword()!=""){
+            String encode = PW_ENCODER.encode(dto.getPassword());
+            dto.setPassword(encode);
         }
 
-        String encode = PW_ENCODER.encode(dto.getPassword());
-        dto.setPassword(encode);
         return mapper.Updprofile(dto);
     }
 
@@ -125,11 +124,41 @@ public class MypageService {
     }
 
     public int delUser(Long iuser){
+       // iuser = USERPK.getLoginUserPk();
         return mapper.delUser(iuser);
     }
 
 
-    public int patchProfile(MultipartFile img, Long iuser) {
-        return mapper.patchProfile(img, iuser);
+    public int updPicUser(MultipartFile pic, Long iuser){
+        //iuser = USERPK.getLoginUserPk();
+        String centerPath = String.format("%s/user/%d", FileUtils.getAbsolutePath(fileDir),iuser);
+
+        File dic = new File(centerPath);
+        if(!dic.exists()){
+            dic.mkdirs();
+        }
+
+        String originFileName = pic.getOriginalFilename();
+        String savedFileName = FileUtils.makeRandomFileNm(originFileName);
+        String savedFilePath = String.format("%s/%s",centerPath, savedFileName);
+
+        File target = new File(savedFilePath);
+        try {
+            pic.transferTo(target);
+        }catch (Exception e) {
+            return 0;
+        }
+        String img = savedFileName;
+        try {
+            int result = mapper.patchProfile(img,iuser);
+            if(result == 0) {
+                throw new Exception("프로필 사진을 등록할 수 없습니다.");
+            }
+        } catch (Exception e) {
+            //파일 삭제
+            target.delete();
+            return 0;
+        }
+        return 1;
     }
 }

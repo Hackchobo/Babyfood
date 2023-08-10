@@ -10,6 +10,7 @@ public interface BuyMapper {
 
     int delOrderbasket(Long cartId);
     int updProduct(BuyUpdDto dto);
+    BuyUserSelDto selUser(Long iuser);
 
     int addpoint(BuyUpdPointDto dto);
     int removepoint(BuyUpdPointDto dto);

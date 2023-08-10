@@ -1,6 +1,7 @@
 package com.green.babyfood.mypage;
 
 import com.green.babyfood.mypage.model.*;
+import com.green.babyfood.user.model.CreatePicDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -58,16 +59,18 @@ public class MypageController {
         return service.nicknmcheck(nickname);
     }
 
-//    @PostMapping(value = "/profile/img", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-//    @Operation(summary = "유저정보-이미지 수정")
-//    int patchProfile(@RequestPart MultipartFile img, @RequestParam Long iuser){
-//        return service.patchProfile(img, iuser);
-//    }
-
     @DeleteMapping("/profile")
     @Operation(summary = "회원탈퇴")
     int delprofile(Long iuser){
         return service.delUser(iuser);
+    }
+
+    @PatchMapping(value = "/profile/pic", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "유저 사진수정",description =
+            "iuser : 회원의 고유값(PK) <- 해당 유저가 수정됨<br>"+
+                    "pic : 사진 넣는 부분")
+    public int patchPic(@RequestParam MultipartFile pic, @RequestParam Long iuser){
+        return service.updPicUser(pic,iuser);
     }
 
 
