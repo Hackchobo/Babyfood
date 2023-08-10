@@ -2,8 +2,11 @@ package com.green.babyfood.mypage;
 
 import com.green.babyfood.config.security.PasswordEncoderConfiguration;
 import com.green.babyfood.mypage.model.*;
+import com.green.babyfood.user.model.CreatePicDto;
+import com.green.babyfood.util.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -19,6 +23,10 @@ import java.util.List;
 @Transactional
 @Slf4j
 public class MypageService {
+
+    @Value("${file.dir}")
+    private String fileDir;
+
     private final MypageMapper mapper;
     private final PasswordEncoder PW_ENCODER;
 
@@ -117,7 +125,35 @@ public class MypageService {
     }
 
 
-    public int patchProfile(MultipartFile img, Long iuser) {
-        return mapper.patchProfile(img, iuser);
+    public int updPicUser(MultipartFile pic, Long iuser){
+        String centerPath = String.format("%s/user/%d", FileUtils.getAbsolutePath(fileDir),iuser);
+
+        File dic = new File(centerPath);
+        if(!dic.exists()){
+            dic.mkdirs();
+        }
+
+        String originFileName = pic.getOriginalFilename();
+        String savedFileName = FileUtils.makeRandomFileNm(originFileName);
+        String savedFilePath = String.format("%s/%s",centerPath, savedFileName);
+
+        File target = new File(savedFilePath);
+        try {
+            pic.transferTo(target);
+        }catch (Exception e) {
+            return 0;
+        }
+        String img = savedFileName;
+        try {
+            int result = mapper.patchProfile(img,iuser);
+            if(result == 0) {
+                throw new Exception("프로필 사진을 등록할 수 없습니다.");
+            }
+        } catch (Exception e) {
+            //파일 삭제
+            target.delete();
+            return 0;
+        }
+        return 1;
     }
 }

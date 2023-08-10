@@ -1,6 +1,7 @@
 package com.green.babyfood.mypage;
 
 import com.green.babyfood.mypage.model.*;
+import com.green.babyfood.user.model.CreatePicDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,5 @@ public interface MypageMapper {
     OrderlistUserDto selUser(Long orderId);
     int delorder(Long orderId);
 
-
-    int patchProfile(MultipartFile img, Long iuser);
+    int patchProfile(String img, Long iuser);
 }
