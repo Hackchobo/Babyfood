@@ -2,6 +2,8 @@ package com.green.babyfood.sign.model;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class SignEntity {
     private String email;
@@ -13,4 +15,5 @@ public class SignEntity {
     private String address;
     private String addressDetail;
     private String nickNm;
+    private String birthday;
 }
