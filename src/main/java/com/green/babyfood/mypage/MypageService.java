@@ -97,7 +97,8 @@ public class MypageService {
     }
 
     public ProfileSelDto profile(Long iuser){
-        //iuser = USERPK.getLoginUserPk();
+
+        //Long iuser = USERPK.getLoginUserPk();
         ProfileSelDto profile = mapper.profile(iuser);
 
         String path = "http://192.168.0.144:5001/img/user/"+iuser+"/"+profile.getImage();
@@ -106,18 +107,6 @@ public class MypageService {
     }
 
     public int UpdProfileDto(ProfileUpdDto dto){
-        // 빈값으로 들어온 데이터 null 로 변경
-//
-//        if (dto.getNickNm() == null || dto.getNickNm().isEmpty()) {
-//            dto.setNickNm(null);
-//        }
-//        if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
-//            dto.setPassword(null);
-//        }
-//        if (dto.getPhoneNumber() == null || dto.getPhoneNumber().isEmpty()) {
-//            dto.setPhoneNumber(null);
-//        }
-
         return mapper.Updprofile(dto);
     }
 
@@ -130,13 +119,13 @@ public class MypageService {
     }
 
     public int delUser(Long iuser){
-       // iuser = USERPK.getLoginUserPk();
+       //Long iuser = USERPK.getLoginUserPk();
         return mapper.delUser(iuser);
     }
 
 
-    public int updPicUser(MultipartFile pic, Long iuser){
-        //iuser = USERPK.getLoginUserPk();
+    public int updPicUser(MultipartFile pic,Long iuser){
+        //Long iuser = USERPK.getLoginUserPk();
         String centerPath = String.format("%s/user/%d", FileUtils.getAbsolutePath(fileDir),iuser);
 
         File dic = new File(centerPath);

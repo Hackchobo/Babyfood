@@ -6,6 +6,6 @@ import lombok.Data;
 public class SearchSelVo {
     private int productid;
     private String name;
-    private String img;
+    private String thumbnail;
     private int price;
 }
