@@ -13,17 +13,18 @@ import static org.apache.commons.lang3.StringUtils.substring;
 @RequiredArgsConstructor
 public class BuyService {
     private final BuyMapper Mapper;
-    private final AuthenticationFacade USERPK;
+    //private final AuthenticationFacade USERPK;
+    private final AuthenticationFacade FACADE;
 
     public BuyProductRes BuyProduct(BuyEntity entity){
-        //entity.setIuser(USERPK.getLoginUserPk());
+        entity.setIuser(FACADE.getLoginUserPk());
 
         final int shipment = 1;
         final float earnedPercent = 0.03F;
         int totalprice = 0;
 
 
-        BuyUserSelDto userDto = Mapper.selUser(entity.getIuser());
+        BuyUserSelDto userDto = Mapper.selUser(FACADE.getLoginUserPk());
 
             // 값이 없을때
             if (entity.getRequest().equals("")||entity.getRequest()==null){
@@ -42,7 +43,7 @@ public class BuyService {
         BuyInsDto dto = new BuyInsDto();
         BuyProductRes res = new BuyProductRes();
 
-        dto.setIuser(entity.getIuser());
+        dto.setIuser(FACADE.getLoginUserPk());
         dto.setPayment(entity.getPayment());
         dto.setShipment(shipment);
         dto.setPhoneNm(entity.getPhoneNm());
@@ -65,7 +66,7 @@ public class BuyService {
         if (result == 1){
             BuyUpdPointDto addpoint = new BuyUpdPointDto();
             BuyUpdPointDto updpoint = new BuyUpdPointDto();
-            updpoint.setIuser(entity.getIuser());
+            updpoint.setIuser(FACADE.getLoginUserPk());
             updpoint.setPoint(entity.getPoint());
 
 
@@ -99,7 +100,7 @@ public class BuyService {
             res.setPaymentprice(totalprice-entity.getPoint()); // 결제금액구하기
             int point = (int) (res.getPaymentprice() * earnedPercent);
 
-            addpoint.setIuser(entity.getIuser());
+            addpoint.setIuser(FACADE.getLoginUserPk());
             addpoint.setPoint(point);
 
             int removepoint = Mapper.removepoint(updpoint);
