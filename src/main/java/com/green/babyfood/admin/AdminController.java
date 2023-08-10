@@ -14,7 +14,7 @@ import java.util.List;
 
 @Tag(name = "관리자페이지")
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 @RequiredArgsConstructor
 @Slf4j
 public class AdminController {
