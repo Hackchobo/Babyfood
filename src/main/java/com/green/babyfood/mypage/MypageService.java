@@ -106,11 +106,17 @@ public class MypageService {
     }
 
     public int UpdProfileDto(ProfileUpdDto dto){
-
-        if (dto.getPassword()!=null || dto.getPassword()!=""){
-            String encode = PW_ENCODER.encode(dto.getPassword());
-            dto.setPassword(encode);
-        }
+        // 빈값으로 들어온 데이터 null 로 변경
+//
+//        if (dto.getNickNm() == null || dto.getNickNm().isEmpty()) {
+//            dto.setNickNm(null);
+//        }
+//        if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
+//            dto.setPassword(null);
+//        }
+//        if (dto.getPhoneNumber() == null || dto.getPhoneNumber().isEmpty()) {
+//            dto.setPhoneNumber(null);
+//        }
 
         return mapper.Updprofile(dto);
     }
