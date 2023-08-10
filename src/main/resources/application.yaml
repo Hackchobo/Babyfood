@@ -45,12 +45,9 @@ spring:
     activate:
       on-profile: test
   datasource:
-    url: jdbc:mariadb://192.168.0.144:3306
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:init/schema.sql
-      data-locations: classpath:init/data.sql
+    url: jdbc:mariadb://localhost:3306/babyfood
+    username: root
+    password: green502
 ---
 
 spring:

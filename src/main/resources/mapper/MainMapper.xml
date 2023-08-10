@@ -71,7 +71,6 @@
         <if test="strallergy!=''">
             AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${strallergy}))
         </if>
-
         group by A.product_id
         order by A.sale_volumn desc
         limit #{startIdx},#{row}
