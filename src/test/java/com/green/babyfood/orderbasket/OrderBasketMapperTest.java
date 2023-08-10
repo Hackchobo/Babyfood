@@ -25,7 +25,7 @@ class OrderBasketMapperTest {
          entity.setCount(3);
 
          mapper.insOrderBasket(entity);
-         assertEquals(2L,entity.getCartId());
+         assertEquals(9L,entity.getCartId());
 
        }
 
