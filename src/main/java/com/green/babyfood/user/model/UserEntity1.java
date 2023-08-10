@@ -18,4 +18,5 @@ public class UserEntity1 {
     private String addressDetail;
     private String nickNm;
     private int point;
+
 }

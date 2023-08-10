@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class CreatePicDto {
-    private Long iuser;
+    private String email;
     private String image;
 }

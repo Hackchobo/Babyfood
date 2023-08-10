@@ -8,26 +8,27 @@
         SELECT iuser , email, password, image, name, birthday, mobile_nb mobileNb, created_at createdAt
         , role,zip_code zipCode, address, address_detail addressDetail, nick_nm nickNm, point
         FROM user
+        order by iuser asc
+        LIMIT #{startIdx}, #{rowLen}
     </select>
 
     <update id="updUser">
         update user
-        set email = #{email},
-        password = #{password},
-        name = #{name},
-        birthday = #{birthday},
-        mobile_nb = #{mobileNb},
-        zip_code = #{zipCode},
-        address = #{address},
-        address_detail = #{addressDetail},
-        nick_nm = #{nickNm}
-        where iuser = #{iuser}
+        <set>
+            <if test="nickNm != null and nickNm != '' ">nick_nm = #{nickNm},</if>
+            <if test="mobileNb != null and mobileNb != '' ">mobile_nb = #{mobileNb},</if>
+            <if test="birthday != null and birthday != '' ">birthday = #{birthday},</if>
+            <if test="zipCode != null and zipCode != '' ">zip_code = #{zipCode},</if>
+            <if test="address != null and address != '' ">address = #{address},</if>
+            <if test="addressDetail != null and addressDetail != '' ">address_detail = #{addressDetail}</if>
+        </set>
+        where email = #{email}
     </update>
 
     <update id="updPicUser">
         update user
         set image = #{image}
-        where iuser = #{iuser}
+        where email = #{email}
     </update>
 
     <update id="updPointUser">
