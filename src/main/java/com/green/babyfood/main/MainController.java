@@ -106,7 +106,7 @@ public class MainController {
             "volumn : 판매량<br>" +
             "maxPaige : 최대페이지수<br>" +
             "4개월 이하는 이유식이 먹을 나이가 아닙니다")
-    public List<MainSelVo> postBirthFilter(Long iuser, int row) {
-        return service.birthRecommendFilter(iuser, row);
+    public List<MainSelVo> postBirthFilter(int row) {
+        return service.birthRecommendFilter(row);
     }
 }

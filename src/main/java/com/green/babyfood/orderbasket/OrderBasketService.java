@@ -1,5 +1,6 @@
 package com.green.babyfood.orderbasket;
 
+import com.green.babyfood.config.security.AuthenticationFacade;
 import com.green.babyfood.orderbasket.model.OrderBasketDto;
 import com.green.babyfood.orderbasket.model.OrderBasketEntity;
 import com.green.babyfood.orderbasket.model.OrderBasketSelVo;
@@ -15,14 +16,15 @@ import java.util.List;
 public class OrderBasketService {
 
     private final OrderBasketMapper mapper;
+    private final AuthenticationFacade USERPK;
 
     public Long insOrderBasket(OrderBasketDto dto){
         OrderBasketEntity entity=new OrderBasketEntity();
-        entity.setIuser(dto.getIuser());
+        entity.setIuser(USERPK.getLoginUserPk());
         entity.setProductId(dto.getProductId());
         entity.setCount(dto.getCount());
         int result=0;
-        Long aLong = mapper.countUpd(dto.getIuser(), dto.getProductId());
+        Long aLong = mapper.countUpd(USERPK.getLoginUserPk(), dto.getProductId());
         System.out.println(aLong);
         if(aLong==null){
              result=mapper.insOrderBasket(entity);
@@ -38,8 +40,8 @@ public class OrderBasketService {
     }
 
 
-    public List<OrderBasketSelVo> selUserOrderBasket(Long iuser){
-        return mapper.selUserOrderBasket(iuser);
+    public List<OrderBasketSelVo> selUserOrderBasket(){
+        return mapper.selUserOrderBasket(USERPK.getLoginUserPk());
     }
 
     public int updCountPlus(Long cartId){
