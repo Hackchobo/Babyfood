@@ -66,7 +66,7 @@ public class MypageController {
     }
 
     @PatchMapping(value = "/profile/pic", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "유저/관리자 사진등록",description =
+    @Operation(summary = "유저 사진수정",description =
             "iuser : 회원의 고유값(PK) <- 해당 유저가 수정됨<br>"+
                     "pic : 사진 넣는 부분")
     public int patchPic(@RequestParam MultipartFile pic, @RequestParam Long iuser){

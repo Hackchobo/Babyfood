@@ -1,5 +1,6 @@
 package com.green.babyfood.mypage;
 
+import com.green.babyfood.config.security.AuthenticationFacade;
 import com.green.babyfood.config.security.PasswordEncoderConfiguration;
 import com.green.babyfood.mypage.model.*;
 import com.green.babyfood.user.model.CreatePicDto;
@@ -29,8 +30,10 @@ public class MypageService {
 
     private final MypageMapper mapper;
     private final PasswordEncoder PW_ENCODER;
+    private final AuthenticationFacade USERPK;
 
     public  OrderlistSelDto[] Orderlist(OrderlistMonthsSelDto dto){
+        //dto.setIuser(USERPK.getLoginUserPk());
 
         List<OrderlistCountSelDto> orderlist = mapper.orderlist(dto);
 
@@ -75,7 +78,6 @@ public class MypageService {
 
     public OrderlistSelUserDto OrderlistDetail(Long orderId){
 
-
         List<OrderlistDetailSelDto> orderlist = mapper.orderlistDetail(orderId);
         OrderlistUserDto user = mapper.selUser(orderId);
 
@@ -95,6 +97,7 @@ public class MypageService {
     }
 
     public ProfileSelDto profile(Long iuser){
+        //iuser = USERPK.getLoginUserPk();
         ProfileSelDto profile = mapper.profile(iuser);
 
         String path = "http://192.168.0.144:5001/img/user/"+iuser+"/"+profile.getImage();
@@ -121,11 +124,13 @@ public class MypageService {
     }
 
     public int delUser(Long iuser){
+       // iuser = USERPK.getLoginUserPk();
         return mapper.delUser(iuser);
     }
 
 
     public int updPicUser(MultipartFile pic, Long iuser){
+        //iuser = USERPK.getLoginUserPk();
         String centerPath = String.format("%s/user/%d", FileUtils.getAbsolutePath(fileDir),iuser);
 
         File dic = new File(centerPath);

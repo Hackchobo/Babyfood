@@ -1,6 +1,7 @@
 package com.green.babyfood.buy;
 
 import com.green.babyfood.buy.model.*;
+import com.green.babyfood.config.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,10 @@ import static org.apache.commons.lang3.StringUtils.substring;
 @RequiredArgsConstructor
 public class BuyService {
     private final BuyMapper Mapper;
+    private final AuthenticationFacade USERPK;
 
     public BuyProductRes BuyProduct(BuyEntity entity){
+        //entity.setIuser(USERPK.getLoginUserPk());
 
         final int shipment = 1;
         final float earnedPercent = 0.03F;

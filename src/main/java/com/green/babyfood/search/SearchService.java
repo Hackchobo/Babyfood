@@ -97,6 +97,8 @@ public class SearchService {
                 .append(mackerel+",").append(shellfish+",").append(peach+",").append(tomato+",").append(chicken+",").append(pork+",")
                 .append(beef+",").append(sulfur_dioxide+",").append(fish+",");
         String strallergy = String.valueOf(allergy);
+        System.out.println(strallergy);
+
         String[] split = strallergy.split(",");
         String plus="";
         String subAllergy = "";
