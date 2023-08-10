@@ -1,5 +1,6 @@
 package com.green.babyfood.main;
 
+import com.green.babyfood.config.security.AuthenticationFacade;
 import com.green.babyfood.main.model.MainListPageDto;
 import com.green.babyfood.main.model.MainSelVo;
 import com.green.babyfood.main.model.MainSelVoMaxPaige;
@@ -17,7 +18,7 @@ import java.util.List;
 public class MainService {
 
     private final MainMapper mapper;
-
+    private final AuthenticationFacade USERPK;
 
     public MainSelVoMaxPaige mainSelView(int page,int row) {
 
@@ -184,7 +185,7 @@ public class MainService {
 //   }
 
 
-    public List<MainSelVo> birthRecommendFilter(Long iuser, int row) {
+    public List<MainSelVo> birthRecommendFilter( int row) {
 
 //        String plus="";
 //        String subAllergy="";
@@ -200,7 +201,7 @@ public class MainService {
 //        else {
 //            subAllergy="";
 //        }
-        int month = mapper.birth(iuser);
+        int month = mapper.birth(USERPK.getLoginUserPk());
         int cate = 0;
         if (month <= 4) {
              throw new RuntimeException("이유식 먹을수 있는 나이가 아닙니다");
