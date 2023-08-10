@@ -35,7 +35,7 @@
         AND A.p_quantity !=0
         AND A.is_delete = 0
         <if test="allergy!=''">
-        AND E.allergy_id NOT IN (${allergy})
+            AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${allergy}))
         </if>
         GROUP BY A.product_id
         <choose>
