@@ -44,6 +44,14 @@ public class MainService {
 
 
         List<MainSelVo> mainSelVos = mapper.mainSelView(startIdx, row,subAllergy);
+        for (int i = 0; i < mainSelVos.size(); i++) {
+            String thumbnail = mainSelVos.get(i).getThumbnail();
+            Long productId=mainSelVos.get(i).getProductId();
+            String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
+            mainSelVos.get(i).setThumbnail(fullPath);
+        }
+
+
 
         int maxPaige1 = mapper.maxPaige(subAllergy);
         int maxPaige2 = (int) Math.ceil((double) maxPaige1 / row);
@@ -57,26 +65,26 @@ public class MainService {
 
 
 
-    public List<MainSelVo> random(String egg,String milk,String buckwheat,String peanut,String soybean,String wheat,String pine_nut,String walnut,String crab,String shrimp
-            ,String squid,String mackerel,String shellfish,String peach,String tomato,String chicken,String pork,String beef,String sulfur_dioxide,String fish) {
-
-        StringBuffer allergy = new StringBuffer();
-        allergy.append(egg + ",").append(milk + ",").append(buckwheat + ",").append(peanut + ",").append(soybean + ",")
-                .append(wheat + ",").append(pine_nut + ",").append(walnut + ",").append(crab + ",").append(shrimp + ",").append(squid + ",")
-                .append(mackerel + ",").append(shellfish + ",").append(peach + ",").append(tomato + ",").append(chicken + ",").append(pork + ",")
-                .append(beef + ",").append(sulfur_dioxide + ",").append(fish + ",");
-
-        String strallergy = String.valueOf(allergy);
-        String[] split = strallergy.split(",");
-        String plus = "";
-        for (String s : split) {
-            if (!s.equals("null")) {
-                plus += s + ",";
-            }
-        }
-
-        return mapper.random();
-    }
+//    public List<MainSelVo> random(String egg,String milk,String buckwheat,String peanut,String soybean,String wheat,String pine_nut,String walnut,String crab,String shrimp
+//            ,String squid,String mackerel,String shellfish,String peach,String tomato,String chicken,String pork,String beef,String sulfur_dioxide,String fish) {
+//
+//        StringBuffer allergy = new StringBuffer();
+//        allergy.append(egg + ",").append(milk + ",").append(buckwheat + ",").append(peanut + ",").append(soybean + ",")
+//                .append(wheat + ",").append(pine_nut + ",").append(walnut + ",").append(crab + ",").append(shrimp + ",").append(squid + ",")
+//                .append(mackerel + ",").append(shellfish + ",").append(peach + ",").append(tomato + ",").append(chicken + ",").append(pork + ",")
+//                .append(beef + ",").append(sulfur_dioxide + ",").append(fish + ",");
+//
+//        String strallergy = String.valueOf(allergy);
+//        String[] split = strallergy.split(",");
+//        String plus = "";
+//        for (String s : split) {
+//            if (!s.equals("null")) {
+//                plus += s + ",";
+//            }
+//        }
+//
+//        return mapper.random();
+//    }
 
 
     public List<MainSelVo> bestSell(String egg, String milk, String buckwheat, String peanut, String soybean, String wheat, String pine_nut,
@@ -101,8 +109,17 @@ public class MainService {
             System.out.println(subAllergy);
             return mapper.bestSell(subAllergy);
         }
-        return mapper.bestSell("");
+        List<MainSelVo> mainSelVos = mapper.bestSell("");
+        for (int i = 0; i < mainSelVos.size(); i++) {
+            String thumbnail = mainSelVos.get(i).getThumbnail();
+            Long productId=mainSelVos.get(i).getProductId();
+            String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
+            mainSelVos.get(i).setThumbnail(fullPath);
+        }
+        return mainSelVos;
     }
+
+
 
     public MainSelVoMaxPaige bestSellAll(int page,int row,
                                     String egg, String milk, String buckwheat, String peanut, String soybean, String wheat, String pine_nut,
@@ -130,6 +147,13 @@ public class MainService {
             int maxPage=(int)Math.ceil(maxPageCount/(double)row);
 
             List<MainSelVo> mainSelVos = mapper.bestSellAll(startIdx, row, subAllergy);
+            for (int i = 0; i < mainSelVos.size(); i++) {
+                String thumbnail = mainSelVos.get(i).getThumbnail();
+                Long productId=mainSelVos.get(i).getProductId();
+                String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
+                mainSelVos.get(i).setThumbnail(fullPath);
+            }
+
             MainSelVoMaxPaige mainSelVoMaxPaige=new MainSelVoMaxPaige();
             mainSelVoMaxPaige.setMaxPage(maxPage);
             mainSelVoMaxPaige.setList(mainSelVos);
@@ -140,6 +164,12 @@ public class MainService {
         int maxPageCount = mapper.bestSellAllMaxPage("");
         int maxPage=(int)Math.ceil(maxPageCount/(double)row);
         List<MainSelVo> mainSelVos = mapper.bestSellAll(startIdx, row, "");
+        for (int i = 0; i < mainSelVos.size(); i++) {
+            String thumbnail = mainSelVos.get(i).getThumbnail();
+            Long productId=mainSelVos.get(i).getProductId();
+            String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
+            mainSelVos.get(i).setThumbnail(fullPath);
+        }
         MainSelVoMaxPaige mainSelVoMaxPaige=new MainSelVoMaxPaige();
         mainSelVoMaxPaige.setMaxPage(maxPage);
         mainSelVoMaxPaige.setList(mainSelVos);
@@ -223,6 +253,12 @@ public class MainService {
 //      int maxPage = (int) (Math.ceil(count / (double) row));
 //      MainSelVoMaxPaige voMaxPaige = new MainSelVoMaxPaige();
         List<MainSelVo> mainSelVos = mapper.birthRecommendFilter(cate, row,subAllergy);
+        for (int i = 0; i < mainSelVos.size(); i++) {
+            String thumbnail = mainSelVos.get(i).getThumbnail();
+            Long productId=mainSelVos.get(i).getProductId();
+           String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
+           mainSelVos.get(i).setThumbnail(fullPath);
+        }
 //       voMaxPaige.setMaxPage(maxPage);
 //       voMaxPaige.setList(mainSelVos);
 //       return voMaxPaige;

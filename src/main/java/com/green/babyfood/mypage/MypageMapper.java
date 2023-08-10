@@ -2,6 +2,7 @@ package com.green.babyfood.mypage;
 
 import com.green.babyfood.mypage.model.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface MypageMapper {
     int delorder(Long orderId);
 
 
-
+    int patchProfile(MultipartFile img, Long iuser);
 }

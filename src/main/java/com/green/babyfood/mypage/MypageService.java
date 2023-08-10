@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -62,8 +65,17 @@ public class MypageService {
 
     public OrderlistSelUserDto OrderlistDetail(Long orderId){
 
+
         List<OrderlistDetailSelDto> orderlist = mapper.orderlistDetail(orderId);
         OrderlistUserDto user = mapper.selUser(orderId);
+
+        for (int i = 0; i <orderlist.size(); i++) {
+
+            String thumbnail = orderlist.get(i).getThumbnail();
+            String path = "http://192.168.0.144:5001/img/webeditor/"+orderlist.get(i).getIuser()+"/"+thumbnail;
+            orderlist.get(i).setThumbnail(path);
+
+        }
         OrderlistSelUserDto build = OrderlistSelUserDto.builder().orderlist(orderlist).user(user).build();
 
         return build;
@@ -72,16 +84,35 @@ public class MypageService {
          return mapper.delorder(orderId);
     }
 
-    ProfileSelDto profile(Long iuser){
+    public ProfileSelDto profile(Long iuser){
         ProfileSelDto profile = mapper.profile(iuser);
+
+        String path = "http://192.168.0.144:5001/img/webeditor/"+iuser+"/"+profile.getImage();
+        profile.setImage(path);
         return profile;
     }
 
     public int UpdProfileDto(ProfileUpdDto dto){
+        ProfileSelDto profile = mapper.profile(dto.getIuser());
+
+        if (dto.getZipcode()==null) {
+            dto.setZipcode(profile.getZipcode());
+        } else if (dto.getAddress()==null){
+            dto.setAddress(profile.getAddress());
+        } else if (dto.getAddressDetail()==null) {
+            dto.setAddressDetail(profile.getAddressDetail());
+        } else if (dto.getBirthday()==null) {
+            dto.setBirthday(profile.getBirthday());
+        } else if (dto.getZipcode()==null) {
+            dto.setZipcode(profile.getZipcode());
+        } else if (dto.getNickNm()==null) {
+            dto.setNickNm(profile.getNickNm());
+        } else if (dto.getPhoneNumber()==null){
+            dto.setPhoneNumber(profile.getMobileNb());
+        }
+
         String encode = PW_ENCODER.encode(dto.getPassword());
         dto.setPassword(encode);
-
-
         return mapper.Updprofile(dto);
     }
 
@@ -98,4 +129,7 @@ public class MypageService {
     }
 
 
+    public int patchProfile(MultipartFile img, Long iuser) {
+        return mapper.patchProfile(img, iuser);
+    }
 }

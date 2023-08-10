@@ -23,7 +23,8 @@
     </select>
 
     <select id="orderlistDetail">
-        SELECT B.product_id productId,COALESCE(D.thumbnail, "이미지없음")thumbnail,C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice, DATE(A.created_at) createdAt
+        SELECT  B.product_id productId,D.thumbnail thumbnail,C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice, DATE(A.created_at) createdAt
+        ,A.iuser iuser
         FROM order_list A
         left JOIN order_detail B
         ON A.order_id = B.order_id
@@ -31,8 +32,10 @@
         ON C.product_id = B.product_id
         left JOIN product_img D
         ON C.product_id = D.product_id
-        WHERE A.order_id =  #{orderId}
+        WHERE A.order_id = #{orderId}
+        AND D.thumbnail IS NOT null
         AND A.cancel = 0
+        GROUP BY C.product_id
     </select>
     <update id="delorder">
         UPDATE order_list
@@ -48,7 +51,7 @@
     </select>
 
     <select id="profile">
-        SELECT A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb mobileNb,A.address address,A.address_detail addressDetail,A.nick_nm nickNm,A.point point
+        SELECT A.iuser,A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb mobileNb,A.address address,A.address_detail addressDetail,A.nick_nm nickNm,A.point point,A.zip_code zipcode
         FROM user A
         WHERE iuser = #{iuser}
     </select>
@@ -60,8 +63,9 @@
         mobile_nb = #{phoneNumber},
         birthday= #{birthday},
         address = #{address},
-        address_detail = #{addressDetail}
-        WHERE iuser = #{iuser};
+        address_detail = #{addressDetail},
+        zip_code = #{zipcode}
+        WHERE iuser = #{iuser}
     </update>
 
     <select id="SelNickNm">
@@ -73,5 +77,11 @@
         delete from user
         where iuser =#{iuser}
     </delete>
+
+    <update id="patchProfile">
+        update user
+        set image = #{img}
+        where iuser = #{iuser}
+    </update>
 
 </mapper>

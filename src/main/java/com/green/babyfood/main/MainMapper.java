@@ -11,7 +11,7 @@ public interface MainMapper {
     List<MainSelVo> mainSelView(int startIdx,int row,String strallergy);
     int maxPaige(String strallergy);
 
-    List<MainSelVo> random();
+//    List<MainSelVo> random();
     List<MainSelVo> bestSell(String strallergy);
     List<MainSelVo> bestSellAll(int startIdx,int row,String strallergy);
     int bestSellAllMaxPage(String strallergy);

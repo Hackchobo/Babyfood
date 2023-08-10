@@ -4,7 +4,9 @@ import com.green.babyfood.mypage.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 @Tag(name = "마이페이지 , 주문내역")
@@ -55,6 +57,12 @@ public class MypageController {
     int getNickNamecheck(@RequestParam String nickname){
         return service.nicknmcheck(nickname);
     }
+
+//    @PostMapping(value = "/profile/img", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+//    @Operation(summary = "유저정보-이미지 수정")
+//    int patchProfile(@RequestPart MultipartFile img, @RequestParam Long iuser){
+//        return service.patchProfile(img, iuser);
+//    }
 
     @DeleteMapping("/profile")
     @Operation(summary = "회원탈퇴")
