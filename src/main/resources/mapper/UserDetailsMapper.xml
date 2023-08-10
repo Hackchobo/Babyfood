@@ -13,6 +13,7 @@
         , address = #{address}
         , address_detail = #{addressDetail}
         , nick_nm = #{nickNm}
+        , birthday = #{birthday}
     </insert>
 
     <select id="getByUid">

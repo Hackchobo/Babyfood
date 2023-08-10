@@ -13,4 +13,5 @@ public class SignEntity {
     private String address;
     private String addressDetail;
     private String nickNm;
+    private String birthday;
 }
