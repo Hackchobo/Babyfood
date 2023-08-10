@@ -249,17 +249,14 @@ public class SignService {
         result.setMsg(CommonRes.FAIL.getMsg());
     }
 
-    // 이 아래로 비밀번호 찾기용 테스트코드
-    // 문제 발생시 아래구간 전체 주석처리해주세요
-
     public String findPassword(String mail, String mobileNb) {
 
+        // email을 기준으로 DB의 유저 정보와 비교
         SignPwDto inputDto = new SignPwDto();
         inputDto.setMail(mail);
-        inputDto.setMobileNb(mobileNb); // 유저가 입력한 정보 넣는 객체
+        inputDto.setMobileNb(mobileNb);
 
         SignPwDto dataDto = SIGN_MAPPER.findPassword(mail, mobileNb);
-        // email을 기준으로 DB의 유저 정보와 비교
 
         if (inputDto.equals(dataDto)){
             log.info("회원정보 일치, 비밀번호 변경 시작");
@@ -267,7 +264,7 @@ public class SignService {
             String pw = updPassword(); // 임시 비밀번호 생성
             SIGN_MAPPER.updPassword(dataDto.getIuser(), pw); // DB의 비밀번호 변경
             dto.setTitle("비밀번호 변경 메일입니다");
-            dto.setCtnt("임시 비밀번호 : " + pw);
+            dto.setCtnt("임시 비밀번호 : " + pw + "\n 임시 비밀번호를 이용하여 로그인 후, 사용하고자 하는 비밀번호로 변경하세요.");
             dto.setMailAddress(mail);
             EmailController.postSend(dto);
             return "회원정보 일치 / 임시 비밀번호 메일 발송";
@@ -278,7 +275,7 @@ public class SignService {
     }
 
     public String updPassword() {
-        // 임시 비밀번호 생성
+        // 임시 비밀번호 생성 -> 0~9, 알파벳 대소문자
         int index = 0;
         char[] charSet = new char[] {
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -296,12 +293,8 @@ public class SignService {
         for (int i = 0; i < PASSWORDLENGTH ; i++) {
             double rd = random.nextDouble();
             index = (int) (charSet.length * rd);
-
             password.append(charSet[index]);
-
-            System.out.println("index::" + index + "	charSet::"+ charSet[index]);
         }
-
         return password.toString();
     }
 

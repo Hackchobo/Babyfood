@@ -18,19 +18,19 @@ public class CateService {
     public CateSelLevelVo cateSelLevel(CateSelLevelDto dto) {
 
 
-        String plus="";
-        String subAllergy="";
-        if(dto.getAllergy()!=null){
-            for (int i = 0; i < dto.getAllergy().size(); i++) {
-                plus+=dto.getAllergy().get(i)+",";
-            }
-        }
-        if(!plus.equals("")){
-            subAllergy = plus.substring(0, plus.length()-1);
-        }
-        else {
-            subAllergy="";
-        }
+//       String plus="";
+//       String subAllergy="";
+//       if(dto.getAllergy()!=null){
+//           for (int i = 0; i < dto.getAllergy().size(); i++) {
+//               plus+=dto.getAllergy().get(i)+",";
+//           }
+//       }
+//       if(!plus.equals("")){
+//           subAllergy = plus.substring(0, plus.length()-1);
+//       }
+//       else {
+//           subAllergy="";
+//       }
 
         int page = (dto.getPage() - 1) * dto.getRow();
         CateSelLevelDto2 dto2=new CateSelLevelDto2();
@@ -38,7 +38,7 @@ public class CateService {
         dto2.setCateDetailId(dto.getCateDetailId());
         dto2.setPage(page);
         dto2.setRow(dto.getRow());
-        dto2.setStrallergy(subAllergy);
+//        dto2.setStrallergy(subAllergy);
 
         int maxPaigeResult = mapper.cateSelLevelmaxPage(dto2);
         System.out.println("maxPaigeResult = " + maxPaigeResult);

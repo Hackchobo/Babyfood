@@ -17,17 +17,16 @@ class OrderBasketMapperTest {
     @Autowired
     private OrderBasketMapper mapper;
 
-//  @Test
-//  void insOrderBasket(){
-//      OrderBasketEntity entity=new OrderBasketEntity();
-//      entity.setIuser(1L);
-//      entity.setProductId(1L);
-//      entity.setCount(3);
+     @Test
+     void insOrderBasket(){
+         OrderBasketEntity entity=new OrderBasketEntity();
+         entity.setIuser(1L);
+         entity.setProductId(1L);
+         entity.setCount(3);
 
-//      mapper.insOrderBasket(entity);
-//      entity.getCartId();
-//      (#{iuser},#{productId},#{count})
-//        int insOrderBasket(OrderBasketEntity entity);
-//    }
+         mapper.insOrderBasket(entity);
+         assertEquals(2L,entity.getCartId());
+
+       }
 
 }
