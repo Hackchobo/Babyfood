@@ -15,23 +15,14 @@ public class CateService {
 
 
 
-    public CateSelLevelVo cateSelLevel(CateSelLevelDto dto,String egg,String milk,String buckwheat,String peanut,String soybean,String wheat,
-                                       String pine_nut,String walnut,String crab,String shrimp,String squid,String mackerel,String shellfish,
-                                       String peach, String tomato,String chicken,String pork,String beef,String sulfur_dioxide,String fish) {
+    public CateSelLevelVo cateSelLevel(CateSelLevelDto dto) {
 
-        StringBuffer allergy = new StringBuffer();
-        allergy.append(egg+",").append(milk+",").append(buckwheat).append(",").append(peanut+",").append(soybean + ",")
-                .append(wheat+",").append(pine_nut+",").append(walnut+",").append(crab+",").append(shrimp+",").append(squid+",")
-                .append(mackerel+",").append(shellfish+",").append(peach+",").append(tomato+",").append(chicken+",").append(pork+",")
-                .append(beef+",").append(sulfur_dioxide+",").append(fish+",");
 
-        String strallergy = String.valueOf(allergy);
-        String[] split = strallergy.split(",");
         String plus="";
         String subAllergy="";
-        for (String s : split) {
-            if(!s.equals("null")){
-                plus+=s+",";
+        if(dto.getAllergy()!=null){
+            for (int i = 0; i < dto.getAllergy().size(); i++) {
+                plus+=dto.getAllergy().get(i)+",";
             }
         }
         if(!plus.equals("")){
@@ -50,8 +41,9 @@ public class CateService {
         dto2.setStrallergy(subAllergy);
 
         int maxPaigeResult = mapper.cateSelLevelmaxPage(dto2);
+        System.out.println("maxPaigeResult = " + maxPaigeResult);
         List<CateSelListVo> cateSelListVos = mapper.cateSelLevel(dto2);
-
+        System.out.println("cateSelListVos = " + cateSelListVos);
         CateSelLevelVo vo = new CateSelLevelVo();
         int maxPage = (int) Math.ceil(maxPaigeResult / (double) dto.getRow());
 

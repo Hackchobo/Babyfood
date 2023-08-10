@@ -18,48 +18,37 @@ public class MainService {
     private final MainMapper mapper;
 
 
-    public MainSelVoMaxPaige mainSelView(int paige, int row,
-                                        String egg,String milk,String buckwheat,String peanut,String soybean,String wheat,String pine_nut,String walnut,
-                                         String  crab,String shrimp,String squid,String mackerel,String shellfish,String peach,String tomato,
-                                         String chicken,String pork,String beef,String sulfur_dioxide,String fish) {
-        StringBuffer allergy = new StringBuffer();
-        allergy.append(egg+",").append(milk+",").append(buckwheat+",").append(peanut+",").append(soybean + ",")
-                .append(wheat+",").append(pine_nut+",").append(walnut+",").append(crab+",").append(shrimp+",").append(squid+",")
-                .append(mackerel+",").append(shellfish+",").append(peach+",").append(tomato+",").append(chicken+",").append(pork+",")
-                .append(beef+",").append(sulfur_dioxide+",").append(fish+",");
+    public MainSelVoMaxPaige mainSelView(int paige, int row, List<String> allergy) {
 
-        String strallergy = String.valueOf(allergy);
-        String[] split = strallergy.split(",");
         String plus="";
         String subAllergy="";
-        for (String s : split) {
-            if(!s.equals("null")){
-                plus+=s+",";
+        if(allergy!=null){
+            for (int i = 0; i < allergy.size(); i++) {
+                plus+=allergy.get(i)+",";
             }
-        }
-        int startIdx = (paige - 1) * row;
-        if(!plus.equals("")) {
             subAllergy = plus.substring(0, plus.length() - 1);
         }
 
 
-        List<MainSelVo> mainSelVos = mapper.mainSelView(startIdx, row,subAllergy);
-        for (int i = 0; i < mainSelVos.size(); i++) {
-            String thumbnail = mainSelVos.get(i).getThumbnail();
-            Long productId=mainSelVos.get(i).getProductId();
-            String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
-            mainSelVos.get(i).setThumbnail(fullPath);
-        }
+        int startIdx = (paige - 1) * row;
+
+       List<MainSelVo> mainSelVos = mapper.mainSelView(startIdx, row, subAllergy);
+       for (int i = 0; i < mainSelVos.size(); i++) {
+           String thumbnail = mainSelVos.get(i).getThumbnail();
+           Long productId=mainSelVos.get(i).getProductId();
+           String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
+           mainSelVos.get(i).setThumbnail(fullPath);
+      }
 
 
 
-        int maxPaige1 = mapper.maxPaige(subAllergy);
-        int maxPaige2 = (int) Math.ceil((double) maxPaige1 / row);
-        MainSelVoMaxPaige mainSelVoMaxPaige = new MainSelVoMaxPaige();
-        mainSelVoMaxPaige.setMaxPage(maxPaige2);
-        mainSelVoMaxPaige.setList(mainSelVos);
+      int maxPaige1 = mapper.maxPaige(subAllergy);
+      int maxPaige2 = (int) Math.ceil((double) maxPaige1 / row);
+      MainSelVoMaxPaige mainSelVoMaxPaige = new MainSelVoMaxPaige();
+      mainSelVoMaxPaige.setMaxPage(maxPaige2);
+      mainSelVoMaxPaige.setList(mainSelVos);
 
-        return mainSelVoMaxPaige;
+     return mainSelVoMaxPaige;
     }
 
 
@@ -87,26 +76,19 @@ public class MainService {
 //    }
 
 
-    public List<MainSelVo> bestSell(String egg, String milk, String buckwheat, String peanut, String soybean, String wheat, String pine_nut,
-                                    String walnut, String crab, String shrimp, String squid, String mackerel, String shellfish, String peach, String tomato, String chicken,
-                                    String pork, String beef, String sulfur_dioxide, String fish) {
-        StringBuffer allergy = new StringBuffer();
-        allergy.append(egg + ",").append(milk + ",").append(buckwheat + ",").append(peanut + ",").append(soybean + ",")
-                .append(wheat + ",").append(pine_nut + ",").append(walnut + ",").append(crab + ",").append(shrimp + ",").append(squid + ",")
-                .append(mackerel + ",").append(shellfish + ",").append(peach + ",").append(tomato + ",").append(chicken + ",").append(pork + ",")
-                .append(beef + ",").append(sulfur_dioxide + ",").append(fish + ",");
+    public List<MainSelVo> bestSell(List<String> allergy) {
 
-        String strallergy = String.valueOf(allergy);
-        String[] split = strallergy.split(",");
-        String plus = "";
-        for (String s : split) {
-            if (!s.equals("null")) {
-                plus += s + ",";
+        String plus="";
+        String subAllergy="";
+        if(allergy!=null){
+            for (int i = 0; i < allergy.size(); i++) {
+                plus+=allergy.get(i)+",";
             }
         }
+
         if(!plus.equals("")){
-            String subAllergy = plus.substring(0, plus.length()-1);
-            System.out.println(subAllergy);
+            subAllergy = plus.substring(0, plus.length()-1);
+
             return mapper.bestSell(subAllergy);
         }
         List<MainSelVo> mainSelVos = mapper.bestSell("");
@@ -121,28 +103,22 @@ public class MainService {
 
 
 
-    public MainSelVoMaxPaige bestSellAll(int page,int row,
-                                    String egg, String milk, String buckwheat, String peanut, String soybean, String wheat, String pine_nut,
-                                    String walnut, String crab, String shrimp, String squid, String mackerel, String shellfish, String peach, String tomato, String chicken,
-                                    String pork, String beef, String sulfur_dioxide, String fish) {
-        StringBuffer allergy = new StringBuffer();
-        allergy.append(egg + ",").append(milk + ",").append(buckwheat + ",").append(peanut + ",").append(soybean + ",")
-                .append(wheat + ",").append(pine_nut + ",").append(walnut + ",").append(crab + ",").append(shrimp + ",").append(squid + ",")
-                .append(mackerel + ",").append(shellfish + ",").append(peach + ",").append(tomato + ",").append(chicken + ",").append(pork + ",")
-                .append(beef + ",").append(sulfur_dioxide + ",").append(fish + ",");
+    public MainSelVoMaxPaige bestSellAll(int page,int row,List<String> allergy) {
 
-        String strallergy = String.valueOf(allergy);
-        String[] split = strallergy.split(",");
-        String plus = "";
-        for (String s : split) {
-            if (!s.equals("null")) {
-                plus += s + ",";
+
+
+        String plus="";
+        String subAllergy="";
+        if(allergy!=null){
+            for (int i = 0; i < allergy.size(); i++) {
+                plus+=allergy.get(i)+",";
             }
         }
+
         int startIdx=(page-1)*row;
         if(!plus.equals("")){
-            String subAllergy = plus.substring(0, plus.length()-1);
-
+             subAllergy = plus.substring(0, plus.length()-1);
+            System.out.println(subAllergy);
             int maxPageCount = mapper.bestSellAllMaxPage(subAllergy);
             int maxPage=(int)Math.ceil(maxPageCount/(double)row);
 
@@ -206,28 +182,16 @@ public class MainService {
 //   }
 
 
-    public List<MainSelVo> birthRecommendFilter(Long iuser, int row,String egg,
-                                                  String milk, String buckwheat, String peanut, String soybean,
-                                                  String wheat, String pine_nut, String walnut, String crab, String shrimp,
-                                                  String squid, String mackerel, String shellfish, String peach,
-                                                  String tomato, String chicken, String pork,
-                                                  String beef, String sulfur_dioxide, String fish) {
-        StringBuffer allergy = new StringBuffer();
-        allergy.append(egg+",").append(milk+",").append(buckwheat).append(",").append(peanut+",").append(soybean + ",")
-                .append(wheat+",").append(pine_nut+",").append(walnut+",").append(crab+",").append(shrimp+",").append(squid+",")
-                .append(mackerel+",").append(shellfish+",").append(peach+",").append(tomato+",").append(chicken+",").append(pork+",")
-                .append(beef+",").append(sulfur_dioxide+",").append(fish+",");
-                
-        String strallergy = String.valueOf(allergy);
-        String[] split = strallergy.split(",");
-        String plus="";
+    public List<MainSelVo> birthRecommendFilter(Long iuser, int row, List<String> allergy) {
 
-        for (String s : split) {
-            if(!s.equals("null")){
-                plus+=s+",";
+        String plus="";
+        String subAllergy="";
+        if(allergy!=null){
+            for (int i = 0; i < allergy.size(); i++) {
+                plus+=allergy.get(i)+",";
             }
         }
-        String subAllergy="";
+
         if(!plus.equals("")){
              subAllergy = plus.substring(0, plus.length()-1);
         }

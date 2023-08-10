@@ -98,7 +98,7 @@ public class OrderBasketControllerTest {
 
 
     @Test
-    void orerBasketSel() throws Exception {
+    void orderBasketSel() throws Exception {
         List<OrderBasketSelVo> list=new ArrayList<>();
         OrderBasketSelVo vo1=new OrderBasketSelVo();
         vo1.setCartId(1L);
