@@ -107,6 +107,10 @@ public class MypageService {
 
     public int UpdProfileDto(ProfileUpdDto dto){
 
+
+        String encode = PW_ENCODER.encode(dto.getPassword());
+        dto.setPassword(encode);
+
         return mapper.Updprofile(dto);
     }
 
@@ -127,6 +131,7 @@ public class MypageService {
     public int updPicUser(MultipartFile pic, Long iuser){
         //iuser = USERPK.getLoginUserPk();
         String centerPath = String.format("%s/user/%d", FileUtils.getAbsolutePath(fileDir),iuser);
+
 
         File dic = new File(centerPath);
         if(!dic.exists()){

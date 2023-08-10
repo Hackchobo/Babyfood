@@ -5,7 +5,7 @@
 <mapper namespace="com.green.babyfood.search.SearchMapper">
 
     <select id="selproduct">
-        SELECT A.product_id productid,A.p_name NAME,D.thumbnail thumbnail,A.p_price price
+        SELECT  A.product_id productid,A.p_name NAME,D.thumbnail thumbnail,A.p_price price
         FROM product A
         left JOIN product_allergy B
         ON A.product_id = B.product_id
@@ -16,6 +16,7 @@
         WHERE p_name REGEXP #{msg}
         AND A.p_quantity !=0
         AND A.is_delete = 0
+        GROUP BY A.product_id
         LIMIT #{startIdx}, #{row}
     </select>
 
@@ -33,10 +34,10 @@
         WHERE p_name REGEXP #{msg}
         AND A.p_quantity !=0
         AND A.is_delete = 0
-        <if test="strallergy!=''">
+        <if test="allergy!=''">
         AND E.allergy_id NOT IN (${allergy})
         </if>
-
+        GROUP BY A.product_id
         <choose>
             <when test="sorter == 0">
                 ORDER BY A.sale_volumn DESC
@@ -52,7 +53,6 @@
             </when>
         </choose>
         LIMIT #{startIdx}, #{row}
-
     </select>
 
     <select id="maxpage">
