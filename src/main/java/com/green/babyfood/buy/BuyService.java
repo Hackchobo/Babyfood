@@ -19,15 +19,21 @@ public class BuyService {
         final float earnedPercent = 0.03F;
         int totalprice = 0;
 
-        // 값이 없을때
-        for (int i = 0; i <entity.getOrderbasket().size(); i++) {
-            if (entity.getRequest().equals("")){
+
+        BuyUserSelDto userDto = Mapper.selUser(entity.getIuser());
+
+            // 값이 없을때
+            if (entity.getRequest().equals("")||entity.getRequest()==null){
                 entity.setRequest("요청사항 없음");
+            }if (entity.getAddress().equals("")||entity.getAddress()==null) {
+                entity.setAddress(userDto.getAddress());
+            }if (entity.getAddressDetail().equals("")||entity.getAddressDetail()==null) {
+                entity.setAddressDetail(userDto.getAddressDetail());
+            }if (entity.getPhoneNm().equals("")||entity.getPhoneNm()==null) {
+                entity.setPhoneNm(userDto.getMobileNm());
+            }if (entity.getReceiver().equals("")||entity.getReceiver()==null) {
+                entity.setReceiver(userDto.getName());
             }
-
-        }
-
-        // 결제할때 orderID 를 2023080400001
 
 
         BuyInsDto dto = new BuyInsDto();
@@ -50,8 +56,6 @@ public class BuyService {
                 return null;
             }
         }
-
-            Mapper.InsBuy(dto);
 
         int result = Mapper.InsBuy(dto);
 
