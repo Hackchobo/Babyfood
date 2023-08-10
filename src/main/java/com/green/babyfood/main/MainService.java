@@ -1,5 +1,6 @@
 package com.green.babyfood.main;
 
+import com.green.babyfood.main.model.MainListPageDto;
 import com.green.babyfood.main.model.MainSelVo;
 import com.green.babyfood.main.model.MainSelVoMaxPaige;
 import lombok.RequiredArgsConstructor;
@@ -18,21 +19,21 @@ public class MainService {
     private final MainMapper mapper;
 
 
-    public MainSelVoMaxPaige mainSelView(int paige, int row, List<String> allergy) {
+    public MainSelVoMaxPaige mainSelView(int page,int row) {
 
-        String plus="";
-        String subAllergy="";
-        if(allergy!=null){
-            for (int i = 0; i < allergy.size(); i++) {
-                plus+=allergy.get(i)+",";
-            }
-            subAllergy = plus.substring(0, plus.length() - 1);
-        }
+//      String plus="";
+//      String subAllergy="";
+//      if(dto.getAllergy()!=null){
+//          for (int i = 0; i < dto.getAllergy().size(); i++) {
+//              plus+=dto.getAllergy().get(i)+",";
+//          }
+//          subAllergy = plus.substring(0, plus.length() - 1);
+//      }
 
 
-        int startIdx = (paige - 1) * row;
+        int startIdx = (page - 1) * row;
 
-       List<MainSelVo> mainSelVos = mapper.mainSelView(startIdx, row, subAllergy);
+       List<MainSelVo> mainSelVos = mapper.mainSelView(startIdx,row);
        for (int i = 0; i < mainSelVos.size(); i++) {
            String thumbnail = mainSelVos.get(i).getThumbnail();
            Long productId=mainSelVos.get(i).getProductId();
@@ -42,7 +43,7 @@ public class MainService {
 
 
 
-      int maxPaige1 = mapper.maxPaige(subAllergy);
+      int maxPaige1 = mapper.maxPaige();
       int maxPaige2 = (int) Math.ceil((double) maxPaige1 / row);
       MainSelVoMaxPaige mainSelVoMaxPaige = new MainSelVoMaxPaige();
       mainSelVoMaxPaige.setMaxPage(maxPaige2);
@@ -76,22 +77,23 @@ public class MainService {
 //    }
 
 
-    public List<MainSelVo> bestSell(List<String> allergy) {
+    public List<MainSelVo> bestSell() {
 
-        String plus="";
-        String subAllergy="";
-        if(allergy!=null){
-            for (int i = 0; i < allergy.size(); i++) {
-                plus+=allergy.get(i)+",";
-            }
-        }
+//       String plus="";
+//       String subAllergy="";
+//       if(allergy!=null){
+//           for (int i = 0; i < allergy.size(); i++) {
+//               plus+=allergy.get(i)+",";
+//           }
+//       }
 
-        if(!plus.equals("")){
-            subAllergy = plus.substring(0, plus.length()-1);
+//      if(!plus.equals("")){
+//          subAllergy = plus.substring(0, plus.length()-1);
 
-            return mapper.bestSell(subAllergy);
-        }
-        List<MainSelVo> mainSelVos = mapper.bestSell("");
+//          return mapper.bestSell(subAllergy);
+//      }
+
+        List<MainSelVo> mainSelVos = mapper.bestSell();
         for (int i = 0; i < mainSelVos.size(); i++) {
             String thumbnail = mainSelVos.get(i).getThumbnail();
             Long productId=mainSelVos.get(i).getProductId();
@@ -103,43 +105,43 @@ public class MainService {
 
 
 
-    public MainSelVoMaxPaige bestSellAll(int page,int row,List<String> allergy) {
+    public MainSelVoMaxPaige bestSellAll(int page,int row) {
 
 
 
-        String plus="";
-        String subAllergy="";
-        if(allergy!=null){
-            for (int i = 0; i < allergy.size(); i++) {
-                plus+=allergy.get(i)+",";
-            }
-        }
+//       String plus="";
+//       String subAllergy="";
+//       if(allergy!=null){
+//           for (int i = 0; i < allergy.size(); i++) {
+//               plus+=allergy.get(i)+",";
+//           }
+//       }
 
-        int startIdx=(page-1)*row;
-        if(!plus.equals("")){
-             subAllergy = plus.substring(0, plus.length()-1);
-            System.out.println(subAllergy);
-            int maxPageCount = mapper.bestSellAllMaxPage(subAllergy);
-            int maxPage=(int)Math.ceil(maxPageCount/(double)row);
+          int startIdx=(page-1)*row;
+//      if(!plus.equals("")){
+//            subAllergy = plus.substring(0, plus.length()-1);
+//           System.out.println(subAllergy);
+//           int maxPageCount = mapper.bestSellAllMaxPage(subAllergy);
+//           int maxPage=(int)Math.ceil(maxPageCount/(double)row);
 
-            List<MainSelVo> mainSelVos = mapper.bestSellAll(startIdx, row, subAllergy);
-            for (int i = 0; i < mainSelVos.size(); i++) {
-                String thumbnail = mainSelVos.get(i).getThumbnail();
-                Long productId=mainSelVos.get(i).getProductId();
-                String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
-                mainSelVos.get(i).setThumbnail(fullPath);
-            }
+//           List<MainSelVo> mainSelVos = mapper.bestSellAll(startIdx, row);
+//           for (int i = 0; i < mainSelVos.size(); i++) {
+//               String thumbnail = mainSelVos.get(i).getThumbnail();
+//               Long productId=mainSelVos.get(i).getProductId();
+//               String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
+//               mainSelVos.get(i).setThumbnail(fullPath);
+//           }
 
-            MainSelVoMaxPaige mainSelVoMaxPaige=new MainSelVoMaxPaige();
-            mainSelVoMaxPaige.setMaxPage(maxPage);
-            mainSelVoMaxPaige.setList(mainSelVos);
+//           MainSelVoMaxPaige mainSelVoMaxPaige=new MainSelVoMaxPaige();
+//           mainSelVoMaxPaige.setMaxPage(maxPage);
+//           mainSelVoMaxPaige.setList(mainSelVos);
 
-            return mainSelVoMaxPaige;
-        }
+//           return mainSelVoMaxPaige;
+//       }
 
-        int maxPageCount = mapper.bestSellAllMaxPage("");
+        int maxPageCount = mapper.bestSellAllMaxPage();
         int maxPage=(int)Math.ceil(maxPageCount/(double)row);
-        List<MainSelVo> mainSelVos = mapper.bestSellAll(startIdx, row, "");
+        List<MainSelVo> mainSelVos = mapper.bestSellAll(startIdx, row);
         for (int i = 0; i < mainSelVos.size(); i++) {
             String thumbnail = mainSelVos.get(i).getThumbnail();
             Long productId=mainSelVos.get(i).getProductId();
@@ -182,22 +184,22 @@ public class MainService {
 //   }
 
 
-    public List<MainSelVo> birthRecommendFilter(Long iuser, int row, List<String> allergy) {
+    public List<MainSelVo> birthRecommendFilter(Long iuser, int row) {
 
-        String plus="";
-        String subAllergy="";
-        if(allergy!=null){
-            for (int i = 0; i < allergy.size(); i++) {
-                plus+=allergy.get(i)+",";
-            }
-        }
-
-        if(!plus.equals("")){
-             subAllergy = plus.substring(0, plus.length()-1);
-        }
-        else {
-            subAllergy="";
-        }
+//        String plus="";
+//        String subAllergy="";
+//        if(allergy!=null){
+//            for (int i = 0; i < allergy.size(); i++) {
+//                plus+=allergy.get(i)+",";
+//            }
+//        }
+//
+//        if(!plus.equals("")){
+//             subAllergy = plus.substring(0, plus.length()-1);
+//        }
+//        else {
+//            subAllergy="";
+//        }
         int month = mapper.birth(iuser);
         int cate = 0;
         if (month <= 4) {
@@ -216,7 +218,7 @@ public class MainService {
 //      int count = mapper.birthRecommendFilterMaxPaige(cate,subAllergy);
 //      int maxPage = (int) (Math.ceil(count / (double) row));
 //      MainSelVoMaxPaige voMaxPaige = new MainSelVoMaxPaige();
-        List<MainSelVo> mainSelVos = mapper.birthRecommendFilter(cate, row,subAllergy);
+        List<MainSelVo> mainSelVos = mapper.birthRecommendFilter(cate, row);
         for (int i = 0; i < mainSelVos.size(); i++) {
             String thumbnail = mainSelVos.get(i).getThumbnail();
             Long productId=mainSelVos.get(i).getProductId();

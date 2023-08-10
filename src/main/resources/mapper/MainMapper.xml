@@ -12,9 +12,11 @@
     LEFT JOIN product_allergy C
     ON A.product_id=C.product_id
     where A.p_quantity!=0 AND A.is_delete=0
+        <!--
         <if test="strallergy!=''">
             AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${strallergy}))
         </if>
+        -->
     group by A.product_id
     ORDER BY A.created_at desc
     LIMIT #{startIdx},#{row};
@@ -26,9 +28,11 @@
         left join product_allergy B
         on A.product_id=B.product_id
         where A.p_quantity!=0 AND A.is_delete=0
+        <!--
         <if test="strallergy!=''">
             AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${strallergy}))
         </if>
+        -->
     </select>
 
 <!--
@@ -51,9 +55,11 @@
         LEFT JOIN product_allergy C
         ON A.product_id=C.product_id
         where A.p_quantity!=0 and A.is_delete=0
+        <!--
         <if test="strallergy!=''">
             AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${strallergy}))
         </if>
+        -->
         group by A.product_id
         order by A.sale_volumn desc,rand()
         limit 8
@@ -68,9 +74,11 @@
         LEFT JOIN product_allergy C
         ON A.product_id=C.product_id
         where A.p_quantity!=0 and A.is_delete=0
+        <!--
         <if test="strallergy!=''">
             AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${strallergy}))
         </if>
+        -->
         group by A.product_id
         order by A.sale_volumn desc
         limit #{startIdx},#{row}
@@ -84,9 +92,11 @@
         LEFT JOIN product_allergy C
         ON A.product_id=C.product_id
         where A.p_quantity!=0 and A.is_delete=0
+        <!--
         <if test="strallergy!=''">
             AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${strallergy}))
         </if>
+        -->
         order by A.sale_volumn DESC;
     </select>
     
@@ -96,6 +106,8 @@
         FROM user
         WHERE iuser=#{iuser}
     </select>
+
+
 <!--
     <select id="birthRecommend">
         select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
@@ -132,15 +144,17 @@
         LEFT JOIN product_allergy D
         ON A.product_id=D.product_id
         WHERE C.cate_id=#{cate} and A.p_quantity!=0 and A.is_delete=0
+        <!--
         <if test="strallergy!=''">
             AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${strallergy}))
         </if>
+        -->
         group by A.product_id
         order by A.sale_volumn desc,rand()
         LIMIT #{row}
     </select>
 
-
+<!--
     <select id="birthRecommendFilterMaxPaige">
         select COUNT(distinct A.product_id)
         from product A
@@ -152,10 +166,12 @@
         ON A.product_id=D.product_id
 
         WHERE C.cate_id=#{cate} and A.p_quantity!=0 and A.is_delete=0
+
         <if test="strallergy!=''">
             AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${strallergy}))
         </if>
+
         order by A.sale_volumn desc,RAND()
     </select>
-
+-->
 </mapper>

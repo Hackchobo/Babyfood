@@ -18,9 +18,11 @@
         <if test="cateDetailId !=null and cateDetailId!='' ">
           and  A.cate_detail_id=#{cateDetailId}
         </if>
+        <!--
         <if test="strallergy!=''">
             AND C.product_id NOT IN(SELECT D.product_id FROM product_allergy WHERE D.allergy_id in(${strallergy}))
         </if>
+        -->
     </select>
 
     <select id="cateSelLevel">
@@ -36,9 +38,11 @@
         <if test="cateDetailId !=null and cateDetailId!='' ">
             AND A.cate_detail_id=#{cateDetailId}
         </if>
+        <!--
         <if test="strallergy!=''">
             AND C.product_id NOT IN(SELECT D.product_id FROM product_allergy WHERE D.allergy_id in(${strallergy}))
         </if>
+        -->
         group by A.product_id
         ORDER BY C.created_at desc
         LIMIT #{page},#{row}
