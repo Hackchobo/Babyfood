@@ -59,12 +59,24 @@
     <update id="Updprofile">
         UPDATE user
         SET nick_nm = #{nickNm},
+        <if test="password != null || password != '' ">
         password = #{password},
-        mobile_nb = #{phoneNumber},
-        birthday= #{birthday},
-        address = #{address},
-        address_detail = #{addressDetail},
-        zip_code = #{zipcode}
+        </if>
+        <if test="phoneNumber!= null || phoneNumber != ''">
+            mobile_nb = #{phoneNumber},
+        </if>
+        <if test=" birthday !=null || birthday !='' ">
+            birthday= #{birthday},
+        </if>
+        <if test="address !=null || address !='' ">
+            address = #{address},
+        </if>
+        <if test="addressDetail !=null || addressDetail !='' ">
+            address_detail = #{addressDetail},
+        </if>
+        <if test=" zipcode !=null || zipcode !='' ">
+            zip_code = #{zipcode}
+        </if>
         WHERE iuser = #{iuser}
     </update>
 

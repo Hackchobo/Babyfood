@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -54,7 +55,8 @@ public class MypageService {
             orderlistSelDto[i]=new OrderlistSelDto();
             orderlistSelDto[i].setOrderId(orderlist.get(i).getOrderId());
             orderlistSelDto[i].setCreatedAt(orderlist.get(i).getCreatedAt());
-            orderlistSelDto[i].setThumbnail(orderlist.get(i).getThumbnail());
+            String path = "192.168.0.144:5001/img/webeditor/"+dto.getIuser()+"/"+orderlist.get(i).getThumbnail();
+            orderlistSelDto[i].setThumbnail(path);
             orderlistSelDto[i].setName(orderlist.get(i).getName());
             orderlistSelDto[i].setPrice(orderlist.get(i).getPrice());
             orderlistSelDto[i].setShipment(orderlist.get(i).getShipment());
@@ -93,26 +95,12 @@ public class MypageService {
     }
 
     public int UpdProfileDto(ProfileUpdDto dto){
-        ProfileSelDto profile = mapper.profile(dto.getIuser());
 
-        if (dto.getZipcode()==null) {
-            dto.setZipcode(profile.getZipcode());
-        } else if (dto.getAddress()==null){
-            dto.setAddress(profile.getAddress());
-        } else if (dto.getAddressDetail()==null) {
-            dto.setAddressDetail(profile.getAddressDetail());
-        } else if (dto.getBirthday()==null) {
-            dto.setBirthday(profile.getBirthday());
-        } else if (dto.getZipcode()==null) {
-            dto.setZipcode(profile.getZipcode());
-        } else if (dto.getNickNm()==null) {
-            dto.setNickNm(profile.getNickNm());
-        } else if (dto.getPhoneNumber()==null){
-            dto.setPhoneNumber(profile.getMobileNb());
+        if (dto.getPassword()!=null || dto.getPassword()!=""){
+            String encode = PW_ENCODER.encode(dto.getPassword());
+            dto.setPassword(encode);
         }
 
-        String encode = PW_ENCODER.encode(dto.getPassword());
-        dto.setPassword(encode);
         return mapper.Updprofile(dto);
     }
 
