@@ -18,7 +18,6 @@ public class BuyController {
     @Operation(summary = "상품구매",description = "사용법 <br>"+
             "cartId : 장바구니 PK 번호<br>"+
             "productId : 상품 PK 번호<br>"+
-            "iuser : 유저 PK 번호 <br>"+
             "count : 상품 갯수 <br>"+
             "totalPrice : 주문한 상품의 가격 <br>"+
             "point : 포인트 사용 금액 <br>"+
