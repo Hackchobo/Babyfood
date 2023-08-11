@@ -28,7 +28,7 @@ public class UserController {
             "나타나는 정보 : 회원의 고유값(PK), 이메일, 비밀번호, 이미지, 이름, 생년월일, 모바일 번호, 생성일, 관리자 여부" +
                     "우편번호, 주소, 상세주소, 닉네임, 포인트<br>"
     )
-    public List<UserEntity1> getUser(@RequestParam @Min(value = 1, message = "page값은 1이상이어야 합니다.")
+    public List<AdminUserEntity> getUser(@RequestParam @Min(value = 1, message = "page값은 1이상이어야 합니다.")
                                          int page){
 
         UserSelEntity entity = new UserSelEntity();
@@ -49,7 +49,7 @@ public class UserController {
             "addressDetaile : 상세주소" +
             "변경할 값만 보내주거나 / 변경하지 않는 값은 null, 공백문자 등으로 보내주세요. 기존 정보를 유지합니다"
     )
-    public int patchUser(@RequestBody UserUpdDto1 dto){
+    public int patchUser(@RequestBody AdminUserUpdDto dto){
         return service.updUser(dto);
     }
 
