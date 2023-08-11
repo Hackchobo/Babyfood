@@ -21,7 +21,6 @@ public class OrderBasketController {
 
     @PostMapping
     @Operation(summary = "상품페이지에서 장바구니 버튼",description = ""+
-    "iuser : 유저번호<br>"+
     "productId : 상품번호<br>"+
     "count : 수량")
     public Long post(@RequestBody OrderBasketDto dto){
