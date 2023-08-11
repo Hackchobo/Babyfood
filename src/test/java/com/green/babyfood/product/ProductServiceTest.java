@@ -47,6 +47,7 @@ public class ProductServiceTest {
         when(mapper.selProduct(anyLong())).thenReturn(selDto); // selProduct 메소드에 어떤 pk값을 넣어도 dtoSel로 반환
         when(mapper.postReview(reviewDto)).thenReturn(1); // 리뷰 작성 메소드 호출시 무조건 1 반환
 
+
         // When
         ProductSelDto result = service.selProduct(productId);
 

@@ -5,6 +5,6 @@ VALUES
 	(8, 364, 1, 4, '2023-08-10 17:22:16');
 
 insert into `review`
-	(`review_id`, `iuser`, `product_id`, `ctnt`)
+(`review_id`, `iuser`, `product_id`, `ctnt`)
 VALUES
-    (1, 1, 1, '이것은 테스트용 리뷰이다');
+	(1, 1, 1, '이것은 테스트용 리뷰이다');
