@@ -14,5 +14,5 @@ public class BuyInsDto {
     private int payment;
     private int point;
 
-    List<BuyInsOrderbasketDto> orderbasket;
+    List<BuyInsOrderbasketDto> Insorderbasket;
 }

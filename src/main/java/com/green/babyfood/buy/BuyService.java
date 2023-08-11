@@ -30,6 +30,19 @@ public class BuyService {
         entity.setIuser(USERPK.getLoginUserPk());
         entity.setPoint(dto.getPoint());
 
+        List<BuyOrderbasketDto> orderbasket = new ArrayList<>();
+        for (int i = 0; i <dto.getInsorderbasket().size(); i++) {
+            BuyOrderbasketDto orderbasketdto = new BuyOrderbasketDto();
+            orderbasketdto.setProductId(dto.getInsorderbasket().get(i).getProductId());
+            orderbasketdto.setCartId(dto.getInsorderbasket().get(i).getCartId());
+            orderbasketdto.setCount(dto.getInsorderbasket().get(i).getCount());
+            orderbasketdto.setIuser(USERPK.getLoginUserPk());
+            orderbasketdto.setTotalprice(dto.getInsorderbasket().get(i).getTotalprice());
+            orderbasket.add(orderbasketdto);
+        }
+
+
+
 
         final int shipment = 1;
         final float earnedPercent = 0.03F;
@@ -54,7 +67,7 @@ public class BuyService {
         BuyInsorder order = new BuyInsorder();
         BuyProductRes res = new BuyProductRes();
 
-        order.setIuser(USERPK.getLoginUserPk());
+        order.setIuser(entity.getIuser());
         order.setPayment(entity.getPayment());
         order.setShipment(shipment);
         order.setPhoneNm(entity.getPhoneNm());
@@ -65,8 +78,8 @@ public class BuyService {
 
 
         //제품의 수량이 0개이하이면 return 0
-        for (int i = 0; i <entity.getOrderbasket().size(); i++) {
-            BuySelquantityDto quantity = Mapper.quantity(entity.getOrderbasket().get(i).getProductId());
+        for (int i = 0; i <orderbasket.size(); i++) {
+            BuySelquantityDto quantity = Mapper.quantity(orderbasket.get(i).getProductId());
             if (quantity.getQuantity() < 1){
                 return null;
             }
@@ -81,26 +94,26 @@ public class BuyService {
             updpoint.setPoint(entity.getPoint());
 
 
-            for (int i = 0; i <entity.getOrderbasket().size(); i++) {
+            for (int i = 0; i <orderbasket.size(); i++) {
 
                 //상품의 totalprice 가격 구하기
-                 totalprice += entity.getOrderbasket().get(i).getTotalprice();
+                 totalprice += orderbasket.get(i).getTotalprice();
 
 
                 BuyDetailInsDto detaildto = new BuyDetailInsDto();
                 detaildto.setOrderId(order.getOrderId());
-                detaildto.setProductId(entity.getOrderbasket().get(i).getProductId());
-                detaildto.setCount(entity.getOrderbasket().get(i).getCount());
-                detaildto.setTotalPrice(entity.getOrderbasket().get(i).getTotalprice());
+                detaildto.setProductId(orderbasket.get(i).getProductId());
+                detaildto.setCount(orderbasket.get(i).getCount());
+                detaildto.setTotalPrice(orderbasket.get(i).getTotalprice());
                 Mapper.InsBuyDetail(detaildto);
 
                 BuyUpdDto updDto = new BuyUpdDto();
-                updDto.setProductId(entity.getOrderbasket().get(i).getProductId());
-                updDto.setSaleVolumn(entity.getOrderbasket().get(i).getCount());
-                updDto.setQuantity(entity.getOrderbasket().get(i).getCount());
+                updDto.setProductId(orderbasket.get(i).getProductId());
+                updDto.setSaleVolumn(orderbasket.get(i).getCount());
+                updDto.setQuantity(orderbasket.get(i).getCount());
                 Mapper.updProduct(updDto);
 
-                Mapper.delOrderbasket(entity.getOrderbasket().get(i).getCartId());
+                Mapper.delOrderbasket(orderbasket.get(i).getCartId());
 
             }
 

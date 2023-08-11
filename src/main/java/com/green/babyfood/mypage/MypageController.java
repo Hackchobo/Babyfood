@@ -22,8 +22,8 @@ public class MypageController {
     @Operation(summary = "주문내역조회",description = ""+
             "iuser: 유저PK <br>"+
             "month: 조회하고싶은 기간(개월) <br>")
-    OrderlistSelDto[] getOrderlistMonths(OrderlistMonthsSelDto dto){
-        return service.Orderlist(dto);
+    OrderlistSelDto[] getOrderlistMonths(@RequestParam  int month){
+        return service.Orderlist(month);
     }
 
     @GetMapping("/orderlist/detail")
@@ -43,8 +43,8 @@ public class MypageController {
     @Operation(summary = "내 정보조회",description = ""+
             "image: 프로필이미지<br>"+
             "address: 주소 <br>")
-    ProfileSelDto getprofile(Long iuser){
-        return service.profile(iuser);
+    ProfileSelDto getprofile(){
+        return service.profile();
     }
 
     @PatchMapping("/profile")
@@ -61,16 +61,16 @@ public class MypageController {
 
     @DeleteMapping("/profile")
     @Operation(summary = "회원탈퇴")
-    int delprofile(Long iuser){
-        return service.delUser(iuser);
+    int delprofile(){
+        return service.delUser();
     }
 
     @PatchMapping(value = "/profile/pic", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "유저 사진수정",description =
             "iuser : 회원의 고유값(PK) <- 해당 유저가 수정됨<br>"+
                     "pic : 사진 넣는 부분")
-    public int patchPic(@RequestParam MultipartFile pic, @RequestParam Long iuser){
-        return service.updPicUser(pic,iuser);
+    public int patchPic(@RequestParam MultipartFile pic){
+        return service.updPicUser(pic);
     }
 
 

@@ -1,22 +1,21 @@
 package com.green.babyfood.mypage;
 
 import com.green.babyfood.mypage.model.*;
-import com.green.babyfood.user.model.CreatePicDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
 @Mapper
 public interface MypageMapper {
-    ProfileSelDto profile(Long iuser);
-    int Updprofile(ProfileUpdDto dto);
+    ProfileSelDto profile(OrderIuserDto dto);
+    int Updprofile(ProfileEntity entity);
     String SelNickNm(String nickNm);
-    int delUser(Long iuser);
+    int delUser(OrderIuserDto dto);
     List<OrderlistCountSelDto> orderlist(OrderlistMonthsSelDto dto);
     List<OrderlistDetailSelDto> orderlistDetail(Long orderId);
     OrderlistUserDto selUser(Long orderId);
     int delorder(Long orderId);
 
-    int patchProfile(String img, Long iuser);
+    int patchProfile(ProfileUpdPicDto dto);
 }
