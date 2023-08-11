@@ -13,4 +13,15 @@ CREATE TABLE IF NOT EXISTS `order_basket` (
     );
 
 
-
+drop table IF exists `review`;
+CREATE TABLE `review` (
+    `review_id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `iuser` BIGINT(20) UNSIGNED NOT NULL,
+    `product_id` BIGINT(20) UNSIGNED NOT NULL,
+    `ctnt` TEXT NOT NULL ,
+    PRIMARY KEY (`review_id`) USING BTREE,
+    INDEX `iuser` (`iuser`) USING BTREE,
+    INDEX `product_id` (`product_id`) USING BTREE,
+    CONSTRAINT `review_ibfk_1` FOREIGN KEY (`iuser`) REFERENCES `user` (`iuser`),
+    CONSTRAINT `review_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
+);
