@@ -1,13 +1,16 @@
 package com.green.babyfood.orderbasket;
 
+import com.green.babyfood.config.security.AuthenticationFacade;
 import com.green.babyfood.orderbasket.model.OrderBasketDto;
 import com.green.babyfood.orderbasket.model.OrderBasketEntity;
 import com.green.babyfood.orderbasket.model.OrderBasketSelVo;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -18,7 +21,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@Import({OrderBasketService.class})
+@Import({OrderBasketService.class, AuthenticationFacade.class})
 class OrderBasketServiceTest {
 
    @MockBean
@@ -26,24 +29,29 @@ class OrderBasketServiceTest {
 
    @Autowired
    private OrderBasketService service;
+   @MockBean
+   private AuthenticationFacade USERPK;
+
+
 
 
    @Test
    void insOrderBasket() {
+
+
       when(mapper.countUpd(anyLong(),anyLong())).thenReturn(null);
       when(mapper.updCount(anyLong(),anyInt())).thenReturn(1);
       when(mapper.insOrderBasket(any())).thenReturn(1);
       OrderBasketDto dto=new OrderBasketDto();
-      dto.setIuser(1L);
       dto.setProductId(1L);
       dto.setCount(3);
-      Long cartId = service.insOrderBasket(dto);
+
       OrderBasketEntity entity=new OrderBasketEntity();
-      entity.setIuser(dto.getIuser());
+      entity.setIuser(10L);
       entity.setProductId(dto.getProductId());
       entity.setCount(dto.getCount());
-
-      Long aLong=mapper.countUpd(dto.getIuser(),dto.getProductId());
+      Long cartId = service.insOrderBasket(dto);
+      Long aLong=mapper.countUpd( 10L,dto.getProductId());
       assertEquals(aLong,cartId);
       int result=0;
       if (aLong == null) {
@@ -84,7 +92,7 @@ class OrderBasketServiceTest {
       vos.add(vo2);
 
       when(mapper.selUserOrderBasket(anyLong())).thenReturn(vos);
-      List<OrderBasketSelVo> rVosList = service.selUserOrderBasket(10L);
+      List<OrderBasketSelVo> rVosList = service.selUserOrderBasket();
       assertEquals(rVosList.get(0).getCartId(),vos.get(0).getCartId());
       assertEquals(rVosList.get(0).getPrice(),vos.get(0).getPrice());
       assertEquals(rVosList.get(0).getName(),vos.get(0).getName());
