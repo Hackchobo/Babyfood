@@ -24,7 +24,7 @@ public class ProductService {
     @Value("${file.dir}")
     private String fileDir;
 
-    public ProductSelDto selProduct(int productId) {
+    public ProductSelDto selProduct(Long productId) {
         log.info("테스트");
 
         List<String> imgList = mapper.selProductImg(productId);
@@ -53,7 +53,7 @@ public class ProductService {
         dto.setThumbnail(thumbnailList);
 
 
-        log.info("예상 배송일정 확인 시작");
+//        log.info("예상 배송일정 확인 시작");
 
 
 
@@ -61,7 +61,7 @@ public class ProductService {
         return dto;
     }
 
-    private String createImageUrl(int productId, String imgName) {
+    private String createImageUrl(Long productId, String imgName) {
         String path = "http://192.168.0.144:5001/img/webeditor/"+productId+"/"+imgName;
         return path;
     }
