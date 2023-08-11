@@ -80,7 +80,7 @@ public class OrderBasketControllerTest {
     @DisplayName("장바구니 등록")
     void orderBasketIns() throws Exception {
         OrderBasketDto dto=new OrderBasketDto();
-        dto.setIuser(1L);
+
         dto.setProductId(1L);
         dto.setCount(2);
 
@@ -123,7 +123,7 @@ public class OrderBasketControllerTest {
         list.add(vo1);
         list.add(vo2);
 
-        given(service.selUserOrderBasket(any())).willReturn(list);
+        given(service.selUserOrderBasket()).willReturn(list);
 
         ResultActions ra = mvc.perform(get("/api/orderbasket"));
 
@@ -140,7 +140,7 @@ public class OrderBasketControllerTest {
                 .andExpect(jsonPath("$.[1].name").value("홍길동2"))
                 .andDo(print());
 
-        verify(service).selUserOrderBasket(any());
+        verify(service).selUserOrderBasket();
     }
 
     @Test
