@@ -114,9 +114,16 @@ public class MypageService {
     }
 
     public int UpdProfileDto(ProfileUpdDto dto){
+        Long iuser = USERPK.getLoginUserPk();
         ProfileEntity entity = new ProfileEntity();
-        entity.setIuser(USERPK.getLoginUserPk());
-        entity.setNickNm(dto.getNickNm());
+
+        String nickNm = mapper.SelNickNm(dto.getNickNm());
+
+        entity.setIuser(iuser);
+        if (!dto.getNickNm().equals(nickNm) ){
+            entity.setNickNm(dto.getNickNm());
+        }
+
         entity.setName(dto.getName());
         entity.setPhoneNumber(dto.getPhoneNumber());
         entity.setBirthday(dto.getBirthday());
@@ -124,8 +131,11 @@ public class MypageService {
         entity.setAddress(dto.getAddress());
         entity.setAddressDetail(dto.getAddressDetail());
 
-        String encode = PW_ENCODER.encode(dto.getPassword());
-        dto.setPassword(encode);
+        if (dto.getPassword()!=null || !dto.getPassword().equals("")){
+            String encode = PW_ENCODER.encode(dto.getPassword());
+            entity.setPassword(encode);
+        }
+
         return mapper.Updprofile(entity);
     }
 
