@@ -1,11 +1,7 @@
 package com.green.babyfood.product;
 
 import com.green.babyfood.config.security.AuthenticationFacade;
-import com.green.babyfood.orderbasket.OrderBasketMapper;
-import com.green.babyfood.orderbasket.OrderBasketService;
 import com.green.babyfood.product.model.ProductReviewDto;
-import com.green.babyfood.product.model.ProductSelDto;
-import com.green.babyfood.product.model.ReviewEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

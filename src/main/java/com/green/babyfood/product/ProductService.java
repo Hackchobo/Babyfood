@@ -1,9 +1,9 @@
 package com.green.babyfood.product;
 
-import com.green.babyfood.product.model.ProductImgDto;
+import com.green.babyfood.config.security.AuthenticationFacade;
 import com.green.babyfood.product.model.ProductReviewDto;
+import com.green.babyfood.product.model.ProductReviewEntity;
 import com.green.babyfood.product.model.ProductSelDto;
-import com.green.babyfood.product.model.ReviewEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +22,7 @@ import java.util.List;
 public class ProductService {
 
     private final ProductMapper mapper;
+    private final AuthenticationFacade USERPK;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -87,7 +87,11 @@ public class ProductService {
     }
 
     public int postReview(ProductReviewDto dto){
-        return mapper.postReview(dto);
+        ProductReviewEntity entity = new ProductReviewEntity();
+        entity.setProductId(dto.getProductId());
+        entity.setCtnt(dto.getCtnt());
+        entity.setIuser(USERPK.getLoginUserPk());
+        return mapper.postReview(entity);
     }
 
     List<ProductReviewDto> selReview(Long productId) {
