@@ -39,7 +39,7 @@
     </insert>
 
     <select id="selReview">
-        SELECT iuser, ctnt
+        SELECT iuser, ctnt, product_id productId
         from review
         where product_id = #{productId}
     </select>

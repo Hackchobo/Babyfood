@@ -8,8 +8,8 @@ import java.util.List;
 @Mapper
 public interface ProductMapper {
     ProductSelDto selProduct(Long productId);
-    int postReview(ProductReviewDto dto);
-    List<ReviewEntity> selReview(int productId);
+    int postReview(ProductReviewEntity entity);
+    List<ProductReviewDto> selReview(Long productId);
 
     List<String> selProductImg(Long productId);
     List<String> selProductThumbnail(Long productId);
