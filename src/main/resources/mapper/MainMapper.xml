@@ -35,7 +35,7 @@
         -->
     </select>
 
-<!--
+
     <select id="random">
         select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
         from product A
@@ -43,9 +43,9 @@
         ON A.product_id=B.product_id
         group by A.product_id
         ORDER BY RAND()
-        limit 5
+        limit 8
     </select>
--->
+
 
     <select id="bestSell">
         select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
