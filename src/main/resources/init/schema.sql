@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `order_basket` (
 
 
 drop table IF exists `review`;
-CREATE TABLE `review` (
+CREATE TABLE IF NOT EXISTS `review` (
     `review_id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     `iuser` BIGINT(20) UNSIGNED NOT NULL,
     `product_id` BIGINT(20) UNSIGNED NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE `review` (
     CONSTRAINT `review_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
 );
 
-drop table IF CREATE TABLE IF NOT EXISTS `order_list` (
+CREATE TABLE IF NOT EXISTS `order_list` (
     `order_id` bigint(100) unsigned NOT NULL AUTO_INCREMENT,
     `iuser` bigint(20) unsigned NOT NULL,
     `payment` tinyint(3) unsigned NOT NULL DEFAULT 1,
