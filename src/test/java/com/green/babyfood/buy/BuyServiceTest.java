@@ -82,7 +82,7 @@ class BuyServiceTest {
       assertEquals(insDto.getPoint(),buyProductRes.getPoint());
       assertEquals(paymentprice,buyProductRes.getPaymentprice());
 
-      verify(mapper,times(1)).quantity(anyLong());
+      verify(mapper,times(1)).InsBuy(any());
       verify(mapper,times(2)).updProduct(any());
       verify(mapper).InsBuy(any());
 

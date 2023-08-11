@@ -26,7 +26,8 @@ CREATE TABLE `review` (
     CONSTRAINT `review_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
 );
 
-drop table IF CREATE TABLE IF NOT EXISTS `order_list` (
+drop table if exists `orderlist`
+CREATE TABLE IF NOT EXISTS `order_list` (
     `order_id` bigint(100) unsigned NOT NULL AUTO_INCREMENT,
     `iuser` bigint(20) unsigned NOT NULL,
     `payment` tinyint(3) unsigned NOT NULL DEFAULT 1,
@@ -44,7 +45,8 @@ drop table IF CREATE TABLE IF NOT EXISTS `order_list` (
     CONSTRAINT `order_list_ibfk_1` FOREIGN KEY (`iuser`) REFERENCES `user` (`iuser`)
     ) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-drop table IF CREATE TABLE IF NOT EXISTS `order_detail` (
+drop table if exists `order_detail`
+CREATE TABLE IF NOT EXISTS `order_detail` (
     `order_detail_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     `order_id` bigint(20) unsigned NOT NULL,
     `product_id` bigint(20) unsigned NOT NULL,
