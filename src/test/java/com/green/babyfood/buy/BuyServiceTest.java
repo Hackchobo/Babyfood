@@ -77,7 +77,7 @@ class BuyServiceTest {
       when(mapper.quantity(any())).thenReturn(quantity);
 
       BuyProductRes buyProductRes = service.BuyProduct(insDto);
-      assertEquals(null,buyProductRes.getOrderId());
+      assertEquals(1,buyProductRes.getOrderId());
       assertEquals(totalprice,buyProductRes.getTotalprice());
       assertEquals(insDto.getPoint(),buyProductRes.getPoint());
       assertEquals(paymentprice,buyProductRes.getPaymentprice());
