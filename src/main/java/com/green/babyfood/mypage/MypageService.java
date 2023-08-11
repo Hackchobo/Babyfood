@@ -83,7 +83,7 @@ public class MypageService {
         for (int i = 0; i <orderlist.size(); i++) {
 
             String thumbnail = orderlist.get(i).getThumbnail();
-            String path = "http://192.168.0.144:5001/img/webeditor/"+orderlist.get(i).getIuser()+"/"+thumbnail;
+            String path = "http://192.168.0.144:5001/img/webeditor/"+orderlist.get(i).getProductId()+"/"+thumbnail;
             orderlist.get(i).setThumbnail(path);
 
         }
@@ -118,7 +118,6 @@ public class MypageService {
 
         String encode = PW_ENCODER.encode(dto.getPassword());
         dto.setPassword(encode);
-
         return mapper.Updprofile(entity);
     }
 
