@@ -56,26 +56,28 @@ public class MainService {
 
 
 
-//    public List<MainSelVo> random(String egg,String milk,String buckwheat,String peanut,String soybean,String wheat,String pine_nut,String walnut,String crab,String shrimp
-//            ,String squid,String mackerel,String shellfish,String peach,String tomato,String chicken,String pork,String beef,String sulfur_dioxide,String fish) {
-//
-//        StringBuffer allergy = new StringBuffer();
-//        allergy.append(egg + ",").append(milk + ",").append(buckwheat + ",").append(peanut + ",").append(soybean + ",")
-//                .append(wheat + ",").append(pine_nut + ",").append(walnut + ",").append(crab + ",").append(shrimp + ",").append(squid + ",")
-//                .append(mackerel + ",").append(shellfish + ",").append(peach + ",").append(tomato + ",").append(chicken + ",").append(pork + ",")
-//                .append(beef + ",").append(sulfur_dioxide + ",").append(fish + ",");
-//
-//        String strallergy = String.valueOf(allergy);
-//        String[] split = strallergy.split(",");
-//        String plus = "";
-//        for (String s : split) {
-//            if (!s.equals("null")) {
-//                plus += s + ",";
-//            }
-//        }
-//
-//        return mapper.random();
-//    }
+    public List<MainSelVo> random() {
+
+
+
+//       String strallergy = String.valueOf(allergy);
+//       String[] split = strallergy.split(",");
+//       String plus = "";
+//       for (String s : split) {
+//           if (!s.equals("null")) {
+//               plus += s + ",";
+//           }
+//       }
+
+        List<MainSelVo> random = mapper.random();
+        for (int i = 0; i < random.size(); i++) {
+            String thumbnail = random.get(i).getThumbnail();
+            Long productId=random.get(i).getProductId();
+            String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
+            random.get(i).setThumbnail(fullPath);
+        }
+        return random;
+    }
 
 
     public List<MainSelVo> bestSell() {
