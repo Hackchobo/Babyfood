@@ -14,6 +14,5 @@ public class BuyEntity {
     private int payment;
     private Long iuser;
     private int point;
-
-    List<BuyOrderbasketDto> orderbasket;
+    //List<BuyOrderbasketDto> orderbasket;
 }
