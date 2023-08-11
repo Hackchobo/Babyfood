@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ReviewEntity {
-    private int iuser;
+    private Long iuser;
     private String ctnt;
 }
