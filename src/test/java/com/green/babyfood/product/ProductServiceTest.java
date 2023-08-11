@@ -1,10 +1,7 @@
 package com.green.babyfood.product;
 
 import com.green.babyfood.config.security.AuthenticationFacade;
-import com.green.babyfood.orderbasket.OrderBasketMapper;
-import com.green.babyfood.orderbasket.OrderBasketService;
 import com.green.babyfood.product.model.ProductReviewDto;
-import com.green.babyfood.product.model.ProductSelDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +9,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.mockito.ArgumentMatchers.anyInt;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
@@ -30,26 +31,47 @@ public class ProductServiceTest {
     @MockBean
     private AuthenticationFacade USERPK;
 
+    Long iuser = USERPK.getLoginUserPk(); // 로그인한 유저의 pk(iuser)
+    Long productId = 1L;
 
     @Test
-    void selProduct(){ // 선택한 pk(productId) 상품정보 조회
-
-        Long iuser = USERPK.getLoginUserPk(); // 로그인한 유저의 pk(iuser)
+    void selReview(){
+        // 선택한 상품의 리뷰 정보 조회 테스트
 
         // Given
-        ProductSelDto selDto = new ProductSelDto();
-        Long productId = 1L;
+        List<ProductReviewDto> reviewList = new ArrayList<>();
+        ProductReviewDto reviewList1 = new ProductReviewDto();
+        reviewList1.setProductId(productId);
+        reviewList1.setIuser(iuser);
+        reviewList1.setCtnt("리뷰테스트1");
 
-        ProductReviewDto reviewDto = new ProductReviewDto();
-        reviewDto.setProductId(productId);
+        ProductReviewDto reviewList2 = new ProductReviewDto();
+        reviewList2.setProductId(productId);
+        reviewList2.setIuser(iuser);
+        reviewList2.setCtnt("리뷰테스트2");
 
-        // 모의 객체의 메서드 호출 시 반환할 값을 설정합니다.
-        when(mapper.selProduct(anyLong())).thenReturn(selDto); // selProduct 메소드에 어떤 pk값을 넣어도 dtoSel로 반환
-        when(mapper.postReview(reviewDto)).thenReturn(1); // 리뷰 작성 메소드 호출시 무조건 1 반환
+        reviewList.add(reviewList1);
+        reviewList.add(reviewList2);
 
-        // When
-        ProductSelDto result = service.selProduct(productId);
+        // 모의 객체의 메서드 호출 시 반환할 값을 설정
+        when(mapper.selReview(productId)).thenReturn(reviewList);
+        List<ProductReviewDto> testReviewList = service.selReview(productId);
+        assertEquals(testReviewList.get(0).getProductId(), reviewList.get(0).getProductId());
+        assertEquals(testReviewList.get(0).getIuser(), reviewList.get(0).getIuser());
+        assertEquals(testReviewList.get(0).getCtnt(), reviewList.get(0).getCtnt());
+
+
+        verify(mapper).selReview(anyLong());
 
     }
 
+    @Test
+    void postReview() {
+        //given
+
+    }
+
+    @Test
+    void selProduct() {
+    }
 }
