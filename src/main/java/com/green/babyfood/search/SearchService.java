@@ -84,7 +84,6 @@ public class SearchService {
         int maxpage = (int) Math.ceil((double) num / row);
 
 
-
         SearchSelRes res = new SearchSelRes();
         res.setDto(productDto);
         res.setMaxpage(maxpage);
@@ -114,10 +113,11 @@ public class SearchService {
         dto.setAllergy(strallergy);
         dto.setSorter(res.getSorter());
 
-        System.out.println(dto.getAllergy());
 
         int startIdx = (dto.getPage() - 1) * dto.getRow();
         dto.setStartIdx(startIdx);
+
+
 
         String msg = "";
         boolean isEnglish = true;
