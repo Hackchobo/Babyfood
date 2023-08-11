@@ -64,7 +64,7 @@ public class MypageService {
             orderlistSelDto[i]=new OrderlistSelDto();
             orderlistSelDto[i].setOrderId(orderlist.get(i).getOrderId());
             orderlistSelDto[i].setCreatedAt(orderlist.get(i).getCreatedAt());
-            String path = "192.168.0.144:5001/img/webeditor/"+dto.getIuser()+"/"+orderlist.get(i).getThumbnail();
+            String path = "192.168.0.144:5001/img/webeditor/"+orderlist.get(i).getOrderId()+"/"+orderlist.get(i).getThumbnail();
             orderlistSelDto[i].setThumbnail(path);
             orderlistSelDto[i].setName(orderlist.get(i).getName());
             orderlistSelDto[i].setPrice(orderlist.get(i).getPrice());
@@ -99,6 +99,14 @@ public class MypageService {
         OrderIuserDto dto = new OrderIuserDto();
         dto.setIuser(USERPK.getLoginUserPk());
         ProfileSelDto profile = mapper.profile(dto);
+        String mobileNb = profile.getMobileNb();
+
+        String num1 = mobileNb.substring(0, 3);
+        String num2 = mobileNb.substring(3, 7);
+        String num3 = mobileNb.substring(7, 11);
+        String nbsub = num1 + "-" + num2 + "-" + num3;
+        profile.setMobileNb(nbsub);
+
 
         String path = "http://192.168.0.144:5001/img/user/"+dto.getIuser()+"/"+profile.getImage();
         profile.setImage(path);
