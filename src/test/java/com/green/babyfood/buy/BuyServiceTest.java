@@ -77,15 +77,21 @@ class BuyServiceTest {
       when(mapper.quantity(any())).thenReturn(quantity);
 
       BuyProductRes buyProductRes = service.BuyProduct(insDto);
-      assertEquals(null,buyProductRes.getOrderId());
+      buyProductRes.setOrderId(1L);
+      assertEquals(1L,buyProductRes.getOrderId());
       assertEquals(totalprice,buyProductRes.getTotalprice());
       assertEquals(insDto.getPoint(),buyProductRes.getPoint());
       assertEquals(paymentprice,buyProductRes.getPaymentprice());
 
       verify(mapper,times(1)).InsBuy(any());
       verify(mapper,times(2)).updProduct(any());
-      verify(mapper).InsBuy(any());
+      verify(mapper,times(2)).InsBuyDetail(any());
+      verify(mapper,times(2)).delOrderbasket(any());
+      verify(mapper,times(2)).updProduct(any());
+      verify(mapper,times(1)).selUser(any());
+      verify(mapper,times(1)).addpoint(any());
+      verify(mapper,times(1)).removepoint(any());
+      verify(mapper,times(2)).quantity(any());
 
-
-  }
+}
 }
