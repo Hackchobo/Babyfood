@@ -96,8 +96,6 @@ class BuyControllerTest {
             dto.setTotalprice(4500);
             orderbasket.add(dto);
 
-            entity.setOrderbasket(orderbasket);
-
             BuyProductRes res = new BuyProductRes();
             res.setOrderId(1L);
             res.setTotalprice(10000);

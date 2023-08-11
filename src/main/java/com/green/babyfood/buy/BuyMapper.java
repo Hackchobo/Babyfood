@@ -15,7 +15,6 @@ public interface BuyMapper {
     int addpoint(BuyUpdPointDto dto);
     int removepoint(BuyUpdPointDto dto);
 
-
     BuySelquantityDto quantity(Long productId);
 
 }

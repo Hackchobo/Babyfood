@@ -38,7 +38,6 @@ class OrderBasketServiceTest {
    @Test
    void insOrderBasket() {
 
-
       when(mapper.countUpd(anyLong(),anyLong())).thenReturn(null);
       when(mapper.updCount(anyLong(),anyInt())).thenReturn(1);
       when(mapper.insOrderBasket(any())).thenReturn(1);

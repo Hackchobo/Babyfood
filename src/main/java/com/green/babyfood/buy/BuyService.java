@@ -41,9 +41,6 @@ public class BuyService {
             orderbasket.add(orderbasketdto);
         }
 
-
-
-
         final int shipment = 1;
         final float earnedPercent = 0.03F;
         int totalprice = 0;
@@ -77,7 +74,7 @@ public class BuyService {
         order.setAddressDetail(entity.getAddressDetail());
 
 
-        //제품의 수량이 0개이하이면 return 0
+        //제품의 수량이 0개 이하 일떄
         for (int i = 0; i <orderbasket.size(); i++) {
             BuySelquantityDto quantity = Mapper.quantity(orderbasket.get(i).getProductId());
             if (quantity.getQuantity() < 1){
