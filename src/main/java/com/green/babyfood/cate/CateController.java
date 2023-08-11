@@ -19,7 +19,7 @@ public class CateController {
     private final CateService service;
 
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     @Operation(summary = "카테고리 클릭시 해당품목만 보여주는 메소드",description = ""+
     "cateId: 1차카테고리"+
     "cateDetailId : 2차카테고리"+
@@ -33,7 +33,7 @@ public class CateController {
     "price : 해당상품의 가격<br>"+
     "quantity : 해당상품의 재고량<br>"+
     "volumn : 해당상품의 판매량")
-    public CateSelLevelVo getLevel(@RequestBody CateSelLevelDto dto){
+    public CateSelLevelVo getLevel(CateSelLevelDto dto){
         return service.cateSelLevel(dto);
     }
 
