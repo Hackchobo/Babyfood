@@ -68,21 +68,21 @@ public class UserController {
 
 
     @PatchMapping("/point/{iuser}")
-    @Operation(summary = "유저/관리자 포인트",description = "iuser : 회원의 고유값(PK) <- 해당 유저가 수정됨<br>"+
+    @Operation(summary = "유저/관리자 포인트",description = "email : 이메일/아이디 <- 해당 유저가 수정됨<br>"+
             "point : 유저의 포인트"
     )
-    public int patchPoint(@PathVariable Long iuser, @RequestParam int point){
+    public int patchPoint(@RequestParam String email, @RequestParam int point){
         UserPointDto dto = new UserPointDto();
-        dto.setIuser(iuser);
+        dto.setEmail(email);
         dto.setPoint(point);
         return service.updPointUser(dto);
     }
 
     @DeleteMapping("/{iuser}")
     @Operation(summary = "유저/관리자 삭제",description = "iuser : 회원의 고유값(PK) <- 해당 유저가 삭제됨<br>")
-    public int delUser(@PathVariable Long iuser){
+    public int delUser(@PathVariable String email){
         UserDelDto dto = new UserDelDto();
-        dto.setIuser(iuser);
+        dto.setEmail(email);
         return service.delUser(dto);
     }
 

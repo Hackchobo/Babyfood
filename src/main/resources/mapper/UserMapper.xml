@@ -34,13 +34,13 @@
     <update id="updPointUser">
         update user
         set point = #{point}
-        where iuser = #{iuser}
+        where email = #{email}
     </update>
 
     <delete id="delUser">
         delete
         from user
-        where iuser = #{iuser}
+        where email = #{email}
     </delete>
 
     <delete id="deltoken">
