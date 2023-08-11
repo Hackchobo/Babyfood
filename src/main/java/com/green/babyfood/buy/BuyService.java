@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.apache.commons.lang3.StringUtils.substring;
 
 @Slf4j
@@ -13,18 +16,26 @@ import static org.apache.commons.lang3.StringUtils.substring;
 @RequiredArgsConstructor
 public class BuyService {
     private final BuyMapper Mapper;
-    //private final AuthenticationFacade USERPK;
-    private final AuthenticationFacade FACADE;
+    private final AuthenticationFacade USERPK;
 
-    public BuyProductRes BuyProduct(BuyEntity entity){
-        entity.setIuser(FACADE.getLoginUserPk());
+    public BuyProductRes BuyProduct(BuyInsDto dto){
+
+        BuyEntity entity = new BuyEntity();
+        entity.setReceiver(dto.getReceiver());
+        entity.setAddress(dto.getAddress());
+        entity.setAddressDetail(dto.getAddressDetail());
+        entity.setPhoneNm(dto.getPhoneNm());
+        entity.setRequest(dto.getRequest());
+        entity.setPayment(dto.getPayment());
+        entity.setIuser(USERPK.getLoginUserPk());
+        entity.setPoint(dto.getPoint());
+
 
         final int shipment = 1;
         final float earnedPercent = 0.03F;
         int totalprice = 0;
 
-
-        BuyUserSelDto userDto = Mapper.selUser(FACADE.getLoginUserPk());
+        BuyUserSelDto userDto = Mapper.selUser(USERPK.getLoginUserPk());
 
             // 값이 없을때
             if (entity.getRequest().equals("")||entity.getRequest()==null){
@@ -40,17 +51,17 @@ public class BuyService {
             }
 
 
-        BuyInsDto dto = new BuyInsDto();
+        BuyInsorder order = new BuyInsorder();
         BuyProductRes res = new BuyProductRes();
 
-        dto.setIuser(FACADE.getLoginUserPk());
-        dto.setPayment(entity.getPayment());
-        dto.setShipment(shipment);
-        dto.setPhoneNm(entity.getPhoneNm());
-        dto.setRequest(entity.getRequest());
-        dto.setReceiver(entity.getReceiver());
-        dto.setAddress(entity.getAddress());
-        dto.setAddressDetail(entity.getAddressDetail());
+        order.setIuser(USERPK.getLoginUserPk());
+        order.setPayment(entity.getPayment());
+        order.setShipment(shipment);
+        order.setPhoneNm(entity.getPhoneNm());
+        order.setRequest(entity.getRequest());
+        order.setReceiver(entity.getReceiver());
+        order.setAddress(entity.getAddress());
+        order.setAddressDetail(entity.getAddressDetail());
 
 
         //제품의 수량이 0개이하이면 return 0
@@ -61,12 +72,12 @@ public class BuyService {
             }
         }
 
-        int result = Mapper.InsBuy(dto);
+        int result = Mapper.InsBuy(order);
 
         if (result == 1){
             BuyUpdPointDto addpoint = new BuyUpdPointDto();
             BuyUpdPointDto updpoint = new BuyUpdPointDto();
-            updpoint.setIuser(FACADE.getLoginUserPk());
+            updpoint.setIuser(USERPK.getLoginUserPk());
             updpoint.setPoint(entity.getPoint());
 
 
@@ -77,7 +88,7 @@ public class BuyService {
 
 
                 BuyDetailInsDto detaildto = new BuyDetailInsDto();
-                detaildto.setOrderId(dto.getOrderId());
+                detaildto.setOrderId(order.getOrderId());
                 detaildto.setProductId(entity.getOrderbasket().get(i).getProductId());
                 detaildto.setCount(entity.getOrderbasket().get(i).getCount());
                 detaildto.setTotalPrice(entity.getOrderbasket().get(i).getTotalprice());
@@ -95,12 +106,12 @@ public class BuyService {
 
 
             res.setPoint(entity.getPoint());
-            res.setOrderId(dto.getOrderId());
+            res.setOrderId(order.getOrderId());
             res.setTotalprice(totalprice);
             res.setPaymentprice(totalprice-entity.getPoint()); // 결제금액구하기
             int point = (int) (res.getPaymentprice() * earnedPercent);
 
-            addpoint.setIuser(FACADE.getLoginUserPk());
+            addpoint.setIuser(USERPK.getLoginUserPk());
             addpoint.setPoint(point);
 
             int removepoint = Mapper.removepoint(updpoint);
@@ -113,7 +124,6 @@ public class BuyService {
 
         }else
             throw new RuntimeException();
-
 
         return res;
     }
