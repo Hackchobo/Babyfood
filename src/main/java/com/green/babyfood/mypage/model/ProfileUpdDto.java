@@ -10,6 +10,7 @@ public class ProfileUpdDto {
     private String nickNm;
     private String password;
     private String phoneNumber;
+    private String name;
     private String birthday;
     private String zipcode;
     private String address;

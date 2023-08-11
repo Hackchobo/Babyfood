@@ -195,4 +195,34 @@ class MainControllerTest {
         verify(service).bestSellAll(anyInt(),anyInt());
     }
 
+    @Test
+    void postBirthFilter() throws Exception {
+        MainSelVo mainSelVo1=new MainSelVo();
+        mainSelVo1.setProductId(1L);
+        mainSelVo1.setTitle("테스트1");
+        mainSelVo1.setName("네임테스트1");
+        mainSelVo1.setPrice(1000);
+        mainSelVo1.setQuantity(10);
+        mainSelVo1.setThumbnail("main.pic1");
+        mainSelVo1.setVolumn(100);
+
+        List<MainSelVo> list=new ArrayList<>();
+        list.add(mainSelVo1);
+
+        given(service.birthRecommendFilter(anyInt())).willReturn(list);
+        ResultActions ra = mvc.perform(get("/api/main/recommend").param("row","10"));
+        ra.andExpect(status().isOk())
+                .andExpect(jsonPath("$.[*]",hasSize(list.size())))
+                .andExpect(jsonPath("$.[0].productId").value(1L))
+                .andExpect(jsonPath("$.[0].title").value("테스트1"))
+                .andExpect(jsonPath("$.[0].name").value("네임테스트1"))
+                .andExpect(jsonPath("$.[0].price").value(1000))
+                .andExpect(jsonPath("$.[0].quantity").value(10))
+                .andExpect(jsonPath("$.[0].thumbnail").value("main.pic1"))
+                .andExpect(jsonPath("$.[0].volumn").value(100))
+                .andDo(print());
+
+        verify(service).birthRecommendFilter(anyInt());
+    }
+
 }

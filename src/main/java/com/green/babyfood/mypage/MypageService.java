@@ -76,7 +76,6 @@ public class MypageService {
 
     public OrderlistSelUserDto OrderlistDetail(Long orderId){
         OrderIuserDto dto = new OrderIuserDto();
-//        dto.setIuser(USERPK.getLoginUserPk());
 
         List<OrderlistDetailSelDto> orderlist = mapper.orderlistDetail(orderId);
         OrderlistUserDto user = mapper.selUser(orderId);
@@ -110,6 +109,7 @@ public class MypageService {
         ProfileEntity entity = new ProfileEntity();
         entity.setIuser(USERPK.getLoginUserPk());
         entity.setNickNm(dto.getNickNm());
+        entity.setName(dto.getName());
         entity.setPhoneNumber(dto.getPhoneNumber());
         entity.setBirthday(dto.getBirthday());
         entity.setZipcode(dto.getZipcode());

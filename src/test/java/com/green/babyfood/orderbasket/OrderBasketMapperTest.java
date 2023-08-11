@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 @MybatisTest
 @ActiveProfiles("test")
@@ -28,5 +30,9 @@ class OrderBasketMapperTest {
          assertEquals(9L,entity.getCartId());
 
        }
-
+     @Test
+    void delOrderBasket(){
+         int i = mapper.delOrderBasket(7L);
+         assertEquals(1,i);
+     }
 }

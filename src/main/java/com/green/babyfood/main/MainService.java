@@ -118,7 +118,7 @@ public class MainService {
 //           }
 //       }
 
-          int startIdx=(page-1)*row;
+        int startIdx=(page-1)*row;
 //      if(!plus.equals("")){
 //            subAllergy = plus.substring(0, plus.length()-1);
 //           System.out.println(subAllergy);
@@ -185,7 +185,7 @@ public class MainService {
 //   }
 
 
-    public List<MainSelVo> birthRecommendFilter( int row) {
+    public List<MainSelVo> birthRecommendFilter(int row) {
 
 //        String plus="";
 //        String subAllergy="";
