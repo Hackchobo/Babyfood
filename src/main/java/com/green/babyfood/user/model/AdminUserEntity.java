@@ -3,7 +3,7 @@ package com.green.babyfood.user.model;
 import lombok.Data;
 
 @Data
-public class UserEntity1 {
+public class AdminUserEntity {
     private Long iuser;
     private String email;
     private String password;

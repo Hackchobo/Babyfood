@@ -1,9 +1,7 @@
 package com.green.babyfood.mypage;
 
 import com.green.babyfood.config.security.AuthenticationFacade;
-import com.green.babyfood.config.security.PasswordEncoderConfiguration;
 import com.green.babyfood.mypage.model.*;
-import com.green.babyfood.user.model.CreatePicDto;
 import com.green.babyfood.util.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -32,8 +28,10 @@ public class MypageService {
     private final PasswordEncoder PW_ENCODER;
     private final AuthenticationFacade USERPK;
 
-    public  OrderlistSelDto[] Orderlist(OrderlistMonthsSelDto dto){
-        //dto.setIuser(USERPK.getLoginUserPk());
+    public  OrderlistSelDto[] Orderlist(int month){
+        OrderlistMonthsSelDto dto = new OrderlistMonthsSelDto();
+        dto.setIuser(USERPK.getLoginUserPk());
+        dto.setMonth(month);
 
         List<OrderlistCountSelDto> orderlist = mapper.orderlist(dto);
 
@@ -77,6 +75,7 @@ public class MypageService {
     }
 
     public OrderlistSelUserDto OrderlistDetail(Long orderId){
+        OrderIuserDto dto = new OrderIuserDto();
 
         List<OrderlistDetailSelDto> orderlist = mapper.orderlistDetail(orderId);
         OrderlistUserDto user = mapper.selUser(orderId);
@@ -96,22 +95,31 @@ public class MypageService {
          return mapper.delorder(orderId);
     }
 
-    public ProfileSelDto profile(Long iuser){
-        //iuser = USERPK.getLoginUserPk();
-        ProfileSelDto profile = mapper.profile(iuser);
+    public ProfileSelDto profile(){
+        OrderIuserDto dto = new OrderIuserDto();
+        dto.setIuser(USERPK.getLoginUserPk());
+        ProfileSelDto profile = mapper.profile(dto);
 
-        String path = "http://192.168.0.144:5001/img/user/"+iuser+"/"+profile.getImage();
+        String path = "http://192.168.0.144:5001/img/user/"+dto.getIuser()+"/"+profile.getImage();
         profile.setImage(path);
         return profile;
     }
 
     public int UpdProfileDto(ProfileUpdDto dto){
-
+        ProfileEntity entity = new ProfileEntity();
+        entity.setIuser(USERPK.getLoginUserPk());
+        entity.setNickNm(dto.getNickNm());
+        entity.setName(dto.getName());
+        entity.setPhoneNumber(dto.getPhoneNumber());
+        entity.setBirthday(dto.getBirthday());
+        entity.setZipcode(dto.getZipcode());
+        entity.setAddress(dto.getAddress());
+        entity.setAddressDetail(dto.getAddressDetail());
 
         String encode = PW_ENCODER.encode(dto.getPassword());
         dto.setPassword(encode);
 
-        return mapper.Updprofile(dto);
+        return mapper.Updprofile(entity);
     }
 
     public int nicknmcheck(String nickname){
@@ -122,14 +130,17 @@ public class MypageService {
             return 0;
     }
 
-    public int delUser(Long iuser){
-       // iuser = USERPK.getLoginUserPk();
-        return mapper.delUser(iuser);
+    public int delUser(){
+        OrderIuserDto dto = new OrderIuserDto();
+       dto.setIuser(USERPK.getLoginUserPk());
+        return mapper.delUser(dto);
     }
 
 
-    public int updPicUser(MultipartFile pic, Long iuser){
-        //iuser = USERPK.getLoginUserPk();
+    public int updPicUser(MultipartFile pic){
+        Long iuser = USERPK.getLoginUserPk();
+        ProfileUpdPicDto dto = new ProfileUpdPicDto();
+        dto.setIuser(iuser);
         String centerPath = String.format("%s/user/%d", FileUtils.getAbsolutePath(fileDir),iuser);
 
 
@@ -149,8 +160,9 @@ public class MypageService {
             return 0;
         }
         String img = savedFileName;
+        dto.setImg(img);
         try {
-            int result = mapper.patchProfile(img,iuser);
+            int result = mapper.patchProfile(dto);
             if(result == 0) {
                 throw new Exception("프로필 사진을 등록할 수 없습니다.");
             }

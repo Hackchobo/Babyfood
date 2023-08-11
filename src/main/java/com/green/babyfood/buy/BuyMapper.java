@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface BuyMapper {
-    int InsBuy(BuyInsDto dto);
+    int InsBuy(BuyInsorder dto);
     int InsBuyDetail(BuyDetailInsDto dto);
 
     int delOrderbasket(Long cartId);
@@ -14,7 +14,6 @@ public interface BuyMapper {
 
     int addpoint(BuyUpdPointDto dto);
     int removepoint(BuyUpdPointDto dto);
-
 
     BuySelquantityDto quantity(Long productId);
 

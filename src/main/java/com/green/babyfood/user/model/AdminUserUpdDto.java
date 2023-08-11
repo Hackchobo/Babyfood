@@ -3,7 +3,7 @@ package com.green.babyfood.user.model;
 import lombok.Data;
 
 @Data
-public class UserUpdDto1 {
+public class AdminUserUpdDto {
     private String email;
     private String name;
     private String birthday;

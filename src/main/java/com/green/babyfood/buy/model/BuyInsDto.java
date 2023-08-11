@@ -2,15 +2,17 @@ package com.green.babyfood.buy.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class BuyInsDto {
-    private Long orderId;
-    private Long iuser;
-    private int payment;
-    private int shipment;
-    private String phoneNm;
-    private String request;
     private String receiver;
     private String address;
     private String addressDetail;
+    private String phoneNm;
+    private String request;
+    private int payment;
+    private int point;
+
+    List<BuyInsOrderbasketDto> Insorderbasket;
 }

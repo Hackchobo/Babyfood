@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProductReviewDto {
-    private int iuser;
-    private int productId;
+    private Long iuser;
+    private Long productId;
     private String ctnt;
 }

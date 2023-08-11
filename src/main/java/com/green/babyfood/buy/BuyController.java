@@ -32,7 +32,7 @@ public class BuyController {
             "paymentprice: 결제한 금액<br>"+
             "orderId: 주문번호 PK<br>"
     )
-    public BuyProductRes BuyProduct(@RequestBody BuyEntity entity){
-        return SERVICE.BuyProduct(entity);
+    public BuyProductRes BuyProduct(@RequestBody BuyInsDto dto){
+        return SERVICE.BuyProduct(dto);
     }
 }

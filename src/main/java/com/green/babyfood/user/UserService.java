@@ -40,7 +40,7 @@ public class UserService {
         return mapper.insAdmin(dto);
     }*/
 
-    public List<UserEntity1> selUser(UserSelEntity entity){
+    public List<AdminUserEntity> selUser(UserSelEntity entity){
         int ROW_PER_PAGE = entity.getRow();
         int startIdx = (entity.getPage() - 1) * ROW_PER_PAGE;
         entity.setRowLen(ROW_PER_PAGE);
@@ -48,7 +48,7 @@ public class UserService {
         return mapper.selUser(entity);
     }
 
-    public int updUser(UserUpdDto1 dto){
+    public int updUser(AdminUserUpdDto dto){
         return mapper.updUser(dto);
     }
 

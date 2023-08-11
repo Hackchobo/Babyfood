@@ -2,11 +2,9 @@ package com.green.babyfood.mypage.model;
 
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 @Data
-public class ProfileUpdDto {
+public class ProfileEntity {
+    private Long iuser;
     private String nickNm;
     private String password;
     private String phoneNumber;
