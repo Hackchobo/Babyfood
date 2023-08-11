@@ -38,7 +38,7 @@ public class ProductController {
     @GetMapping("/review/{productId}")
     @Operation(summary = "상품 리뷰 보기", description = ""+
     "productId = 상품코드")
-    List<ReviewEntity> selReview(@RequestParam int productId){
+    List<ProductReviewDto> selReview(@RequestParam Long productId){
         return service.selReview(productId);
     }
 

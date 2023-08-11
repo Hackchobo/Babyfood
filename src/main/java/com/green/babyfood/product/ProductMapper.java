@@ -9,7 +9,7 @@ import java.util.List;
 public interface ProductMapper {
     ProductSelDto selProduct(Long productId);
     int postReview(ProductReviewDto dto);
-    List<ReviewEntity> selReview(int productId);
+    List<ProductReviewDto> selReview(Long productId);
 
     List<String> selProductImg(Long productId);
     List<String> selProductThumbnail(Long productId);

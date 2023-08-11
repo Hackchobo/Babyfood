@@ -9,10 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.green.babyfood.util.FileUtils.getAbsolutePath;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +26,8 @@ public class ProductService {
 
     @Value("${file.dir}")
     private String fileDir;
+
+
 
     public ProductSelDto selProduct(Long productId) {
         log.info("테스트");
@@ -53,11 +58,26 @@ public class ProductService {
         dto.setThumbnail(thumbnailList);
 
 
-//        log.info("예상 배송일정 확인 시작");
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        LocalTime afternoonOne = LocalTime.of(13, 0); // 오후 1시
 
+        // 주말 확인
+        boolean isWeekend = currentDate.getDayOfWeek() == DayOfWeek.SATURDAY ||
+                currentDate.getDayOfWeek() == DayOfWeek.SUNDAY;
 
+        // 배송일 계산
+        LocalDate estimatedDeliveryDate = currentDate;
+        if (isWeekend || (currentTime.isAfter(afternoonOne) && !isWeekend)) {
+            // 주말이거나 현재 시각이 오후 1시 이후이면 배송일을 2일 후로 설정
+            estimatedDeliveryDate = currentDate.plusDays(2);
+        } else {
+            // 현재 시각이 오후 1시 이전이면 배송일을 1일 후로 설정
+            estimatedDeliveryDate = currentDate.plusDays(1);
+        }
 
-
+        // 배송일 출력
+        log.info("예상 배송일정은 {} 입니다", estimatedDeliveryDate);
         return dto;
     }
 
@@ -70,7 +90,7 @@ public class ProductService {
         return mapper.postReview(dto);
     }
 
-    List<ReviewEntity> selReview(int productId) {
+    List<ProductReviewDto> selReview(Long productId) {
         return mapper.selReview(productId);
     }
 }
