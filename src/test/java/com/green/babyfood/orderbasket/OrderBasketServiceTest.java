@@ -26,7 +26,6 @@ class OrderBasketServiceTest {
 
    @MockBean
    private OrderBasketMapper mapper;
-
    @Autowired
    private OrderBasketService service;
    @MockBean
@@ -47,7 +46,7 @@ class OrderBasketServiceTest {
       dto.setCount(3);
 
       OrderBasketEntity entity=new OrderBasketEntity();
-      entity.setIuser(10L);
+      entity.setIuser(USERPK.getLoginUserPk());
       entity.setProductId(dto.getProductId());
       entity.setCount(dto.getCount());
       Long cartId = service.insOrderBasket(dto);
