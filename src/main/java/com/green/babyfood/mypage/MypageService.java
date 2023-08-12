@@ -131,7 +131,7 @@ public class MypageService {
         entity.setAddress(dto.getAddress());
         entity.setAddressDetail(dto.getAddressDetail());
 
-        if (dto.getPassword()!=null || !dto.getPassword().equals("")){
+        if (!dto.getPassword().equals("")){
             String encode = PW_ENCODER.encode(dto.getPassword());
             entity.setPassword(encode);
         }
