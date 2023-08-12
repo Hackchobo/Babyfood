@@ -46,6 +46,7 @@ public class CateService {
         List<CateSelListVo> cateSelListVos = mapper.cateSelLevel(dto2);
         for (CateSelListVo vo : cateSelListVos) {
             vo.setThumbnail("http://192.168.0.144:5001/img/product/" + vo.getThumbnail());
+            System.out.println("::" + vo.getThumbnail());
         }
         System.out.println("cateSelListVos = " + cateSelListVos);
         CateSelLevelVo vo = new CateSelLevelVo();
