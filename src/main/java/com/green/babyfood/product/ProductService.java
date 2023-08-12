@@ -1,6 +1,7 @@
 package com.green.babyfood.product;
 
 import com.green.babyfood.config.security.AuthenticationFacade;
+import com.green.babyfood.product.model.ProductBuyDto;
 import com.green.babyfood.product.model.ProductReviewDto;
 import com.green.babyfood.product.model.ProductReviewEntity;
 import com.green.babyfood.product.model.ProductSelDto;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -113,5 +115,9 @@ public class ProductService {
 
     List<ProductReviewDto> selReview(Long productId) {
         return mapper.selReview(productId);
+    }
+
+    public ProductBuyDto selBuyProduct(Long productId) {
+        return mapper.selBuyProduct(productId);
     }
 }

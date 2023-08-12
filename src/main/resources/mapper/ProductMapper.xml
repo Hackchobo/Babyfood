@@ -19,6 +19,15 @@
         GROUP BY A.product_id
     </select>
 
+    <select id="selBuyProduct">
+        select
+        p_title AS title, p_name AS name,
+        p_price AS price, p_quantity AS quantity
+        FROM product
+        WHERE product_id = #{productId}
+        GROUP BY product_id
+    </select>
+
 <!--    <select id="selDataByCategory">-->
 <!--        SELECT cate_detail_id-->
 <!--        FROM product_category_relation-->

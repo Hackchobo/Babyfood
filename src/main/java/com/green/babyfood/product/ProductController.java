@@ -1,5 +1,6 @@
 package com.green.babyfood.product;
 
+import com.green.babyfood.product.model.ProductBuyDto;
 import com.green.babyfood.product.model.ProductReviewDto;
 import com.green.babyfood.product.model.ProductSelDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,4 +41,10 @@ public class ProductController {
         return service.selReview(productId);
     }
 
+
+    @PostMapping
+    @Operation(summary = "상품 구매 버튼", description = "장바구니X, 이 페이지의 상품만 즉시 구매")
+    ProductBuyDto selBuyProduct(@RequestParam Long productId){
+        return service.selBuyProduct(productId);
+    }
 }
