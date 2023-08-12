@@ -31,10 +31,11 @@ public class ProductService {
     public ProductSelDto selProduct(Long productId) {
         log.info("테스트");
 
-        ProductSelDto dto = new ProductSelDto();
+        ProductSelDto dto = mapper.selProduct(productId);
 
         List<String> imgList = mapper.selProductImg(productId);
         List<String> thumbnailList = mapper.selProductThumbnail(productId);
+        log.info("테스트 : {}", thumbnailList);
         List<String> baseimg = new ArrayList<>();
         baseimg.add("이미지 없는 상태");
 
@@ -55,6 +56,7 @@ public class ProductService {
             }
         }
         thumbnailList = thumbnailUrls;
+        log.info("테스트 : {}", thumbnailList);
         //dto.setCateDetail(mapper.selDataByCategory(productId));
         dto.setImg(imgList);
         if (dto.getImg() == null) {
