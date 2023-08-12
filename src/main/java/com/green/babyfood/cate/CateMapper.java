@@ -14,4 +14,5 @@ public interface CateMapper {
 
     List<CateVo> selcate();
     List<CateDetailVo> selCateList(Long cateId);
+
 }

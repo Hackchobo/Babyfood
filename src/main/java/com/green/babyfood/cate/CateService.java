@@ -55,15 +55,18 @@ public class CateService {
 
     public List selCateList(){
         List<CateVo> selcate = mapper.selcate();
+        System.out.println(selcate);
         List list=new ArrayList();
         for (int i = 0; i < selcate.size(); i++) {
             List<CateDetailVo> cateDetailVos = mapper.selCateList(selcate.get(i).getCateId());
+
             CateView view=new CateView();
             view.setCateId(selcate.get(i).getCateId());
             view.setCateName(selcate.get(i).getCateName());
             view.setList(cateDetailVos);
             list.add(view);
         }
+        System.out.println(list);
     return list;
     }
 }
