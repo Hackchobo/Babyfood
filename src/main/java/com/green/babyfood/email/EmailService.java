@@ -20,8 +20,10 @@ import org.springframework.stereotype.Component;
 public class EmailService {
 
 
-    private static String user = "kdy12061004@gmail.com";
-    private static String password = "poigxflxgjinjqtt"; // 앱2차비밀번호 !!! 본인 비번 바로넣지마세요 !!!
+    private static String user = "green502teamA@gmail.com";
+    private static String password = "qvoksygqngguntbl";
+    // 앱2차비밀번호 !!! 비밀번호 넣으면 동작하지 않습니다
+    // 팀 공동사용중, 비밀번호나 세팅 확인 필요시 슬랙참고해주세요
 
 
     public void send(MailSendDto dto) {

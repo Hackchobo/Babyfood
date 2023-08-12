@@ -19,15 +19,24 @@
         GROUP BY A.product_id
     </select>
 
+<!--    <select id="selDataByCategory">-->
+<!--        SELECT cate_detail_id-->
+<!--        FROM product_category_relation-->
+<!--        WHERE product_id = #{product_id} AND cate_detail_id IS NOT NULL-->
+<!--    </select>-->
+
+
     <select id="selProductImg">
         SELECT img
         FROM product_img
         WHERE product_id = #{productId} AND img IS NOT null
+        limit 4
     </select>
     <select id="selProductThumbnail">
         select thumbnail
         from product_img
-        where product_id = #{productId} AND img IS NOT null
+        where product_id = #{productId} AND thumbnail IS NOT null
+        limit 4
     </select>
 
 

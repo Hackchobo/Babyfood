@@ -1,9 +1,6 @@
 package com.green.babyfood.sign;
 
-import com.green.babyfood.CommonRes;
-import com.green.babyfood.config.security.model.UserEntity;
 import com.green.babyfood.config.security.otp.OtpRes;
-import com.green.babyfood.config.security.otp.TOTP;
 import com.green.babyfood.config.security.otp.TOTPTokenGenerator;
 import com.green.babyfood.sign.model.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,16 +8,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base32;
-import org.apache.commons.codec.binary.Hex;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -60,7 +52,7 @@ public class SignController {
                     "address : 주소<br>" +
                     "addressDetail : 상세주소<br>" +
                     "nickNm : 닉네임" +
-                    "참고사항 : email 과 nickNm이 곁칠경우 경고창이 나와요"
+                    "참고사항 : email 과 nickNm이 겹칠경우 경고창이 나와요"
     )
     public SignUpResultDto signUp(@RequestBody SignEntity entity) {
         /*log.info("[signUp] 회원가입을 수행합니다. email: {}, pw: {}, nm: {}, mobileNb: {}, role: {}" +
@@ -125,12 +117,14 @@ public class SignController {
     }
 
 
-    // -----------------비밀번호 찾기 테스트용
-    // 임시로 진행하는 코드이므로 다른 내용과 호환되지 않을 수 있습니다
-    // 관련해서 오류가 날 경우 이 아래 전부 주석처리해주면 됩니다.
+    // -----------------비밀번호 찾기
 
-    @GetMapping("/password/find")
-    @Operation(summary = "비밀번호 찾기 페이지",description =
+
+
+
+
+    @GetMapping("/password")
+    @Operation(summary = "비밀번호 찾기",description =
             "테스트용 : 아이디(이메일)과 휴대폰 번호를 입력해주세요.<br>" +
                     "비교하여 회원정보와 일치 시 등록된 메일 주소로 임시 비밀번호를 발송합니다"
     )
@@ -138,6 +132,14 @@ public class SignController {
         log.info("테스트");
         SERVICE.findPassword(mail, mobileNb);
         return SERVICE.findPassword(mail, mobileNb);
+    }
+
+    @GetMapping("/id")
+    @Operation(summary = "아이디 찾기",description =
+            "테스트용 : 휴대폰 번호와 생년월일을 입력해주세요.<br>" +
+                    "회원정보와 일치 시 ID(이메일)을 확인할 수 있습니다.")
+    public String findUserId(@RequestParam String mobileNb, @RequestParam String birthday){
+        return SERVICE.findUserId(mobileNb, birthday);
     }
 
 

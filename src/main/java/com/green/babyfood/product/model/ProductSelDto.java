@@ -15,5 +15,6 @@ public class ProductSelDto {
     private int step;
     private List<String> img;
     private List<String> thumbnail;
+//    List<Integer> cateDetail;
 //    private String thumbnail;
 }

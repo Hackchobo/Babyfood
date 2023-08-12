@@ -12,7 +12,7 @@ import java.util.List;
 @Tag(name = "검색페이지")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/Search")
+@RequestMapping("/api/search")
 public class SearchController {
     private final SearchService SERVICE;
 

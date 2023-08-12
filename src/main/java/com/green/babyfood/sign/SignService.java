@@ -257,7 +257,6 @@ public class SignService {
         return password.toString();
     }
 
-
     public int emailCheck(String email){
         String result=SIGN_MAPPER.emailCheck(email);
 
@@ -273,6 +272,31 @@ public class SignService {
             return 1;
         }
         return 0;
+
+    }
+
+    public String findUserId(String mobileNb, String birthday) {
+        // 입력 휴대폰 기준으로 DB의 유저 정보와 비교 진행
+        SignIdDto inputDto = new SignIdDto();
+        inputDto.setMobileNb(mobileNb);
+        inputDto.setBirthday(birthday);
+
+        SignIdDto dto = SIGN_MAPPER.findUserId(mobileNb); // DB에서 유저 생일을 가져온다.
+        String result;
+        if (birthday.equals(dto.getBirthday())){
+            // 회원이 입력한 생일과 db 저장된 생일이 일치하는 경우
+            if (dto.getEamil().length() >= 4) {
+                result = "##" + dto.getEamil().substring(2, dto.getEamil().length() - 2) + "##";
+                // 이메일의 앞 2글자, 뒤 2글자를 ## 으로 처리한다
+                // 4글자 이하라면 그대로 출력한다
+            }
+            else result = dto.getEamil();
+
+            return "유저 아이디는 : " + result + "입니다";
+        }
+        else {
+            return "회원정보가 일치하지 않습니다. 다시 확인해주세요";
+        }
 
     }
 }

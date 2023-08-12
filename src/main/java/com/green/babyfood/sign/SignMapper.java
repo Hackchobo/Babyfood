@@ -1,5 +1,6 @@
 package com.green.babyfood.sign;
 
+import com.green.babyfood.sign.model.SignIdDto;
 import com.green.babyfood.sign.model.SignPwDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,4 +11,6 @@ public interface SignMapper {
     void updPassword(Long iuser, String pw);
     String emailCheck(String email);
     String SelNickNm(String nickNm);
+
+    SignIdDto findUserId(String mobileNb);
 }

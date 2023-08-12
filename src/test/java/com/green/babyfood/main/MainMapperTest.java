@@ -23,11 +23,11 @@ class MainMapperTest {
     @Test
     void mainSelView(){
 
-
         List<MainSelVo> list = mapper.mainSelView(0, 10);
         assertEquals(list.get(0).getProductId(),1);
         assertEquals(list.get(0).getTitle(),"string");
         assertEquals(list.size(),10);
+
 
 
 

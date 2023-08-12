@@ -9,6 +9,13 @@
         where email = #{mail}
     </select>
 
+    <select id="findUserId">
+        select mobile_nb, email,
+        from user
+        where mobile_nb = #{mobile_nb}
+        limit 1
+    </select>
+
     <update id="updPassword">
         update user
         SET password = #{pw}
