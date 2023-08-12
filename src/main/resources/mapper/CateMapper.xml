@@ -26,7 +26,7 @@
     </select>
 
     <select id="cateSelLevel">
-        SELECT A.product_id productId,B.thumbnail,C.p_title title,C.p_price price,C.p_name name,C.p_quantity quantity,C.sale_volumn volumn
+        SELECT A.product_id productId,B.thumbnail thumbnail,C.p_title title,C.p_price price,C.p_name name,C.p_quantity quantity,C.sale_volumn volumn
         FROM product_category_relation A
         left JOIN product_img B
         ON A.product_id=B.product_id

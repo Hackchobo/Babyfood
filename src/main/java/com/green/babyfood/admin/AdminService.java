@@ -146,7 +146,6 @@ public class AdminService {
     }
 
     public AdminProductUpdDto updProductInfo(int productId) {
-        log.info("카테고리 정보 획득 ");
         List<Integer> cateDetailList = mapper.updProductInfoCate(productId); // 카테고리 정보 획득
         AdminProductUpdDto adminProductUpdDto = mapper.updProductInfo(productId); // 상품 정보 획득
         adminProductUpdDto.setCateDetail(cateDetailList); // 카테고리 정보를 AdminProductUpdDto에 설정
