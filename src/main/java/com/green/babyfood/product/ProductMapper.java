@@ -14,5 +14,7 @@ public interface ProductMapper {
     List<String> selProductImg(Long productId);
     List<String> selProductThumbnail(Long productId);
 
+    //List<Integer> selDataByCategory(Long productId);
+
 //    List<ProductImgDto> selProductthumbnail(int productId);
 }

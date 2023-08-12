@@ -19,6 +19,13 @@
         GROUP BY A.product_id
     </select>
 
+<!--    <select id="selDataByCategory">-->
+<!--        SELECT cate_detail_id-->
+<!--        FROM product_category_relation-->
+<!--        WHERE product_id = #{product_id} AND cate_detail_id IS NOT NULL-->
+<!--    </select>-->
+
+
     <select id="selProductImg">
         SELECT img
         FROM product_img

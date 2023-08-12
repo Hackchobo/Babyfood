@@ -96,7 +96,7 @@ public class AdminService {
 
     public int updProduct(AdminProductUpdDto dto) {
         // 최종 상품 등록할때 사용되는 메소드
-        if (dto.getCategory() > 4){
+        if (dto.getCategory() > 4 && dto.getCategory() > 0){
             log.info("카테고리는 1-4까지 설정 가능, 확인 후 다시 입력하세요");
             return 0;
         }
@@ -106,7 +106,7 @@ public class AdminService {
 
     public int changeProduct(AdminProductUpdDto dto) {
         // 상품 정보 수정
-        if (dto.getCategory() > 4){
+        if (dto.getCategory() > 4 && dto.getCategory() > 0){
             log.info("카테고리는 1-4까지 설정 가능, 확인 후 다시 입력하세요");
             return 0;
         }

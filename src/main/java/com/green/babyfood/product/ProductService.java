@@ -28,12 +28,15 @@ public class ProductService {
     private String fileDir;
 
 
-
     public ProductSelDto selProduct(Long productId) {
         log.info("테스트");
 
+        ProductSelDto dto = new ProductSelDto();
+
         List<String> imgList = mapper.selProductImg(productId);
         List<String> thumbnailList = mapper.selProductThumbnail(productId);
+        List<String> baseimg = new ArrayList<>();
+        baseimg.add("이미지 없는 상태");
 
         List<String> imgUrls = new ArrayList<>();
         for (String imgName : imgList) {
@@ -52,10 +55,21 @@ public class ProductService {
             }
         }
         thumbnailList = thumbnailUrls;
-
-        ProductSelDto dto = mapper.selProduct(productId);
+        //dto.setCateDetail(mapper.selDataByCategory(productId));
         dto.setImg(imgList);
+        if (dto.getImg() == null) {
+            dto.setImg(baseimg);
+        }
+
         dto.setThumbnail(thumbnailList);
+        if (dto.getThumbnail() == null) {
+            dto.setThumbnail(baseimg);
+        }
+
+        StringBuilder tempName = new StringBuilder();
+        tempName.append("[").append(dto.getStep()).append("단계]").append(dto.getName());
+        dto.setName(tempName.toString());
+
 
 
         LocalDate currentDate = LocalDate.now();
@@ -78,6 +92,7 @@ public class ProductService {
 
         // 배송일 출력
         log.info("예상 배송일정은 {} 입니다", estimatedDeliveryDate);
+
         return dto;
     }
 

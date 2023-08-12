@@ -47,7 +47,7 @@ public class AdminController {
 
     @GetMapping("/product/search")
     @Operation(summary = "관리자페이지 - 상품 검색", description = "모든 상품(품절된 상품)포함하여 검색 <br>"+
-    "띄어쓰기 / 한영타변환 검색기능 지원<br>")
+    "미구현상태입니다 호출 XXX 진행되면 말씀드리겠습니다 ")
     public List<AdminProductEntity> searchAdminProduct(@RequestParam String keyword){
         return service.searchAdminProduct(keyword);
     }
