@@ -45,7 +45,7 @@ public class CateService {
         System.out.println("maxPaigeResult = " + maxPaigeResult);
         List<CateSelListVo> cateSelListVos = mapper.cateSelLevel(dto2);
         for (CateSelListVo vo : cateSelListVos) {
-            vo.setThumbnail("http://192.168.0.144:5001/img/product/" + vo.getThumbnail());
+            vo.setThumbnail("http://192.168.0.144:5001/img/product"+"/"+vo.getProductId()+"/" + vo.getThumbnail());
             System.out.println("::" + vo.getThumbnail());
         }
         System.out.println("cateSelListVos = " + cateSelListVos);
