@@ -140,7 +140,7 @@ class MypageControllerTest {
 
         orderlist.add(orderlistdto);
         orderlist.add(orderlistdto2);
-       OrderlistSelUserDto dto = null();
+       OrderlistSelUserDto dto = null;
 
         dto.setOrderlist(orderlist);
         dto.setUser(user);
