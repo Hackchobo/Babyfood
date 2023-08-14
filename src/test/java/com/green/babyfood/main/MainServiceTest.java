@@ -60,7 +60,7 @@ class MainServiceTest {
        assertEquals(mainSel1.getList().get(0).getTitle(),mainSel2.getList().get(0).getTitle());
 
        verify(mapper).mainSelView(anyInt(),anyInt());
-       verify(mapper).maxPaige();
+       verify(mapper).maxPage();
     }
 
     @Test
