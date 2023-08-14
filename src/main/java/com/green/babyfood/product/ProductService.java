@@ -101,7 +101,7 @@ public class ProductService {
     }
 
     private String createImageUrl(Long productId, String imgName) {
-        String path = "http://192.168.0.144:5001/img/webeditor/"+productId+"/"+imgName;
+        String path = "http://192.168.0.144:5001/img/product/"+productId+"/"+imgName;
         return path;
     }
 
