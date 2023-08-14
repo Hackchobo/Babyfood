@@ -13,7 +13,8 @@
         request = #{request},
         reciever = #{receiver},
         address = #{address},
-        address_detail = #{addressDetail}
+        address_detail = #{addressDetail},
+        usepoint = #{point}
     </insert>
 
     <insert id="InsBuyDetail">

@@ -10,5 +10,5 @@ import java.util.List;
 public interface SearchMapper {
     List<SearchSelVo> selproduct(SearchSelDto dto);
     List<SearchSelVo> selfilter(SearchSelDto dto);
-    int maxpage(String strallergy);
+    int maxpage(String msg ,String allergy);
 }

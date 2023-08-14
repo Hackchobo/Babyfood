@@ -9,4 +9,5 @@ public class OrderlistUserDto {
     private String addressDetail;
     private String phoneNm;
     private String request;
+    private int usepoint;
 }

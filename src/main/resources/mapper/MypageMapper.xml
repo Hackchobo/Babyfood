@@ -45,7 +45,7 @@
     </update>
 
     <select id="selUser">
-        SELECT reciever, address,address_detail addressDetail,call_user phoneNm, request
+        SELECT reciever, address,address_detail addressDetail,call_user phoneNm, request,usepoint
         FROM order_list
         WHERE order_id = #{orderId}
         AND cancel = 0

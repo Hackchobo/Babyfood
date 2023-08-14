@@ -13,4 +13,5 @@ public class BuyInsorder {
     private String receiver;
     private String address;
     private String addressDetail;
+    private int point;
 }
