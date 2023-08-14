@@ -1,6 +1,7 @@
 package com.green.babyfood.orderbasket;
 
 import com.green.babyfood.config.security.AuthenticationFacade;
+import com.green.babyfood.main.model.MainSelVo;
 import com.green.babyfood.orderbasket.model.OrderBasketDto;
 import com.green.babyfood.orderbasket.model.OrderBasketEntity;
 import com.green.babyfood.orderbasket.model.OrderBasketSelVo;
@@ -41,7 +42,14 @@ public class OrderBasketService {
 
 
     public List<OrderBasketSelVo> selUserOrderBasket(){
-        return mapper.selUserOrderBasket(USERPK.getLoginUserPk());
+        List<OrderBasketSelVo> orderBasketSelVos =mapper.selUserOrderBasket(USERPK.getLoginUserPk());
+        for (int i = 0; i < orderBasketSelVos.size(); i++) {
+            String thumbnail = orderBasketSelVos.get(i).getThumbnail();
+            Long productId=orderBasketSelVos.get(i).getProductId();
+            String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
+            orderBasketSelVos.get(i).setThumbnail(fullPath);
+        }
+        return orderBasketSelVos;
     }
 
     public int updCountPlus(Long cartId){

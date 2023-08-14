@@ -1,6 +1,9 @@
 package com.green.babyfood.mypage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.gson.Gson;
 import com.green.babyfood.config.RedisService;
 import com.green.babyfood.config.security.JwtTokenProvider;
 import com.green.babyfood.config.security.SecurityConfiguration;
@@ -33,6 +36,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(MypageController.class)
@@ -98,78 +102,111 @@ class MypageControllerTest {
 //        ra.andExpect(status().isOk())
 //                .andExpect(jsonPath("$",hasSize(arr.length)))
 //                .andExpect(jsonPath("$").value(1L));
-//
-        //   }
-//
-        //   @Test
-        //   void getOrderlistDetail() throws Exception {
-//
-        //       OrderlistUserDto user = new OrderlistUserDto();
-        //       user.setReciever("수령인1");
-        //       user.setAddress("주소1");
-        //       user.setAddressDetail("상세주소");
-        //       user.setPhoneNm("01025996521");
-        //       user.setRequest("요청사항 없음");
-//
-        //       List<OrderlistDetailSelDto> orderlist =new ArrayList<>();
-//
-//
-        //       OrderlistDetailSelDto orderlistdto = new OrderlistDetailSelDto();
-//
-        //       orderlistdto.setProductId(1L);
-        //       orderlistdto.setIuser(1L);
-        //       orderlistdto.setThumbnail("creampie.png");
-        //       orderlistdto.setCreatedAt("2023-08-13");
-        //       orderlistdto.setName("강민숙");
-        //       orderlistdto.setPrice(2000);
-        //       orderlistdto.setCount(3);
-        //       orderlistdto.setTotalPrice(6000);
-//
-        //       OrderlistDetailSelDto orderlistdto2 = new OrderlistDetailSelDto();
-//
-        //       orderlistdto2.setProductId(2L);
-        //       orderlistdto2.setIuser(2L);
-        //       orderlistdto2.setThumbnail("beefstew.png");
-        //       orderlistdto2.setCreatedAt("2023-08-13");
-        //       orderlistdto2.setName("강민숙");
-        //       orderlistdto2.setPrice(1000);
-        //       orderlistdto2.setCount(3);
-        //       orderlistdto2.setTotalPrice(3000);
-//
-        //       orderlist.add(orderlistdto);
-        //       orderlist.add(orderlistdto2);
-        //      OrderlistSelUserDto dto = new OrderlistSelUserDto();
-//
-        //       dto.setOrderlist(orderlist);
-        //       dto.setUser(user);
-//
-//
-//
-        //       given(service.OrderlistDetail(any())).willReturn(dto);
-        //       ResultActions ra = mvc.perform(get("api/mypage/orderlist/detail"));
-        //       ra.andExpect(status().isOk())
-        //               .andExpect(jsonPath("$",hasSize()))
-        //               .andExpect(jsonPath("$[0]"))
-//
-        //   }
-//
-//
-//    @Test
-//    void getprofile() {
-//        ProfileSelDto dto = new ProfileSelDto();
-//        dto.setIuser(1L);
-//        dto.setEmail("ob09@naver.com");
-//        dto.setImage("Image.png");
-//
-//    }
-//
-//    @Test
-//    void patchprofile() {
-//
-//    }
-//
-//
-//    @Test
-//    void patchPic() {
+
+    }
+
+    @Test
+    void getOrderlistDetail() throws Exception {
+
+        OrderlistUserDto user = new OrderlistUserDto();
+        user.setReciever("수령인1");
+        user.setAddress("주소1");
+        user.setAddressDetail("상세주소");
+        user.setPhoneNm("01025996521");
+        user.setRequest("요청사항 없음");
+
+        List<OrderlistDetailSelDto> orderlist =new ArrayList<>();
+
+
+        OrderlistDetailSelDto orderlistdto = new OrderlistDetailSelDto();
+
+        orderlistdto.setProductId(1L);
+        orderlistdto.setIuser(1L);
+        orderlistdto.setThumbnail("creampie.png");
+        orderlistdto.setCreatedAt("2023-08-13");
+        orderlistdto.setName("강민숙");
+        orderlistdto.setPrice(2000);
+        orderlistdto.setCount(3);
+        orderlistdto.setTotalPrice(6000);
+
+        OrderlistDetailSelDto orderlistdto2 = new OrderlistDetailSelDto();
+
+        orderlistdto2.setProductId(2L);
+        orderlistdto2.setIuser(2L);
+        orderlistdto2.setThumbnail("beefstew.png");
+        orderlistdto2.setCreatedAt("2023-08-13");
+        orderlistdto2.setName("강민숙");
+        orderlistdto2.setPrice(1000);
+        orderlistdto2.setCount(3);
+        orderlistdto2.setTotalPrice(3000);
+
+        orderlist.add(orderlistdto);
+        orderlist.add(orderlistdto2);
+       OrderlistSelUserDto dto = new OrderlistSelUserDto();
+
+        dto.setOrderlist(orderlist);
+        dto.setUser(user);
+
+        ObjectMapper om = new ObjectMapper();
+        om.registerModule(new JavaTimeModule());
+        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        String resJson  = om.writeValueAsString(dto);
+
+
+
+        given(service.OrderlistDetail(any())).willReturn(dto);
+        ResultActions ra = mvc.perform(get("/api/mypage/orderlist/detail")
+                .content(resJson)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        ra.andExpect(status().isOk())
+                .andDo(print());
+        verify(service).OrderlistDetail(any());
+
+    }
+
+
+    @Test
+    void getprofile() throws Exception {
+        ProfileSelDto dto = new ProfileSelDto();
+        dto.setIuser(1L);
+        dto.setEmail("ob09@naver.com");
+        dto.setImage("Image.png");
+        dto.setName("강민숙");
+        dto.setMobileNb("010-1111-1111");
+        dto.setBirthday("1999-01-01");
+        dto.setZipcode("11111111");
+        dto.setAddress("주소1");
+        dto.setAddressDetail("주소2");
+        dto.setNickNm("별명1");
+        dto.setPoint(1000);
+
+        given(service.profile()).willReturn(dto);
+
+        ObjectMapper om = new ObjectMapper();
+        om.registerModule(new JavaTimeModule());
+        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        String resJson  = om.writeValueAsString(dto);
+
+        ResultActions ra = mvc.perform(get("/api/mypage/profile")
+                .content(resJson)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        ra.andExpect(status().isOk())
+                .andExpect(content().string(resJson))
+                .andDo(print());
+
+        verify(service).profile();
+
+    }
+
+    @Test
+    void patchprofile() {
+
+    }
+
+
+    @Test
+    void patchPic() {
     }
 }
