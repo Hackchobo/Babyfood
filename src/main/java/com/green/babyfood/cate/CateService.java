@@ -53,6 +53,7 @@ public class CateService {
         int maxPage = (int) Math.ceil(maxPaigeResult / (double) dto.getRow());
 
         vo.setMaxPaige(maxPage);
+        vo.setPageCount(maxPaigeResult);
         vo.setList(cateSelListVos);
         return vo;
     }

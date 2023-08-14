@@ -48,6 +48,7 @@ public class MainService {
       int maxPaige2 = (int) Math.ceil((double) maxPaige1 / row);
       MainSelVoMaxPaige mainSelVoMaxPaige = new MainSelVoMaxPaige();
       mainSelVoMaxPaige.setMaxPage(maxPaige2);
+      mainSelVoMaxPaige.setPageCount(maxPaige1);
       mainSelVoMaxPaige.setList(mainSelVos);
 
      return mainSelVoMaxPaige;
@@ -153,6 +154,7 @@ public class MainService {
         }
         MainSelVoMaxPaige mainSelVoMaxPaige=new MainSelVoMaxPaige();
         mainSelVoMaxPaige.setMaxPage(maxPage);
+        mainSelVoMaxPaige.setPageCount(maxPageCount);
         mainSelVoMaxPaige.setList(mainSelVos);
         return mainSelVoMaxPaige;
 }
