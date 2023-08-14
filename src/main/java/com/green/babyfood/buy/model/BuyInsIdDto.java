@@ -12,7 +12,6 @@ public class BuyInsIdDto {
     private int payment;
     private int point;
 
-    private Long cartId;
     private Long productId;
     private int count;
     private int totalprice;
