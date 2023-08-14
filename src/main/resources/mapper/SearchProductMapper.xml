@@ -16,6 +16,7 @@
         WHERE p_name REGEXP #{msg}
         AND A.p_quantity !=0
         AND A.is_delete = 0
+        AND D.thumbnail is not null
         GROUP BY A.product_id
         LIMIT #{startIdx}, #{row}
     </select>
@@ -34,6 +35,7 @@
         WHERE p_name REGEXP #{msg}
         AND A.p_quantity !=0
         AND A.is_delete = 0
+        AND D.thumbnail is not null
         <if test="allergy!=''">
             AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${allergy}))
         </if>
