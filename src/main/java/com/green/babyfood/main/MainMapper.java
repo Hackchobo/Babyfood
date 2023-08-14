@@ -9,7 +9,7 @@ import java.util.List;
 public interface MainMapper {
 
     List<MainSelVo> mainSelView(int startIdx,int row);
-    int maxPaige();
+    int maxPage();
 
     List<MainSelVo> random();
     List<MainSelVo> bestSell();
