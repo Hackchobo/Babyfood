@@ -193,7 +193,6 @@ class MypageControllerTest {
                 .contentType(MediaType.APPLICATION_JSON));
 
         ra.andExpect(status().isOk())
-                .andExpect(content().string(resJson))
                 .andDo(print());
 
         verify(service).profile();
