@@ -35,6 +35,7 @@ public class MypageService {
 
         List<OrderlistCountSelDto> orderlist = mapper.orderlist(dto);
 
+
         OrderlistSelDto[] orderlistSelDto = new OrderlistSelDto[orderlist.size()];
 
 
@@ -49,11 +50,12 @@ public class MypageService {
             } else if (orderlist.get(i).getShipment().equals("4")) {
                 orderlist.get(i).setShipment("상품 배송완료");
             }
+            int count = mapper.count(orderlist.get(i).getOrderId());
 
-            if (orderlist.get(i).getCount()>0){
+            if (count>1){
                 String name = orderlist.get(i).getName();
                 StringBuffer sb = new StringBuffer();
-                sb.append(name).append(" 외").append(orderlist.get(i).getCount()).append("개");
+                sb.append(name).append(" 외").append(count-1).append("개");
 
                 String ordername = String.valueOf(sb);
                 orderlist.get(i).setName(ordername);

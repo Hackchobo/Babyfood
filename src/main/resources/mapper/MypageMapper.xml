@@ -87,5 +87,13 @@
         where iuser = #{iuser}
     </update>
 
+    <select id="count">
+        SELECT COUNT(A.order_id)
+        FROM order_list A
+        INNER JOIN order_detail B
+        ON A.order_id = B.order_id
+        WHERE A.order_id  = #{orderId}
+    </select>
+
 
 </mapper>

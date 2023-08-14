@@ -41,7 +41,4 @@ public class BuyController {
         return SERVICE.BuyIdProduct(dto);
     }
 
-
-
-
 }
