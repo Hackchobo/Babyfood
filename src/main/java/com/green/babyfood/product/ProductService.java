@@ -44,7 +44,8 @@ public class ProductService {
         List<String> imgUrls = new ArrayList<>();
         for (String imgName : imgList) {
             if(imgName != null) {
-                String imgUrl = createImageUrl(productId, imgName); // URL 생성
+                String address = "webeditor";
+                String imgUrl = createImageUrl(productId, imgName, address); // URL 생성
                 imgUrls.add(imgUrl);
             }
         }
@@ -52,8 +53,9 @@ public class ProductService {
 
         List<String> thumbnailUrls = new ArrayList<>();
         for (String thumbnailName : thumbnailList) {
+            String address = "product";
             if(thumbnailName != null) {
-                String thumbnailUrl = createImageUrl(productId, thumbnailName); //URL 생성
+                String thumbnailUrl = createImageUrl(productId, thumbnailName, address); //URL 생성
                 thumbnailUrls.add(thumbnailUrl);
             }
         }
@@ -100,8 +102,8 @@ public class ProductService {
         return dto;
     }
 
-    private String createImageUrl(Long productId, String imgName) {
-        String path = "http://192.168.0.144:5001/img/product/"+productId+"/"+imgName;
+    private String createImageUrl(Long productId, String imgName, String address) {
+        String path = "http://192.168.0.144:5001/img/"+ address+ "/" + productId+ "/" +imgName;
         return path;
     }
 
