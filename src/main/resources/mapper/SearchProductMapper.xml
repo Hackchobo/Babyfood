@@ -58,12 +58,15 @@
     </select>
 
     <select id="maxpage">
-        SELECT count(A.product_id)
+        SELECT count(DISTINCT A.product_id)
         FROM product A
         left join product_allergy B
         on A.product_id=B.product_id
+        LEFT JOIN product_img C
+        ON A.product_id = C.product_id
         where A.p_quantity!=0 AND A.is_delete=0
         AND A.p_name REGEXP #{msg}
+        AND C.p_img_id IS NOT NULL
         <if test="allergy!=''">
             AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${allergy}))
         </if>

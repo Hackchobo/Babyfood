@@ -14,7 +14,7 @@ public class BuyController {
     private final BuyService SERVICE;
 
     @PostMapping("/order")
-    @Operation(summary = "상품구매",description = "사용법 <br>"+
+    @Operation(summary = "상품결제",description = "사용법 <br>"+
             "cartId : 장바구니 PK 번호<br>"+
             "productId : 상품 PK 번호<br>"+
             "count : 상품 갯수 <br>"+
@@ -36,10 +36,9 @@ public class BuyController {
     }
 
     @GetMapping("/product")
-    @Operation(summary = "상품구매페이지")
+    @Operation(summary = "상품단품 구매조회")
     public BuySelProductDto getProduct(@RequestParam Long productId){
         return SERVICE.selProduct(productId);
-
     }
 
 }
