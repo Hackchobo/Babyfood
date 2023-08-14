@@ -30,6 +30,7 @@ public class CateService {
 //       }
 //       else {
 //           subAllergy="";
+//           subAllethumbnailrgy="";
 //       }
 
         int page = (dto.getPage() - 1) * dto.getRow();
@@ -43,6 +44,10 @@ public class CateService {
         int maxPaigeResult = mapper.cateSelLevelmaxPage(dto2);
         System.out.println("maxPaigeResult = " + maxPaigeResult);
         List<CateSelListVo> cateSelListVos = mapper.cateSelLevel(dto2);
+        for (CateSelListVo vo : cateSelListVos) {
+            vo.setThumbnail("http://192.168.0.144:5001/img/product"+"/"+vo.getProductId()+"/" + vo.getThumbnail());
+            System.out.println("::" + vo.getThumbnail());
+        }
         System.out.println("cateSelListVos = " + cateSelListVos);
         CateSelLevelVo vo = new CateSelLevelVo();
         int maxPage = (int) Math.ceil(maxPaigeResult / (double) dto.getRow());

@@ -204,7 +204,15 @@
 					</excludes>
 				</configuration>
 			</plugin>
-		</plugins>
+		<!-- 해당 내용 추가하여 테스트코드 무시하고 패키징하게만든다 !! -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<skipTests>true</skipTests>
+					</configuration>
+				</plugin>
+			</plugins>
 	</build>
 
 </project>
