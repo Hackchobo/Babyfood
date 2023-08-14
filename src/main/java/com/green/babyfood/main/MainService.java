@@ -44,7 +44,7 @@ public class MainService {
 
 
 
-      int maxPaige1 = mapper.maxPaige();
+      int maxPaige1 = mapper.maxPage();
       int maxPaige2 = (int) Math.ceil((double) maxPaige1 / row);
       MainSelVoMaxPaige mainSelVoMaxPaige = new MainSelVoMaxPaige();
       mainSelVoMaxPaige.setMaxPage(maxPaige2);

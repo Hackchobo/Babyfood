@@ -71,7 +71,7 @@
         ON C.product_id = B.product_id
         inner JOIN product_img D
         ON C.product_id = D.product_id
-        WHERE B.order_id = #{orderId}
+        WHERE B.order_id = #{orderId} and D.thumbnail is not null
     </select>
 
     <select id="selorder">
