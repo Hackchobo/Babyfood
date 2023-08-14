@@ -36,6 +36,11 @@ public class BuyController {
         return SERVICE.BuyProduct(dto);
     }
 
+//    @PostMapping("/order/Id")
+//    public BuyProductRes BuyProductId(@RequestBody ByInsIdDto dto){
+//
+//    }
+
 
 
 
