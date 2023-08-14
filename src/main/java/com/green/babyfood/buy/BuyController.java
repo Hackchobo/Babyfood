@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "상품구매")
+@Tag(name = "상품결제")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/buy")
@@ -36,9 +36,17 @@ public class BuyController {
     }
 
     @GetMapping("/product")
-    @Operation(summary = "상품단품 구매조회")
-    public BuySelProductDto getProduct(@RequestParam Long productId){
-        return SERVICE.selProduct(productId);
+    @Operation(summary = "상품 구매하기")
+    public BuySelProductDto getProduct(@RequestParam Long productId, @RequestParam int count){
+        BuySelProductDto buySelProductDto = SERVICE.selProduct(productId,count);
+        return buySelProductDto;
+    }
+
+    @PostMapping("/product")
+    @Operation(summary = "상품 구매하기 post입니다")
+    public BuySelProductDto postProduct(@RequestBody BuyInsVo vo){
+        BuySelProductDto buySelProductDto = SERVICE.selProductpo(vo);
+        return buySelProductDto;
     }
 
 }
