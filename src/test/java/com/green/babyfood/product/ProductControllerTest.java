@@ -6,6 +6,7 @@ import com.green.babyfood.config.security.JwtTokenProvider;
 import com.green.babyfood.config.security.SecurityConfiguration;
 import com.green.babyfood.orderbasket.OrderBasketController;
 import com.green.babyfood.orderbasket.OrderBasketService;
+import com.green.babyfood.product.model.ProductReviewDto;
 import com.green.babyfood.product.model.ProductSelDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -57,6 +58,28 @@ public class ProductControllerTest {
 
 
         verify(productService).selProduct(anyLong());
+    }
+
+    @Test
+    void postReview(){
+        //     private Long productId;
+        //    private String ctnt;
+
+        ProductReviewDto expectedDto1 = new ProductReviewDto();
+        expectedDto1.setProductId(1L);
+        expectedDto1.setCtnt("test");
+
+        ProductReviewDto expectedDto2 = new ProductReviewDto();
+        expectedDto2.setProductId(2L);
+        expectedDto2.setCtnt("test2");
+
+        when(productService.postReview(expectedDto1)).thenReturn(1);
+        when(productService.postReview(expectedDto2)).thenReturn(1);
+
+        assertEquals(expectedDto1.getProductId(), 1);
+        assertEquals(expectedDto1.getCtnt(),"test");
+        assertEquals(expectedDto2.getProductId(), 2);
+        assertEquals(expectedDto2.getCtnt(),"test2");
 
     }
 
