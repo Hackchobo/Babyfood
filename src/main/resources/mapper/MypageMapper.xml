@@ -15,6 +15,7 @@
         ON D.product_id = C.product_id
         where iuser = #{iuser}
         AND A.cancel = 0
+        AND thumbnail IS NOT null
         <if test="month !=0">
             and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{month} MONTH) AND NOW()
         </if>
