@@ -34,7 +34,7 @@
         ON A.product_id=C.product_id
         LEFT JOIN product_allergy D
         ON A.product_id=D.product_id
-        WHERE A.cate_id=#{cateId} and C.p_quantity!=0 AND C.is_delete=0
+        WHERE A.cate_id=#{cateId} and C.p_quantity!=0 AND C.is_delete=0 and B.thumbnail is not null
         <if test="cateDetailId !=null and cateDetailId!='' ">
             AND A.cate_detail_id=#{cateDetailId}
         </if>
