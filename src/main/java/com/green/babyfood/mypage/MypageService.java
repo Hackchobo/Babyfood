@@ -66,7 +66,7 @@ public class MypageService {
             orderlistSelDto[i]=new OrderlistSelDto();
             orderlistSelDto[i].setOrderId(orderlist.get(i).getOrderId());
             orderlistSelDto[i].setCreatedAt(orderlist.get(i).getCreatedAt());
-            String path = "192.168.0.144:5001/img/webeditor/"+orderlist.get(i).getOrderId()+"/"+orderlist.get(i).getThumbnail();
+            String path = "192.168.0.144:5001/img/product/"+orderlist.get(i).getProductId()+"/"+orderlist.get(i).getThumbnail();
             orderlistSelDto[i].setThumbnail(path);
             orderlistSelDto[i].setName(orderlist.get(i).getName());
             orderlistSelDto[i].setPrice(orderlist.get(i).getPrice());
@@ -85,7 +85,7 @@ public class MypageService {
         for (int i = 0; i <orderlist.size(); i++) {
 
             String thumbnail = orderlist.get(i).getThumbnail();
-            String path = "http://192.168.0.144:5001/img/webeditor/"+orderlist.get(i).getProductId()+"/"+thumbnail;
+            String path = "http://192.168.0.144:5001/img/product/"+orderlist.get(i).getProductId()+"/"+thumbnail;
             orderlist.get(i).setThumbnail(path);
 
         }

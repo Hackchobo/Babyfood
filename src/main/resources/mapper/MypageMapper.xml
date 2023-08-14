@@ -6,6 +6,7 @@
 
     <select id="orderlist">
         SELECT A.order_id orderId,DATE_FORMAT(A.created_at,'%Y-%m-%d') createdAt,C.p_name name,COALESCE(D.thumbnail, "이미지없음") thumbnail,B.total_price price,A.shipment shipment,COUNT(A.order_id)-1 count
+        ,C.product_id productId
         FROM order_list A
         INNER JOIN order_detail B
         ON A.order_id = B.order_id
@@ -19,7 +20,7 @@
         <if test="month !=0">
             and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{month} MONTH) AND NOW()
         </if>
-        GROUP BY A.order_id
+        GROUP BY C.product_id
         ORDER BY A.created_at DESC
     </select>
 

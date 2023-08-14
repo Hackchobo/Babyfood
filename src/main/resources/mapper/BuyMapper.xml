@@ -87,5 +87,16 @@
         WHERE product_id  = #{productId}
     </select>
 
+    <select id="selproduct">
+        SELECT A.product_id productId,A.p_title title, A.p_name name, A.p_price price, B.thumbnail
+        FROM product A
+        LEFT JOIN product_img B
+        ON A.product_id = B.product_id
+        WHERE A.product_id = #{productId}
+        and B.thumbnail IS NOT NULL
+        GROUP BY A.product_id
+
+    </select>
+
 
 </mapper>

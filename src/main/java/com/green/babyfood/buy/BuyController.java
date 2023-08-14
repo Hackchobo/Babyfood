@@ -1,7 +1,6 @@
 package com.green.babyfood.buy;
 
 import com.green.babyfood.buy.model.*;
-import com.green.babyfood.buy.model.BuyEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +35,11 @@ public class BuyController {
         return SERVICE.BuyProduct(dto);
     }
 
-    @PostMapping("/order/Id")
-    public BuyProductRes BuyProductId(@RequestBody BuyInsIdDto dto){
-        return SERVICE.BuyIdProduct(dto);
+    @GetMapping("/product")
+    @Operation(summary = "상품구매페이지")
+    public BuySelProductDto getProduct(@RequestParam Long productId){
+        return SERVICE.selProduct(productId);
+
     }
 
 }

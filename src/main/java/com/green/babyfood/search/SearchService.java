@@ -167,8 +167,6 @@ public class SearchService {
         selres.setDto(productDto);
         selres.setCount(num);
         selres.setMaxpage(maxpage);
-
-
         return selres;
 
     }

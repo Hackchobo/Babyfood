@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.apache.commons.lang3.StringUtils.substring;
 
@@ -142,69 +141,14 @@ public class BuyService {
         return res;
     }
 
-    public BuyProductRes BuyIdProduct(BuyInsIdDto dto){
-        Long iuser = USERPK.getLoginUserPk();
-        final int shipmnet = 1;
-        final float earnedPercent = 0.03F;
+    public BuySelProductDto selProduct(Long productId){
+        //Long iuser = USERPK.getLoginUserPk();
+        BuySelProductDto selproduct = Mapper.selproduct(productId);
 
-        BuyInsorder order = new BuyInsorder();
-        order.setIuser(iuser);
-        order.setPayment(dto.getPayment());
-        order.setShipment(shipmnet);
-        order.setPhoneNm(dto.getPhoneNm());
-        if (dto.getRequest().equals("")||dto.getRequest()==null) {
-            order.setRequest("요청사항 없음");
-        }else
-            order.setRequest(dto.getRequest());
-        order.setAddress(dto.getAddress());
-        order.setAddressDetail(dto.getAddressDetail());
-        order.setPoint(dto.getPoint());
-        order.setReceiver(dto.getReceiver());
-
-        //주문내역추가
-        int result = Mapper.InsBuy(order);
-
-        BuyUpdPointDto addpoint = new BuyUpdPointDto();
-        BuyUpdPointDto updpoint = new BuyUpdPointDto();
-        updpoint.setIuser(iuser);
-        updpoint.setPoint(dto.getPoint());
-        addpoint.setIuser(iuser);
-
-        if (result == 1){
-
-            BuyDetailInsDto detaildto = new BuyDetailInsDto();
-            detaildto.setOrderId(order.getOrderId());
-            detaildto.setProductId(dto.getProductId());
-            detaildto.setCount(dto.getCount());
-            detaildto.setTotalPrice(dto.getTotalprice());
-            //주문상세내역 추가
-            Mapper.InsBuyDetail(detaildto);
-
-            BuyUpdDto updDto = new BuyUpdDto();
-            updDto.setProductId(dto.getProductId());
-            updDto.setSaleVolumn(dto.getCount());
-            updDto.setQuantity(dto.getCount());
-            //상품 개수 업데이트
-            Mapper.updProduct(updDto);
-        }
-
-        //결제 포인트 계산
-
-        dto.getPoint();
-        int point = (int) (dto.getTotalprice() * earnedPercent);
-        addpoint.setPoint(point);
-        Mapper.removepoint(updpoint);
-        Mapper.addpoint(addpoint);
-
-
-        // 리턴값
-        BuyProductRes res = new BuyProductRes();
-        res.setPoint(dto.getPoint());
-        res.setOrderId(order.getOrderId());
-        res.setTotalprice(dto.getTotalprice());
-        res.setPaymentprice(dto.getTotalprice() - dto.getPoint());
-
-        return res;
+        String thumbnail = selproduct.getThumbnail();
+        String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
+        selproduct.setThumbnail(fullPath);
+        return selproduct;
     }
 
 }
