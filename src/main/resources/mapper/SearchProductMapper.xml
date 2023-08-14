@@ -63,8 +63,9 @@
         left join product_allergy B
         on A.product_id=B.product_id
         where A.p_quantity!=0 AND A.is_delete=0
-        <if test="strallergy!=''">
-            and B.allergy_id not in(#{strallergy})
+        AND A.p_name REGEXP #{msg}
+        <if test="allergy!=''">
+            AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${allergy}))
         </if>
 
     </select>

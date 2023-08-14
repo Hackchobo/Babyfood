@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class SearchSelRes {
-    private int maxpage;
+    private int count;
     private List<SearchSelVo> dto;
 }

@@ -101,14 +101,6 @@ public class MypageService {
         OrderIuserDto dto = new OrderIuserDto();
         dto.setIuser(USERPK.getLoginUserPk());
         ProfileSelDto profile = mapper.profile(dto);
-        String mobileNb = profile.getMobileNb();
-
-        String num1 = mobileNb.substring(0, 3);
-        String num2 = mobileNb.substring(3, 7);
-        String num3 = mobileNb.substring(7, 11);
-        String nbsub = num1 + "-" + num2 + "-" + num3;
-        profile.setMobileNb(nbsub);
-
 
         String path = "http://192.168.0.144:5001/img/user/"+dto.getIuser()+"/"+profile.getImage();
         profile.setImage(path);
