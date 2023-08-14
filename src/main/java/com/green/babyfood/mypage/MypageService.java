@@ -87,9 +87,11 @@ public class MypageService {
             orderlist.get(i).setThumbnail(path);
 
         }
-        OrderlistSelUserDto build = OrderlistSelUserDto.builder().orderlist(orderlist).user(user).build();
+        OrderlistSelUserDto selUserDto = new OrderlistSelUserDto();
+        selUserDto.setOrderlist(orderlist);
+        selUserDto.setUser(user);
 
-        return build;
+        return selUserDto;
     }
     public int delorder(Long orderId){
          return mapper.delorder(orderId);
