@@ -24,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.ArrayList;
@@ -200,12 +201,63 @@ class MypageControllerTest {
     }
 
     @Test
-    void patchprofile() {
+    void patchprofile() throws Exception {
+        ProfileUpdDto dto = new ProfileUpdDto();
+        dto.setNickNm("짱좋아");
+        dto.setPassword("1234");
+        dto.setPhoneNumber("01012344567");
+        dto.setName("서영기");
+        dto.setBirthday("1998-01-01");
+        dto.setZipcode("02985");
+        dto.setAddress("대구광역시 중구");
+        dto.setAddressDetail("이곡동 래미안아파트 101동 151호");
+
+        ObjectMapper om = new ObjectMapper();
+        om.registerModule(new JavaTimeModule());
+        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        String resJson  = om.writeValueAsString(dto);
+
+        given(service.updPicUser(any())).willReturn(1);
+
+
+
+        ResultActions ra = mvc.perform(patch("/api/mypage/profile")
+                .content(resJson)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        ra.andExpect(status().isOk())
+                .andDo(print());
+
+        verify(service).updProfile(any());
+
+
+    }
+    @Test
+    void getNickNamecheck() throws Exception {
+        String nickname = "짱좋아";
+        given(service.nicknmcheck(anyString())).willReturn(1);
+
+
+        ResultActions ra = mvc.perform(post("/api/mypage/profile/nickname")
+                        .param("nickname",nickname)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        ra.andExpect(status().isOk())
+                .andDo(print());
+
+        verify(service).nicknmcheck(anyString());
 
     }
 
 
     @Test
-    void patchPic() {
+    void patchPic() throws Exception{
+//        MultipartFile file;
+//        given(service.updPicUser(any())).willReturn(1);
+//
+//        mvc.perform(patch("/api/mypage/profile/pic")
+//                .param("file",String.valueOf(file)));
+//
+
     }
 }

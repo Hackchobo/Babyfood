@@ -109,7 +109,7 @@ public class MypageService {
         return profile;
     }
 
-    public int UpdProfileDto(ProfileUpdDto dto){
+    public int updProfile(ProfileUpdDto dto){
         Long iuser = USERPK.getLoginUserPk();
         ProfileEntity entity = new ProfileEntity();
 

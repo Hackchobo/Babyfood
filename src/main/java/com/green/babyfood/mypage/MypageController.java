@@ -50,7 +50,7 @@ public class MypageController {
     @PatchMapping("/profile")
     @Operation(summary = "내정보(유저 정보) 수정" , description = "")
     int patchprofile(@RequestBody ProfileUpdDto dto){
-        return service.UpdProfileDto(dto);
+        return service.updProfile(dto);
     }
     @PostMapping("/profile/nickname")
     @Operation(summary = "닉네임 중복체크" ,
