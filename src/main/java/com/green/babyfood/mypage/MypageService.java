@@ -1,25 +1,43 @@
 package com.green.babyfood.mypage;
 
+import com.green.babyfood.config.security.AuthenticationFacade;
 import com.green.babyfood.mypage.model.*;
+import com.green.babyfood.util.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
 public class MypageService {
+
+    @Value("${file.dir}")
+    private String fileDir;
+
     private final MypageMapper mapper;
+    private final PasswordEncoder PW_ENCODER;
+    private final AuthenticationFacade USERPK;
 
-    public  OrderlistSelDto[] Orderlist(OrderlistMonthsSelDto dto){
+    public  List<OrderlistSelDto> Orderlist(int month){
+        OrderlistMonthsSelDto dto = new OrderlistMonthsSelDto();
+        dto.setIuser(USERPK.getLoginUserPk());
+        dto.setMonth(month);
 
-        List<OrderlistCountSelDto> orderlist = mapper.Orderlist(dto);
+        List<OrderlistCountSelDto> orderlist = mapper.orderlist(dto);
 
-        OrderlistSelDto[] orderlistSelDto = new OrderlistSelDto[orderlist.size()];
+
+        List<OrderlistSelDto> list = new LinkedList<>();
 
 
         for (int i = 0; i < orderlist.size(); i++) {
@@ -33,58 +51,158 @@ public class MypageService {
             } else if (orderlist.get(i).getShipment().equals("4")) {
                 orderlist.get(i).setShipment("상품 배송완료");
             }
+            int count = mapper.count(orderlist.get(i).getOrderId());
 
-            if (orderlist.get(i).getCount()>0){
+            if (count>1){
                 String name = orderlist.get(i).getName();
                 StringBuffer sb = new StringBuffer();
-                sb.append(name).append(" 외").append(orderlist.get(i).getCount()).append("개");
+                sb.append(name).append(" 외").append(count-1).append("개");
 
                 String ordername = String.valueOf(sb);
                 orderlist.get(i).setName(ordername);
             }
         }
 
-        for (int i = 0; i < orderlistSelDto.length; i++) {
-            orderlistSelDto[i]=new OrderlistSelDto();
-            orderlistSelDto[i].setOrderId(orderlist.get(i).getOrderId());
-            orderlistSelDto[i].setCreatedAt(orderlist.get(i).getCreatedAt());
-            orderlistSelDto[i].setThumbnail(orderlist.get(i).getThumbnail());
-            orderlistSelDto[i].setName(orderlist.get(i).getName());
-            orderlistSelDto[i].setPrice(orderlist.get(i).getPrice());
-            orderlistSelDto[i].setShipment(orderlist.get(i).getShipment());
+        for (int i = 0; i < orderlist.size(); i++) {
+            OrderlistSelDto order = new OrderlistSelDto();
+            order.setOrderId(orderlist.get(i).getOrderId());
+            order.setCreatedAt(orderlist.get(i).getCreatedAt());
+            String path = "http://192.168.0.144:5001/img/product/"+orderlist.get(i).getProductId()+"/"+orderlist.get(i).getThumbnail();
+            order.setThumbnail(path);
+            int cateId = orderlist.get(i).getCateId();
+            String name = "["+cateId+"단계] "+orderlist.get(i).getName();
+            order.setName(name);
+            order.setPrice(orderlist.get(i).getPrice());
+            order.setShipment(orderlist.get(i).getShipment());
+            order.setTitle(orderlist.get(i).getTitle());
+            list.add(order);
         }
 
-        return orderlistSelDto;
+        return list;
     }
 
-    public OrderlistSelUserDto OrderlistDetail(int orderId){
+    public OrderlistSelUserDto OrderlistDetail(Long orderId){
 
-        List<OrderlistDetailSelDto> orderlist = mapper.OrderlistDetail(orderId);
+        List<OrderlistCountSelDto> orderlist = mapper.orderlistDetail(orderId);
         OrderlistUserDto user = mapper.selUser(orderId);
-        OrderlistSelUserDto build = OrderlistSelUserDto.builder().orderlist(orderlist).user(user).build();
+        OrderlistSelUserDto selUserDto = new OrderlistSelUserDto();
+        List<OrderlistDetailSelDto> dtoList = new LinkedList<>();
 
-        return build;
+
+        for (int i = 0; i <orderlist.size(); i++) {
+            OrderlistDetailSelDto dto = new OrderlistDetailSelDto();
+            String thumbnail = orderlist.get(i).getThumbnail();
+            String path = "http://192.168.0.144:5001/img/product/"+orderlist.get(i).getProductId()+"/"+thumbnail;
+            orderlist.get(i).setThumbnail(path);
+
+            int cateId = orderlist.get(i).getCateId();
+            String name = "["+cateId+"단계] "+orderlist.get(i).getName();
+            dto.setProductId(orderlist.get(i).getProductId());
+            //dto.setIuser(orderlist.get(i).getIuser());
+            dto.setThumbnail(path);
+            dto.setTitle(orderlist.get(i).getTitle());
+            dto.setCreatedAt(orderlist.get(i).getCreatedAt());
+            dto.setName(name);
+            dto.setPrice(orderlist.get(i).getPrice());
+            dto.setCount(orderlist.get(i).getCount());
+            dto.setTotalPrice(orderlist.get(i).getTotalPrice());
+            dtoList.add(dto);
+
+        }
+        selUserDto.setOrderlist(dtoList);
+        selUserDto.setUser(user);
+
+        return selUserDto;
+    }
+    public int delorder(Long orderId){
+         return mapper.delorder(orderId);
     }
 
-    ProfileSelDto profile(int iuser){
-        ProfileSelDto profile = mapper.profile(iuser);
+    public ProfileSelDto profile(){
+        OrderIuserDto dto = new OrderIuserDto();
+        dto.setIuser(USERPK.getLoginUserPk());
+        ProfileSelDto profile = mapper.profile(dto);
+
+        String path = "http://192.168.0.144:5001/img/user/"+dto.getIuser()+"/"+profile.getImage();
+        profile.setImage(path);
         return profile;
     }
 
-    public int UpdProfileDto(ProfileUpdDto dto){
+    public int updProfile(ProfileUpdDto dto){
+        Long iuser = USERPK.getLoginUserPk();
+        ProfileEntity entity = new ProfileEntity();
 
-        log.info("입력한 닉네임:{}",dto.getNickNm());
-        MypageNickNmDto selNickNmDto = mapper.SelNickNm(dto.getNickNm());
+        String nickNm = mapper.SelNickNm(dto.getNickNm());
 
-        if (!(selNickNmDto == null)){
-            return 0;
+        entity.setIuser(iuser);
+        if (!dto.getNickNm().equals(nickNm) ){
+            entity.setNickNm(dto.getNickNm());
         }
 
-        return mapper.Updprofile(dto);
+        entity.setName(dto.getName());
+        entity.setPhoneNumber(dto.getPhoneNumber());
+        entity.setBirthday(dto.getBirthday());
+        entity.setZipcode(dto.getZipcode());
+        entity.setAddress(dto.getAddress());
+        entity.setAddressDetail(dto.getAddressDetail());
+
+        if (!dto.getPassword().equals("")){
+            String encode = PW_ENCODER.encode(dto.getPassword());
+            entity.setPassword(encode);
+        }
+
+        return mapper.Updprofile(entity);
     }
 
-    public int delUser(int iuser){
-        return mapper.delUser(iuser);
+    public int nicknmcheck(String nickname){
+        String Nicknm = mapper.SelNickNm(nickname);
+        if (nickname.equals(Nicknm)){
+            return 1;
+        }else
+            return 0;
     }
 
+    public int delUser(){
+        OrderIuserDto dto = new OrderIuserDto();
+       dto.setIuser(USERPK.getLoginUserPk());
+        return mapper.delUser(dto);
+    }
+
+
+    public int updPicUser(MultipartFile pic){
+        Long iuser = USERPK.getLoginUserPk();
+        ProfileUpdPicDto dto = new ProfileUpdPicDto();
+        dto.setIuser(iuser);
+        String centerPath = String.format("%s/user/%d", FileUtils.getAbsolutePath(fileDir),iuser);
+
+
+        File dic = new File(centerPath);
+        if(!dic.exists()){
+            dic.mkdirs();
+        }
+
+        String originFileName = pic.getOriginalFilename();
+        String savedFileName = FileUtils.makeRandomFileNm(originFileName);
+        String savedFilePath = String.format("%s/%s",centerPath, savedFileName);
+
+        File target = new File(savedFilePath);
+        try {
+            pic.transferTo(target);
+        }catch (Exception e) {
+            return 0;
+        }
+        String img = savedFileName;
+        dto.setImg(img);
+        try {
+            int result = mapper.patchProfile(dto);
+            if(result == 0) {
+                throw new Exception("프로필 사진을 등록할 수 없습니다.");
+            }
+        } catch (Exception e) {
+            //파일 삭제
+            target.delete();
+            return 0;
+        }
+        return 1;
+    }
 }

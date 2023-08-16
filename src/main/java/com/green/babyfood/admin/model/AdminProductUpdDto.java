@@ -1,8 +1,8 @@
 package com.green.babyfood.admin.model;
 
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,6 +16,5 @@ public class AdminProductUpdDto {
     int saleVolume;
     int allergy;
     int category;
-    List cateDetail = new ArrayList<>();
-
+    List<Integer> cateDetail;
 }

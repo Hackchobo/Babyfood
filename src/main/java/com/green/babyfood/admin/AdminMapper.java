@@ -1,7 +1,9 @@
 package com.green.babyfood.admin;
 
 import com.green.babyfood.admin.model.*;
+import com.green.babyfood.user.model.CreatePicDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -9,7 +11,7 @@ import java.util.List;
 public interface AdminMapper {
     int productIns(AdminProductInsDto dto);
     List<AdminProductEntity> productAll(AdminProductDto dto);
-    AdminProductEntity getProduct(int productId);
+    List<AdminProductEntity> getProduct(int productId);
     //int updAdminProduct(AdminProductUpdDto dto);
     int delAdminProduct(int productId);
     // 검색기능
@@ -28,7 +30,12 @@ public interface AdminMapper {
     int delProduct(Long productId);
 
     int insWebEditorImgList(AdminProductImgDto dto);
+    int insThumbnail(List<MultipartFile> thumbnail);
+    int updPicTest(CreatePicProduct dto);
+
+    int updPicTestThumb(CreatePicProduct dto);
     int delWebEditorCancel(Long pImgId);
     ProductImgPk selProductImgPk(Long pImgId);
 
+    int insImgList(AdminProductImgDto dto);
 }

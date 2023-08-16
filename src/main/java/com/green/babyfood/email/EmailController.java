@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/mail")
 public class EmailController {
 
-    private final EmailService service;
+    private static EmailService EMAIL_SERVICE;
 
-
-    public EmailController(EmailService service) {
-        this.service = service;
-    }
     private MailReservation reserveMail;
 
 
@@ -33,8 +28,8 @@ public class EmailController {
             "mailAddress : 수신자 메일 주소<br>"+
             "title : 메일 제목<br>"+
             "ctnt : 내용 <br>")
-    public void postSend(@RequestBody MailSendDto dto) {
-        service.send(dto);
+    public static void postSend(@RequestBody MailSendDto dto) {
+        EMAIL_SERVICE.send(dto);
         // 보내고 싶은 메일이 있다면 dto 객체에 내용 맞춰서 넣은 후 해당 메소드 호출
     }
 
@@ -44,15 +39,7 @@ public class EmailController {
             "title : 메일 제목<br>"+
             "ctnt : 내용 <br>")
     public void reservationMailPost(@RequestBody MailReservation dto){
-        reserveMail = dto;
-    }
-
-    //@Scheduled(cron = "1 0 15 ? * ?")
-    @Scheduled(cron = "0 6 * * * *") // 테스트용, 모든 시간의 n분마다 발송
-    @PostMapping("/send/Reservation/mail") // 주 1회 자동발송 메일
-    @Operation(summary = "주1회 자동으로 메일 발송")
-    public void cycleMail(){
-        service.cycleMail(reserveMail); // 미리 저장해둔 예약내용으로 발송
+        EMAIL_SERVICE.cycleMail(dto);
     }
 
 }

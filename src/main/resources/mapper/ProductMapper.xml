@@ -4,10 +4,50 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.babyfood.product.ProductMapper">
 
+
     <select id="selProduct">
-        select p_title title, p_name name, p_price price, p_quantity quantity, description from product
-        where product_id=#{productId}
+        SELECT
+        A.p_title AS title, A.p_name AS name,
+        A.p_price AS price, A.p_quantity AS quantity,
+        A.description AS description, B.allergy_id allergy, C.cate_id step
+        FROM product A
+        LEFT JOIN product_allergy B
+        ON A.product_id = B.product_id
+        LEFT JOIN product_category_relation C
+        ON A.product_id = C.product_id
+        WHERE A.product_id = #{productId}
+        GROUP BY A.product_id
     </select>
+
+    <select id="selBuyProduct">
+        select
+        p_title AS title, p_name AS name,
+        p_price AS price, p_quantity AS quantity
+        FROM product
+        WHERE product_id = #{productId}
+        GROUP BY product_id
+    </select>
+
+<!--    <select id="selDataByCategory">-->
+<!--        SELECT cate_detail_id-->
+<!--        FROM product_category_relation-->
+<!--        WHERE product_id = #{product_id} AND cate_detail_id IS NOT NULL-->
+<!--    </select>-->
+
+
+    <select id="selProductImg">
+        SELECT img
+        FROM product_img
+        WHERE product_id = #{productId} AND img IS NOT null
+        limit 4
+    </select>
+    <select id="selProductThumbnail">
+        select thumbnail
+        from product_img
+        where product_id = #{productId} AND thumbnail IS NOT null
+        limit 4
+    </select>
+
 
     <insert id="postReview">
         insert into review
@@ -17,7 +57,7 @@
     </insert>
 
     <select id="selReview">
-        SELECT iuser, ctnt
+        SELECT iuser, ctnt, product_id productId
         from review
         where product_id = #{productId}
     </select>

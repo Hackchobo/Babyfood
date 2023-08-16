@@ -22,9 +22,13 @@
     </select>
 
     <select id="getProduct">
-        select p_title title, p_name name, p_price price, p_quantity quantity, description
-        from product
-        where product_iD = #{productId}
+        SELECT A.p_title title, A.p_name name, A.p_price price, A.p_quantity quantity, A.description,
+        B.img, B.thumbnail
+        from product A
+        INNER JOIN product_img B
+        ON A.product_id = B.product_id
+        WHERE A.product_id = #{product_ID}
+        GROUP BY A.product_id
     </select>
 
     <update id="updAdminProduct">
@@ -38,6 +42,15 @@
         , allergy = #{allergy}
         , created_at = current_timestamp()
         where product_id = #{productId}
+    </update>
+
+    <update id="insThumbnail">
+        insert into product_img
+        (product_id,img)
+        values
+        <foreach collection="img" item="item" separator=",">
+            (#{productId},#{item})
+        </foreach>
     </update>
 
     <update id="changeAdminProduct">
@@ -89,9 +102,6 @@
 
 
 
-
-
-
     <insert id="insPk" useGeneratedKeys="true" keyProperty="productId">
         insert into product
         (p_title,p_name,p_price,p_quantity,description,created_at,updated_at)
@@ -111,7 +121,14 @@
         insert into product_img
         (product_id,img)
         values
-            (#{productId},#{randomName})
+        (#{productId},#{randomName})
+    </insert>
+
+    <insert id="insImgList" useGeneratedKeys="true" keyProperty="pImgId">
+        insert into product_img
+        (product_id,thumbnail)
+        values
+        (#{productId},#{randomName})
 
     </insert>
 
@@ -139,7 +156,16 @@
         where product_id=#{productId}
     </delete>
 
+    <update id="insImgTest">
+        insert into product_img
+        set product_id = #{productId}
+    </update>
 
+    <insert id="updPicTest">
+        insert into product_img
+        set img = #{img},
+        product_id = #{productId}
+    </insert>
     <delete id="delWebEditorCancel">
         delete from product_img
         where p_img_id=#{pImgId}
@@ -151,5 +177,4 @@
         from product_img
         where p_img_id=#{pImgId}
     </select>
-
 </mapper>

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,8 +14,9 @@ import java.util.List;
 
 @Tag(name = "관리자페이지")
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 @RequiredArgsConstructor
+@Slf4j
 public class AdminController {
     private final AdminService service;
 
@@ -31,13 +33,13 @@ public class AdminController {
         return service.productAll(dto);
     }
 
-    @GetMapping("/product/get")
+    @GetMapping("/product/productId")
     @Operation(summary = "상품 상세조회", description = "상품 코드 입력")
-    public AdminProductEntity getProduct(@RequestParam int productId){
+    public List<AdminProductEntity> getProduct(@RequestParam int productId){
         return service.getProduct(productId);
     }
 
-    @PatchMapping("/product/delete")
+    @DeleteMapping ("/product/productId")
     @Operation(summary = "등록된 상품 삭제")
     public int delAdminProduct(@RequestParam int productId){
         return service.delAdminProduct(productId);
@@ -45,7 +47,7 @@ public class AdminController {
 
     @GetMapping("/product/search")
     @Operation(summary = "관리자페이지 - 상품 검색", description = "모든 상품(품절된 상품)포함하여 검색 <br>"+
-    "띄어쓰기 / 한영타변환 검색기능 지원<br>")
+    "미구현상태입니다 호출 XXX 진행되면 말씀드리겠습니다 ")
     public List<AdminProductEntity> searchAdminProduct(@RequestParam String keyword){
         return service.searchAdminProduct(keyword);
     }
@@ -53,59 +55,68 @@ public class AdminController {
     // 웹에디터
 
 
-    @PostMapping
+    @PostMapping("/product")
     @Operation(summary = "웹에디터 pk가져오는 메소드 상품등록할때 바로 pk를 반환한다")
     public Long insPk(@RequestBody PkVo pkVo){
         return service.insPk(pkVo);
     }
 
 
-    @PostMapping(value = "/img",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/product/img",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "웹에디터 이미지 넣기",description = ""+
-    "img : 이미지 풀 경로<br>"+
-    "pimgId : 웹에디터 이미지의 pk값")
+            "img : 이미지 풀 경로<br>"+
+            "pimgId : 웹에디터 이미지의 pk값")
     public ProductImgPkFull insWebEditorImg(@RequestPart MultipartFile img, @RequestParam Long productId){
         return service.insWebEditorImg(img,productId);
     }
 
-
-    @PostMapping(value = "/imglist",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/product/imglist",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "웹에디터 이미지리스트로 넣기",description = ""+
-    "img : 이미지 풀 경로<br>"+
-    "pimgId : 웹에디터 이미지의 pk값")
+            "img : 이미지 풀 경로<br>"+
+            "pimgId : 웹에디터 이미지의 pk값")
     public List<ProductImgPkFull> insWebEditorImgList(@RequestPart List<MultipartFile> img, @RequestParam Long productId){
         return service.insWebEditorImgList(img,productId);
     }
 
-    @PatchMapping
-    @Operation(summary = "최종상품등록할때 저장하는 메소드")
-    public int insProduct(@RequestBody AdminProductUpdDto dto){
-        return service.updProduct(dto);
-    }
-
-    @GetMapping("/product/upd/get")
+    @GetMapping("/product/modification")
     @Operation(summary = "상품 수정 버튼 메소드", description = "수정버튼 클릭시 기존 상품의 정보를 가져온다<br>"+
     "상품코드(pk) 입력해주세요")
     public AdminProductUpdDto updProductInfo(@RequestParam int productId){
         return service.updProductInfo(productId);
     }
 
-    @PatchMapping("/product/upd")
-    @Operation(summary = "상품 수정 메소드")
+    @PatchMapping("/product/modification")
+    @Operation(summary = "상품 수정 메소드", description = "수정할 내역 입력후 클릭하면, 업데이트됩니다.")
     public int updProduct(@RequestBody AdminProductUpdDto dto){
         return service.changeProduct(dto);
     }
 
-
-    @DeleteMapping("/product/cancel")
+    @DeleteMapping("/product/cancelation")
     @Operation(summary = "웹에디터에서 취소를 하면 테이블에서 이미지 데이터와 빈값의 상품테이블 데이터를 삭제")
     public int delProductImg(@RequestParam Long product){
         return service.delProductImg(product);
     }
 
-    @DeleteMapping("/webeditor/cancel")
+    @DeleteMapping("/product/cancelation/editor")
     @Operation(summary = "웹에디터 등록하기전 이미지 삭제")
     public int delProductWebImg(@RequestParam Long pImgId){
         return service.delWebEditorCancel(pImgId);
+    }
+
+    @PostMapping(value = "/product/imglist/thumbnail", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "썸네일 이미지리스트로 넣기", description = "본문 등록할 때 함께 보내주세요"+
+            "img : 이미지<br>"+
+            "pimgId : 웹에디터 이미지의 pk값<br>" +
+            "productId : 등록할 상품 pk값" )
+    public List<ProductImgPkFull> insImgList(@RequestPart List<MultipartFile> img, @RequestParam Long productId){
+        return service.insImgList(img,productId);
+    }
+
+    @PatchMapping("/product/registration")
+    @Operation(summary = "최종상품등록할때 저장하는 메소드", description = "상품등록 마지막단계 <br>" +
+                    "상품 내용이 DB에 등록됩니다")
+    public int insProduct(@RequestBody AdminProductUpdDto dto){
+        log.info("테스트");
+        return service.updProduct(dto);
     }
 }

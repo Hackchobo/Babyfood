@@ -11,14 +11,22 @@
         (#{iuser},#{productId},#{count})
     </insert>
 
+    <update id="updCount">
+        update order_basket
+        set count=count+#{count}
+        where cart_id=#{cartId}
+    </update>
+
+
     <select id="selUserOrderBasket">
-        select B.product_id productId,A.cart_id cartId,A.product_id productId,B.p_name name,A.count,B.p_title title,B.p_price price,C.thumbnail,A.created_at createdAt
+        select A.cart_id cartId,B.product_id productId,B.p_name name,A.count,B.p_title title,B.p_price price,C.thumbnail,A.created_at createdAt
         from order_basket A
         inner join product B
         on A.product_id=B.product_id
         inner join product_img C
         on B.product_id=C.product_id
-        where A.iuser=#{iuser}
+        where A.iuser=#{iuser} and C.thumbnail is not null
+        group by B.product_id
         order by A.created_at desc
     </select>
 
@@ -43,4 +51,10 @@
         delete from order_basket
         where cart_id=#{cartId}
     </delete>
+
+
+    <select id="countUpd">
+        select cart_id cartId from order_basket
+        where iuser=#{iuser} and product_id=#{productId}
+    </select>
 </mapper>

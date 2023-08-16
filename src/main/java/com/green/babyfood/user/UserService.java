@@ -40,18 +40,20 @@ public class UserService {
         return mapper.insAdmin(dto);
     }*/
 
-    public List<UserEntity1> selUser(){
-        return mapper.selUser();
+    public List<AdminUserEntity> selUser(UserSelEntity entity){
+        int ROW_PER_PAGE = entity.getRow();
+        int startIdx = (entity.getPage() - 1) * ROW_PER_PAGE;
+        entity.setRowLen(ROW_PER_PAGE);
+        entity.setStartIdx(startIdx);
+        return mapper.selUser(entity);
     }
 
-    public int updUser(UserUpdDto1 dto){
-        String password = dto.getPassword();
-        dto.setPassword(PW_ENCODER.encode(password));
+    public int updUser(AdminUserUpdDto dto){
         return mapper.updUser(dto);
     }
 
     public int updPicUser(MultipartFile pic, CreatePicDto dto){
-        String centerPath = String.format("%s/user/%d", FileUtils.getAbsolutePath(fileDir),dto.getIuser());
+        String centerPath = String.format("%s/user/%d", FileUtils.getAbsolutePath(fileDir),dto.getEmail());
 
         File dic = new File(centerPath);
         if(!dic.exists()){
@@ -90,6 +92,9 @@ public class UserService {
         mapper.deltoken(dto);
         return mapper.delUser(dto);
     }
+
+
+
 
 
 }

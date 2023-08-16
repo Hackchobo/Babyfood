@@ -54,11 +54,10 @@ public class AdminService {
         AdminProductImgDto dto=new AdminProductImgDto();
         dto.setProductId(productId);
         dto.setRandomName(randomName);
-
         mapper.insWebEditorImg(dto);
         ProductImgPkFull full=new ProductImgPkFull();
         full.setPImgId(dto.getPImgId());
-        String fullPath="192.168.0.144:5001/img/webeditor/"+productId+"/"+randomName;
+        String fullPath="http://192.168.0.144:5001/img/webeditor/"+productId+"/"+randomName;
         full.setImg(fullPath);
        return full;
     }
@@ -86,7 +85,7 @@ public class AdminService {
             mapper.insWebEditorImgList(dto);
             ProductImgPkFull full=new ProductImgPkFull();
             full.setPImgId(dto.getPImgId());
-            String fullPath="192.168.0.144:5001/img/webeditor/"+productId+"/"+randomName;
+            String fullPath="http://192.168.0.144:5001/img/webeditor/"+productId+"/"+randomName;
             full.setImg(fullPath);
             list.add(full);
         }
@@ -97,7 +96,7 @@ public class AdminService {
 
     public int updProduct(AdminProductUpdDto dto) {
         // 최종 상품 등록할때 사용되는 메소드
-        if (dto.getCategory() > 4){
+        if (dto.getCategory() > 4 && dto.getCategory() > 0){
             log.info("카테고리는 1-4까지 설정 가능, 확인 후 다시 입력하세요");
             return 0;
         }
@@ -107,7 +106,7 @@ public class AdminService {
 
     public int changeProduct(AdminProductUpdDto dto) {
         // 상품 정보 수정
-        if (dto.getCategory() > 4){
+        if (dto.getCategory() > 4 && dto.getCategory() > 0){
             log.info("카테고리는 1-4까지 설정 가능, 확인 후 다시 입력하세요");
             return 0;
         }
@@ -123,7 +122,7 @@ public class AdminService {
 
     }
 
-    public AdminProductEntity getProduct(int productId) {
+    public List<AdminProductEntity> getProduct(int productId) {
         return mapper.getProduct(productId);
     }
 
@@ -147,7 +146,6 @@ public class AdminService {
     }
 
     public AdminProductUpdDto updProductInfo(int productId) {
-        log.info("카테고리 정보 획득 ");
         List<Integer> cateDetailList = mapper.updProductInfoCate(productId); // 카테고리 정보 획득
         AdminProductUpdDto adminProductUpdDto = mapper.updProductInfo(productId); // 상품 정보 획득
         adminProductUpdDto.setCateDetail(cateDetailList); // 카테고리 정보를 AdminProductUpdDto에 설정
@@ -161,6 +159,35 @@ public class AdminService {
         File file=new File(path);
         file.delete();
         return mapper.delWebEditorCancel(pImgId);
+    }
+
+    public List<ProductImgPkFull> insImgList(List<MultipartFile> img, Long productId) {
+        String path = getAbsolutePath(fileDir) + "/product/" + productId;
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        List<ProductImgPkFull> list = new ArrayList();
+        for (MultipartFile imgfile : img) {
+            String randomName = FileUtils.makeRandomFileNm(imgfile.getOriginalFilename());
+            String fileUpload = path + "/" + randomName;
+            File file1 = new File(fileUpload);
+            try {
+                imgfile.transferTo(file1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            AdminProductImgDto dto=new AdminProductImgDto();
+            dto.setProductId(productId);
+            dto.setRandomName(randomName);
+            mapper.insImgList(dto);
+            ProductImgPkFull full=new ProductImgPkFull();
+            full.setPImgId(dto.getPImgId());
+            String fullPath="http://192.168.0.144:5001/img/product/"+productId+"/"+randomName;
+            full.setImg(fullPath);
+            list.add(full);
+        }
+        return list;
     }
 }
 

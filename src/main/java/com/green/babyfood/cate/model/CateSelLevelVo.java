@@ -8,5 +8,6 @@ import java.util.List;
 public class CateSelLevelVo {
 
     private int maxPaige;
+    private int pageCount;
     private List<CateSelListVo> list;
 }

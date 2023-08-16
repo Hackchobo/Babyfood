@@ -1,5 +1,6 @@
 package com.green.babyfood.orderbasket.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

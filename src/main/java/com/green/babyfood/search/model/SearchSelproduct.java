@@ -3,9 +3,9 @@ package com.green.babyfood.search.model;
 import lombok.Data;
 
 @Data
-public class SearchtSelVo {
+public class SearchSelproduct {
     private int productid;
     private String name;
-    private String img;
+    private String thumbnail;
     private int price;
 }

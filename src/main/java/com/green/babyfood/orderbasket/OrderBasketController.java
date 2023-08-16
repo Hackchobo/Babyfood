@@ -1,5 +1,6 @@
 package com.green.babyfood.orderbasket;
 
+import com.green.babyfood.config.security.AuthenticationFacade;
 import com.green.babyfood.orderbasket.model.OrderBasketDto;
 import com.green.babyfood.orderbasket.model.OrderBasketSelVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +21,6 @@ public class OrderBasketController {
 
     @PostMapping
     @Operation(summary = "상품페이지에서 장바구니 버튼",description = ""+
-    "iuser : 유저번호<br>"+
     "productId : 상품번호<br>"+
     "count : 수량")
     public Long post(@RequestBody OrderBasketDto dto){
@@ -39,8 +39,8 @@ public class OrderBasketController {
             "thumbnail : 해당상품의 썸네일<br>"+
             "createdAt : 상품이 장바구니에 담긴 날짜"
     )
-    public List<OrderBasketSelVo> getUserOrderBasket(Long iuser){
-        return service.selUserOrderBasket(iuser);
+    public List<OrderBasketSelVo> getUserOrderBasket(){
+        return service.selUserOrderBasket();
     }
 
     @PatchMapping("/plus")

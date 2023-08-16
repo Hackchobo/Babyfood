@@ -1,17 +1,16 @@
-package com.green.babyfood.user.model;
+package com.green.babyfood.mypage.model;
 
 import lombok.Data;
 
 @Data
-public class UserUpdDto1 {
+public class ProfileEntity {
     private Long iuser;
-    private String email;
+    private String nickNm;
     private String password;
+    private String phoneNumber;
     private String name;
     private String birthday;
-    private String mobileNb;
-    private String zipCode;
+    private String zipcode;
     private String address;
     private String addressDetail;
-    private String nickNm;
 }

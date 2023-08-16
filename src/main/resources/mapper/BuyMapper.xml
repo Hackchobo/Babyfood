@@ -13,7 +13,8 @@
         request = #{request},
         reciever = #{receiver},
         address = #{address},
-        address_detail = #{addressDetail}
+        address_detail = #{addressDetail},
+        usepoint = #{point}
     </insert>
 
     <insert id="InsBuyDetail">
@@ -48,8 +49,15 @@
     <update id="removepoint">
         UPDATE user
         SET POINT = POINT - #{point}
-        WHERE iuser = #{iuser}
+        WHERE iuser = #{iuser} and
+        POINT - #{point} >= 0
     </update>
+
+    <select id="selUser">
+        SELECT  name,mobile_nb mobileNm, address, address_detail addressDetail
+        FROM user
+        where iuser = #{iuser}
+    </select>
     
     <select id="selorderId">
         SELECT MAX(order_id) orderID FROM order_list
@@ -64,19 +72,29 @@
         ON C.product_id = B.product_id
         inner JOIN product_img D
         ON C.product_id = D.product_id
-        WHERE B.order_id = #{orderId}
+        WHERE B.order_id = #{orderId} and D.thumbnail is not null
     </select>
 
     <select id="selorder">
         SELECT reciever, address,address_detail addressDetail,call_user phoneNm, request
         FROM order_list
-        WHERE order_id = #{orderId};
+        WHERE order_id = #{orderId}
     </select>
 
-    <select id="point">
-        SELECT point
-        FROM user
-        WHERE iuser = #{iuser};
+    <select id="quantity">
+        SELECT product_id productId, p_quantity quantity
+        FROM product
+        WHERE product_id  = #{productId}
+    </select>
+
+    <select id="selproduct">
+        SELECT A.product_id productId,A.p_title title, A.p_name name, A.p_price price, B.thumbnail
+        FROM product A
+        LEFT JOIN product_img B
+        ON A.product_id = B.product_id
+        WHERE A.product_id = #{productId}
+        and B.thumbnail IS NOT NULL
+        GROUP BY A.product_id
 
     </select>
 

@@ -8,31 +8,41 @@
     <select id="cateSelLevelmaxPage">
         SELECT count(distinct A.product_id)
         FROM product_category_relation A
-        INNER JOIN product_img B
+        left JOIN product_img B
         ON A.product_id=B.product_id
-        INNER JOIN product C
+        left JOIN product C
         ON A.product_id=C.product_id
         LEFT JOIN product_allergy D
         ON A.product_id=D.product_id
-        WHERE A.cate_id=#{cateId} and C.p_quantity!=0 AND A.cate_detail_id=#{cateDetailId}
-        <if test="strallergy!=''">
-           and D.allergy_id not in(${strallergy})
+        WHERE A.cate_id=#{cateId} and C.p_quantity!=0 AND C.is_delete=0 and B.thumbnail is not null
+        <if test="cateDetailId !=null and cateDetailId!='' ">
+          and  A.cate_detail_id=#{cateDetailId}
         </if>
+        <!--
+        <if test="strallergy!=''">
+            AND C.product_id NOT IN(SELECT D.product_id FROM product_allergy WHERE D.allergy_id in(${strallergy}))
+        </if>
+        -->
     </select>
 
     <select id="cateSelLevel">
         SELECT A.product_id productId,B.thumbnail,C.p_title title,C.p_price price,C.p_name name,C.p_quantity quantity,C.sale_volumn volumn
         FROM product_category_relation A
-        INNER JOIN product_img B
+        left JOIN product_img B
         ON A.product_id=B.product_id
-        INNER JOIN product C
+        left JOIN product C
         ON A.product_id=C.product_id
         LEFT JOIN product_allergy D
         ON A.product_id=D.product_id
-        WHERE A.cate_id=#{cateId} and C.p_quantity!=0 AND A.cate_detail_id=#{cateDetailId}
-        <if test="strallergy!=''">
-            and D.allergy_id not in(${strallergy})
+        WHERE A.cate_id=#{cateId} and C.p_quantity!=0 AND C.is_delete=0 and B.thumbnail is not null
+        <if test="cateDetailId !=null and cateDetailId!='' ">
+            AND A.cate_detail_id=#{cateDetailId}
         </if>
+        <!--
+        <if test="strallergy!=''">
+            AND C.product_id NOT IN(SELECT D.product_id FROM product_allergy WHERE D.allergy_id in(${strallergy}))
+        </if>
+        -->
         group by A.product_id
         ORDER BY C.created_at desc
         LIMIT #{page},#{row}

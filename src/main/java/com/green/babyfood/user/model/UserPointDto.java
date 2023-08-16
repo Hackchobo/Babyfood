@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class UserPointDto {
-    private Long iuser;
+    private String email;
     private int point;
 }

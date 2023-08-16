@@ -4,8 +4,9 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.babyfood.mypage.MypageMapper">
 
-    <select id="Orderlist">
+    <select id="orderlist">
         SELECT A.order_id orderId,DATE_FORMAT(A.created_at,'%Y-%m-%d') createdAt,C.p_name name,D.thumbnail thumbnail,B.total_price price,A.shipment shipment,COUNT(A.order_id)-1 count
+        ,C.product_id productId,E.cate_id cateId,C.p_title title
         FROM order_list A
         INNER JOIN order_detail B
         ON A.order_id = B.order_id
@@ -13,61 +14,91 @@
         ON B.product_id = C.product_id
         LEFT JOIN product_img D
         ON D.product_id = C.product_id
+        LEFT JOIN product_category_relation E
+        ON C.product_id = E.product_id
         where iuser = #{iuser}
+        AND A.cancel = 0
+        AND thumbnail IS NOT null
         <if test="month !=0">
             and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{month} MONTH) AND NOW()
         </if>
-        GROUP BY A.order_id
+        GROUP BY C.product_id
         ORDER BY A.created_at DESC
     </select>
 
-    <select id="OrderlistDetail">
-        SELECT B.product_id productId,D.thumbnail thumbnail, C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice, DATE(A.created_at) createdAt
+    <select id="orderlistDetail">
+        SELECT  B.product_id productId,D.thumbnail thumbnail,C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice, DATE(A.created_at) createdAt
+        ,A.iuser iuser,E.cate_id cateId
         FROM order_list A
-        INNER JOIN order_detail B
+        left JOIN order_detail B
         ON A.order_id = B.order_id
-        INNER JOIN product C
+        left JOIN product C
         ON C.product_id = B.product_id
-        inner JOIN product_img D
+        left JOIN product_img D
         ON C.product_id = D.product_id
-        WHERE B.order_id = #{orderId}
+        LEFT JOIN product_category_relation E
+        ON C.product_id = E.product_id
+        WHERE A.order_id = #{orderId}
+        AND D.thumbnail IS NOT null
+        AND A.cancel = 0
+        GROUP BY C.product_id
     </select>
+    <update id="delorder">
+        UPDATE order_list
+        SET cancel = 1
+        WHERE order_id = #{orderId}
+    </update>
 
     <select id="selUser">
-        SELECT reciever, address,address_detail addressDetail,call_user phoneNm, request
+        SELECT reciever, address,address_detail addressDetail,call_user phoneNm, request,usepoint
         FROM order_list
-        WHERE order_id = #{orderId};
+        WHERE order_id = #{orderId}
+        AND cancel = 0
     </select>
 
-
     <select id="profile">
-        SELECT A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb mobileNb,A.address address,A.address_detail addressDetail,A.nick_nm nickNm,A.point point
+        SELECT A.iuser,A.email email,A.image image,A.name name,A.birthday birthday,A.mobile_nb mobileNb,A.address address,A.address_detail addressDetail,A.nick_nm nickNm,A.point point,A.zip_code zipcode
         FROM user A
         WHERE iuser = #{iuser}
     </select>
 
-    <update id="Updprofile">
+    <update id="Updprofile" parameterType="com.green.babyfood.mypage.model.ProfileUpdDto">
         UPDATE user
-        SET nick_nm = #{nickNm},
-        password = #{password},
-        mobile_nb = #{phoneNumber},
-        birthday= #{birthday},
-        address = #{address},
-        address_detail = #{addressDetail}
-        WHERE iuser = #{iuser};
+        <set>
+            <if test="nickNm != null and nickNm != '' ">nick_nm = #{nickNm},</if>
+            <if test="password != null and password != '' ">password = #{password},</if>
+            <if test="phoneNumber != null and phoneNumber != '' ">mobile_nb = #{phoneNumber},</if>
+            <if test="birthday != null and birthday != '' ">birthday = #{birthday},</if>
+            <if test="name != null and name != '' ">name = #{name},</if>
+            <if test="zipcode != null and zipcode != '' ">zip_code = #{zipcode},</if>
+            <if test="address != null and address != '' ">address = #{address},</if>
+            address_detail = #{addressDetail}
+        </set>
+        WHERE iuser = #{iuser}
     </update>
-
     <select id="SelNickNm">
         SELECT nick_nm nickNm FROM user
         WHERE nick_nm =#{nickNm}
     </select>
-
 
     <delete id="delUser">
         delete from user
         where iuser =#{iuser}
     </delete>
 
+    <update id="patchProfile">
+        update user
+        set image = #{img}
+        where iuser = #{iuser}
+    </update>
+
+    <select id="count">
+        SELECT COUNT(A.order_id)
+        FROM order_list A
+        INNER JOIN order_detail B
+        ON A.order_id = B.order_id
+        WHERE A.order_id  = #{orderId}
+    </select>
 
 
 </mapper>
