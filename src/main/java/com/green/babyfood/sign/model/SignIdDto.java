@@ -6,5 +6,5 @@ import lombok.Data;
 public class SignIdDto {
     private String birthday;
     private String mobileNb;
-    private String eamil;
+    private String email;
 }

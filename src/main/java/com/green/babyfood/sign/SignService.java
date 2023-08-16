@@ -279,24 +279,22 @@ public class SignService {
 
     public String findUserId(String mobileNb, String birthday) {
         // 입력 휴대폰 기준으로 DB의 유저 정보와 비교 진행
-        SignIdDto inputDto = new SignIdDto();
+       /* SignIdDto inputDto = new SignIdDto();
         inputDto.setMobileNb(mobileNb);
-        inputDto.setBirthday(birthday);
+        inputDto.setBirthday(birthday);*/
 
         SignIdDto dto = SIGN_MAPPER.findUserId(mobileNb); // DB에서 유저 생일을 가져온다.
+        log.info(dto.getEmail());
+        dto.setBirthday(dto.getBirthday().replaceAll("-", ""));
         String result;
-        if(birthday.equals(null)){
-            log.info("null값 확인");
-            return "정확한 정보를 입력해주세요";
-        }
-        else if (birthday.equals(dto.getBirthday())){
+        if (birthday.equals(dto.getBirthday())){
             // 회원이 입력한 생일과 db 저장된 생일이 일치하는 경우
-            if (dto.getEamil().length() >= 4) {
-                result = "##" + dto.getEamil().substring(2, dto.getEamil().length() - 2) + "##";
+            if (dto.getEmail().length() >= 4) {
+                result = "##" + dto.getEmail().substring(2, dto.getEmail().length() - 2) + "##";
                 // 이메일의 앞 2글자, 뒤 2글자를 ## 으로 처리한다
                 // 4글자 이하라면 그대로 출력한다
             }
-            else result = dto.getEamil();
+            else result = dto.getEmail();
 
             return "유저 아이디는 : " + result + "입니다";
         }
