@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-@Tag(name = "마이페이지 , 주문내역")
+@Tag(name = "프로필(내정보) , 주문내역")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/mypage")
@@ -72,6 +72,5 @@ public class MypageController {
     public int patchPic(@RequestParam MultipartFile pic){
         return service.updPicUser(pic);
     }
-
 
 }
