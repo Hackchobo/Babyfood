@@ -1,10 +1,7 @@
 package com.green.babyfood.search;
 
 import com.green.babyfood.search.EnToKo.EnToKo;
-import com.green.babyfood.search.model.SearchRes;
-import com.green.babyfood.search.model.SearchSelDto;
-import com.green.babyfood.search.model.SearchSelRes;
-import com.green.babyfood.search.model.SearchSelVo;
+import com.green.babyfood.search.model.*;
 
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
@@ -19,6 +16,7 @@ import com.twitter.penguin.korean.tokenizer.KoreanTokenizer;
 import scala.collection.Seq;
 
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,12 +76,28 @@ public class SearchService {
             int productid = productDto.get(i).getProductid();
             String fullPath ="http://192.168.0.144:5001/img/product/"+productid+"/"+thumbnail;
             productDto.get(i).setThumbnail(fullPath);
+            String cateId = productDto.get(i).getCateId();
+            String name = productDto.get(i).getName();
+            StringBuffer productname = new StringBuffer();
+            productname.append("[").append(cateId).append("단계] ").append(name);
+             productDto.get(i).setName(String.valueOf(productname));
+        }
+
+        List<SearchSelproduct> list = new LinkedList<>();
+
+        for (int i = 0; i <productDto.size(); i++) {
+            SearchSelproduct selproduct = new SearchSelproduct();
+            selproduct.setProductid(productDto.get(i).getProductid());
+            selproduct.setName(productDto.get(i).getName());
+            selproduct.setThumbnail(productDto.get(i).getThumbnail());
+            selproduct.setPrice(productDto.get(i).getPrice());
+            list.add(selproduct);
         }
 
         int num = mapper.maxpage(String.valueOf(sb),allergy);
         int maxpage = (int) Math.ceil((double) num / row);
         SearchSelRes res = new SearchSelRes();
-        res.setDto(productDto);
+        res.setDto(list);
         res.setCount(num);
         res.setMaxpage(maxpage);
 
@@ -158,13 +172,30 @@ public class SearchService {
             int productid = productDto.get(i).getProductid();
             String fullPath ="http://192.168.0.144:5001/img/product/"+productid+"/"+thumbnail;
             productDto.get(i).setThumbnail(fullPath);
+
+            String cateId = productDto.get(i).getCateId();
+            String name = productDto.get(i).getName();
+            StringBuffer productname = new StringBuffer();
+            productname.append("[").append(cateId).append("단계] ").append(name);
+            productDto.get(i).setName(String.valueOf(productname));
+        }
+
+        List<SearchSelproduct> list = new LinkedList<>();
+
+        for (int i = 0; i <productDto.size(); i++) {
+            SearchSelproduct selproduct = new SearchSelproduct();
+            selproduct.setProductid(productDto.get(i).getProductid());
+            selproduct.setName(productDto.get(i).getName());
+            selproduct.setThumbnail(productDto.get(i).getThumbnail());
+            selproduct.setPrice(productDto.get(i).getPrice());
+            list.add(selproduct);
         }
 
         int num = mapper.maxpage(String.valueOf(sb), String.valueOf(allergy));
         int maxpage = (int) Math.ceil((double) num / res.getRow());
 
         SearchSelRes selres = new SearchSelRes();
-        selres.setDto(productDto);
+        selres.setDto(list);
         selres.setCount(num);
         selres.setMaxpage(maxpage);
         return selres;

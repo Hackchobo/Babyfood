@@ -22,7 +22,7 @@ public class MypageController {
     @Operation(summary = "주문내역조회",description = ""+
             "iuser: 유저PK <br>"+
             "month: 조회하고싶은 기간(개월) <br>")
-    OrderlistSelDto[] getOrderlistMonths(@RequestParam  int month){
+    List<OrderlistSelDto> getOrderlistMonths(@RequestParam  int month){
         return service.Orderlist(month);
     }
 

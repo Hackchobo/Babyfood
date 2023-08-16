@@ -8,5 +8,5 @@ import java.util.List;
 public class SearchSelRes {
     private int count;
     private int maxpage;
-    private List<SearchSelVo> dto;
+    private List<SearchSelproduct> dto;
 }

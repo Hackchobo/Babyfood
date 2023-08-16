@@ -6,7 +6,7 @@ import lombok.Data;
 public class OrderlistDetailSelDto {
 
     private Long productId;
-    private Long iuser;
+    //private Long iuser;
     private String thumbnail;
     private String title;
     private String createdAt;

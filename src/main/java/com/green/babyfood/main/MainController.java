@@ -23,7 +23,9 @@ public class MainController {
     @GetMapping
     @Operation(summary = "기본으로 보여줄 상품", description = "" +
             "paige : 페이지번호<br>" +
-            "row : 한페이지에 보일 상품의 갯수")
+            "row : 한페이지에 보일 상품의 갯수<br>"+
+            "maxPage : 페이지 총 개수<br>"+
+            "pageCount : 상품의 총개수<br>")
     public MainSelVoMaxPaige selPaging(@RequestParam @Min(value = 1) int page, @RequestParam int row) {
         return service.mainSelView(page, row);
     }
@@ -63,6 +65,8 @@ public class MainController {
             "name : 상품의 이름<br>" +
             "price : 상품의 가격<br>" +
             "quantity : 상품의 재고<br>" +
+            "maxPage : 최대 페이지수<br>"+
+            "pageCount : 상품의 총개수<br>"+
             "volumn : 판매량")
     public MainSelVoMaxPaige bestSellAll(@RequestParam int page,@RequestParam int row) {
         return service.bestSellAll(page,row);
@@ -94,7 +98,6 @@ public class MainController {
             "price : 상품의 가격<br>" +
             "quantity : 상품의 재고<br>" +
             "volumn : 판매량<br>" +
-            "maxPaige : 최대페이지수<br>" +
             "4개월 이하는 이유식이 먹을 나이가 아닙니다")
     public List<MainSelVo> postBirthFilter(int row) {
         return service.birthRecommendFilter(row);

@@ -122,7 +122,7 @@ class MypageControllerTest {
         OrderlistDetailSelDto orderlistdto = new OrderlistDetailSelDto();
 
         orderlistdto.setProductId(1L);
-        orderlistdto.setIuser(1L);
+        //orderlistdto.setIuser(1L);
         orderlistdto.setThumbnail("creampie.png");
         orderlistdto.setCreatedAt("2023-08-13");
         orderlistdto.setName("강민숙");
@@ -133,7 +133,7 @@ class MypageControllerTest {
         OrderlistDetailSelDto orderlistdto2 = new OrderlistDetailSelDto();
 
         orderlistdto2.setProductId(2L);
-        orderlistdto2.setIuser(2L);
+        //orderlistdto2.setIuser(2L);
         orderlistdto2.setThumbnail("beefstew.png");
         orderlistdto2.setCreatedAt("2023-08-13");
         orderlistdto2.setName("강민숙");
