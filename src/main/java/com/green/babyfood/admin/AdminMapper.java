@@ -1,9 +1,7 @@
 package com.green.babyfood.admin;
 
 import com.green.babyfood.admin.model.*;
-import com.green.babyfood.user.model.CreatePicDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,8 +12,11 @@ public interface AdminMapper {
     List<AdminProductEntity> getProduct(int productId);
     //int updAdminProduct(AdminProductUpdDto dto);
     int delAdminProduct(int productId);
+
+
     // 검색기능
-    List<AdminProductEntity> searchAdminProduct(String keyword);
+    List<AdminSearchSelVo> selproduct(AdminSearchSelDto dto);
+    int maxpage(String msg ,String allergy);
 
     // 웹에디터
 
@@ -30,10 +31,10 @@ public interface AdminMapper {
     int delProduct(Long productId);
 
     int insWebEditorImgList(AdminProductImgDto dto);
-    int insThumbnail(List<MultipartFile> thumbnail);
-    int updPicTest(CreatePicProduct dto);
-
-    int updPicTestThumb(CreatePicProduct dto);
+//    int insThumbnail(List<MultipartFile> thumbnail);
+//    int updPicTest(CreatePicProduct dto);
+//
+//    int updPicTestThumb(CreatePicProduct dto);
     int delWebEditorCancel(Long pImgId);
     ProductImgPk selProductImgPk(Long pImgId);
 

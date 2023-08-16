@@ -10,7 +10,7 @@
     </select>
 
     <select id="findUserId">
-        select mobile_nb, email,
+        select mobile_nb, email
         from user
         where mobile_nb = #{mobile_nb}
         limit 1
