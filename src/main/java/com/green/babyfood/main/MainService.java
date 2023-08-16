@@ -6,6 +6,7 @@ import com.green.babyfood.main.model.MainSelVo;
 import com.green.babyfood.main.model.MainSelVoMaxPaige;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -237,7 +238,7 @@ public class MainService {
         int month = mapper.birth(USERPK.getLoginUserPk());
         int cate = 0;
         if (month <= 4) {
-             throw new RuntimeException("이유식 먹을수 있는 나이가 아닙니다");
+            return null;
         }
         if (month > 4 && month <= 6) {
             cate = 1;
