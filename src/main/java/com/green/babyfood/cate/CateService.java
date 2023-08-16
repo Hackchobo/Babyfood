@@ -1,6 +1,7 @@
 package com.green.babyfood.cate;
 
 import com.green.babyfood.cate.model.*;
+import com.green.babyfood.main.MainMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class CateService {
 
     private final CateMapper mapper;
-
+    private final MainMapper mainMapper;
 
 
     public CateSelLevelVo cateSelLevel(CateSelLevelDto dto) {
@@ -47,6 +48,14 @@ public class CateService {
         for (CateSelListVo vo : cateSelListVos) {
             vo.setThumbnail("http://192.168.0.144:5001/img/product"+"/"+vo.getProductId()+"/" + vo.getThumbnail());
             System.out.println("::" + vo.getThumbnail());
+            Long levelSel = mainMapper.levelSel(vo.getProductId());
+            if(levelSel==null){
+                continue;
+            }
+            String name = vo.getName();
+            String levelName="["+levelSel+"단계] "+name;
+            vo.setName(levelName);
+
         }
         System.out.println("cateSelListVos = " + cateSelListVos);
         CateSelLevelVo vo = new CateSelLevelVo();

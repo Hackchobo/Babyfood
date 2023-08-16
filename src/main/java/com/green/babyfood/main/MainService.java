@@ -6,6 +6,7 @@ import com.green.babyfood.main.model.MainSelVo;
 import com.green.babyfood.main.model.MainSelVoMaxPaige;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +41,14 @@ public class MainService {
            Long productId=mainSelVos.get(i).getProductId();
            String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
            mainSelVos.get(i).setThumbnail(fullPath);
-      }
+           Long levelSel = mapper.levelSel(mainSelVos.get(i).getProductId());
+           if(levelSel==null){
+               continue;
+           }
+           String name = mainSelVos.get(i).getName();
+           String levelName="["+levelSel+"단계] "+name;
+           mainSelVos.get(i).setName(levelName);
+       }
 
 
 
@@ -76,6 +84,13 @@ public class MainService {
             Long productId=random.get(i).getProductId();
             String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
             random.get(i).setThumbnail(fullPath);
+            Long levelSel = mapper.levelSel(random.get(i).getProductId());
+            if(levelSel==null){
+                continue;
+            }
+            String name = random.get(i).getName();
+            String levelName="["+levelSel+"단계] "+name;
+            random.get(i).setName(levelName);
         }
         return random;
     }
@@ -103,6 +118,14 @@ public class MainService {
             Long productId=mainSelVos.get(i).getProductId();
             String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
             mainSelVos.get(i).setThumbnail(fullPath);
+            Long levelSel = mapper.levelSel(mainSelVos.get(i).getProductId());
+            if(levelSel==null){
+                continue;
+            }
+            String name = mainSelVos.get(i).getName();
+            String levelName="["+levelSel+"단계] "+name;
+            mainSelVos.get(i).setName(levelName);
+
         }
         return mainSelVos;
     }
@@ -151,6 +174,13 @@ public class MainService {
             Long productId=mainSelVos.get(i).getProductId();
             String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
             mainSelVos.get(i).setThumbnail(fullPath);
+            Long levelSel = mapper.levelSel(mainSelVos.get(i).getProductId());
+            if(levelSel==null){
+                continue;
+            }
+            String name = mainSelVos.get(i).getName();
+            String levelName="["+levelSel+"단계] "+name;
+            mainSelVos.get(i).setName(levelName);
         }
         MainSelVoMaxPaige mainSelVoMaxPaige=new MainSelVoMaxPaige();
         mainSelVoMaxPaige.setMaxPage(maxPage);
@@ -208,7 +238,7 @@ public class MainService {
         int month = mapper.birth(USERPK.getLoginUserPk());
         int cate = 0;
         if (month <= 4) {
-             throw new RuntimeException("이유식 먹을수 있는 나이가 아닙니다");
+            return null;
         }
         if (month > 4 && month <= 6) {
             cate = 1;
@@ -229,6 +259,13 @@ public class MainService {
             Long productId=mainSelVos.get(i).getProductId();
            String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
            mainSelVos.get(i).setThumbnail(fullPath);
+            Long levelSel = mapper.levelSel(mainSelVos.get(i).getProductId());
+            if(levelSel==null){
+                continue;
+            }
+            String name = mainSelVos.get(i).getName();
+            String levelName="["+levelSel+"단계] "+name;
+            mainSelVos.get(i).setName(levelName);
         }
 //       voMaxPaige.setMaxPage(maxPage);
 //       voMaxPaige.setList(mainSelVos);

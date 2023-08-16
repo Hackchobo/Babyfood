@@ -22,4 +22,6 @@ public interface MainMapper {
 
     List<MainSelVo> birthRecommendFilter(int cate,int row);
 //    int birthRecommendFilterMaxPaige(int cate,String strallergy);
+
+    Long levelSel(Long productId);
 }
