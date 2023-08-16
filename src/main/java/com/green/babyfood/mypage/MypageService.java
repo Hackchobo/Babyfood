@@ -67,7 +67,7 @@ public class MypageService {
             OrderlistSelDto order = new OrderlistSelDto();
             order.setOrderId(orderlist.get(i).getOrderId());
             order.setCreatedAt(orderlist.get(i).getCreatedAt());
-            String path = "192.168.0.144:5001/img/product/"+orderlist.get(i).getProductId()+"/"+orderlist.get(i).getThumbnail();
+            String path = "http://192.168.0.144:5001/img/product/"+orderlist.get(i).getProductId()+"/"+orderlist.get(i).getThumbnail();
             order.setThumbnail(path);
             int cateId = orderlist.get(i).getCateId();
             String name = "["+cateId+"단계] "+orderlist.get(i).getName();
