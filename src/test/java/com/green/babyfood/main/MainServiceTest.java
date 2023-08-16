@@ -35,7 +35,7 @@ class MainServiceTest {
     void mainSelView(){
         MainSelVo mainSelVo1=new MainSelVo();
         mainSelVo1.setProductId(1L);
-        mainSelVo1.setTitle("테스트1");
+//        mainSelVo1.setTitle("테스트1");
         mainSelVo1.setName("네임테스트1");
         mainSelVo1.setPrice(1000);
         mainSelVo1.setQuantity(10);
@@ -57,7 +57,7 @@ class MainServiceTest {
        assertEquals(mainSel1.getList().get(0).getThumbnail(),mainSel2.getList().get(0).getThumbnail());
        assertEquals(mainSel1.getList().get(0).getVolumn(),mainSel2.getList().get(0).getVolumn());
        assertEquals(mainSel1.getList().get(0).getName(),mainSel2.getList().get(0).getName());
-       assertEquals(mainSel1.getList().get(0).getTitle(),mainSel2.getList().get(0).getTitle());
+//       assertEquals(mainSel1.getList().get(0).getTitle(),mainSel2.getList().get(0).getTitle());
 
        verify(mapper).mainSelView(anyInt(),anyInt());
        verify(mapper).maxPage();
@@ -67,7 +67,7 @@ class MainServiceTest {
     void bestSell(){
         MainSelVo mainSelVo1=new MainSelVo();
         mainSelVo1.setProductId(1L);
-        mainSelVo1.setTitle("테스트1");
+//        mainSelVo1.setTitle("테스트1");
         mainSelVo1.setName("네임테스트1");
         mainSelVo1.setPrice(1000);
         mainSelVo1.setQuantity(10);
@@ -84,7 +84,7 @@ class MainServiceTest {
         assertEquals(list.get(0).getName(),list1.get(0).getName());
         assertEquals(list.get(0).getVolumn(),list1.get(0).getVolumn());
         assertEquals(list.get(0).getQuantity(),list1.get(0).getQuantity());
-        assertEquals(list.get(0).getTitle(),list1.get(0).getTitle());
+//        assertEquals(list.get(0).getTitle(),list1.get(0).getTitle());
 
         verify(mapper).bestSell();
     }
@@ -93,7 +93,7 @@ class MainServiceTest {
     void bestSellAll(){
         MainSelVo mainSelVo1=new MainSelVo();
         mainSelVo1.setProductId(1L);
-        mainSelVo1.setTitle("테스트1");
+//        mainSelVo1.setTitle("테스트1");
         mainSelVo1.setName("네임테스트1");
         mainSelVo1.setPrice(1000);
         mainSelVo1.setQuantity(10);
@@ -119,7 +119,7 @@ class MainServiceTest {
         assertEquals(mainSel1.getList().get(0).getName(),mainSel2.getList().get(0).getName());
         assertEquals(mainSel1.getList().get(0).getPrice(),mainSel2.getList().get(0).getPrice());
         assertEquals(mainSel1.getList().get(0).getQuantity(),mainSel2.getList().get(0).getQuantity());
-        assertEquals(mainSel1.getList().get(0).getTitle(),mainSel2.getList().get(0).getTitle());
+//        assertEquals(mainSel1.getList().get(0).getTitle(),mainSel2.getList().get(0).getTitle());
         assertEquals(mainSel1.getList().get(0).getVolumn(),mainSel2.getList().get(0).getVolumn());
     }
 
@@ -127,7 +127,7 @@ class MainServiceTest {
     void birthRecommendFilter(){
         MainSelVo mainSelVo1=new MainSelVo();
         mainSelVo1.setProductId(1L);
-        mainSelVo1.setTitle("테스트1");
+//        mainSelVo1.setTitle("테스트1");
         mainSelVo1.setName("네임테스트1");
         mainSelVo1.setPrice(1000);
         mainSelVo1.setQuantity(10);
@@ -144,7 +144,7 @@ class MainServiceTest {
         assertEquals(list1.get(0).getName(),list2.get(0).getName());
         assertEquals(list1.get(0).getThumbnail(),list2.get(0).getThumbnail());
         assertEquals(list1.get(0).getPrice(),list2.get(0).getPrice());
-        assertEquals(list1.get(0).getTitle(),list2.get(0).getTitle());
+ //       assertEquals(list1.get(0).getTitle(),list2.get(0).getTitle());
         assertEquals(list1.get(0).getVolumn(),list2.get(0).getVolumn());
         assertEquals(list1.get(0).getQuantity(),list2.get(0).getQuantity());
 

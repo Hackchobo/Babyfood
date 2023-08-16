@@ -9,7 +9,7 @@ public class OrderBasketSelVo {
 
     private Long cartId;
     private Long productId;
-    private String title;
+//    private String title;
     private String name;
     private int count;
     private int price;
