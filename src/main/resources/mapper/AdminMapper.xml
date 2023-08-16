@@ -44,6 +44,15 @@
         where product_id = #{productId}
     </update>
 
+    <insert id="insProductCateRelation">
+        insert into product_category_relation
+        (product_id,cate_id,cate_detail_id)
+        values
+        <foreach collection="cateDetailId" item="item" separator=",">
+            (#{productId},#{cateId},#{item})
+        </foreach>
+    </insert>
+
     <update id="insThumbnail">
         insert into product_img
         (product_id,img)

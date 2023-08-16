@@ -88,7 +88,7 @@ class MainControllerTest {
         mainSelVoMaxPaige.setMaxPage(10);
         MainSelVo mainSelVo1=new MainSelVo();
         mainSelVo1.setProductId(1L);
-        mainSelVo1.setTitle("테스트1");
+//        mainSelVo1.setTitle("테스트1");
         mainSelVo1.setName("네임테스트1");
         mainSelVo1.setPrice(1000);
         mainSelVo1.setQuantity(10);
@@ -97,7 +97,7 @@ class MainControllerTest {
 
         MainSelVo mainSelVo2=new MainSelVo();
         mainSelVo2.setProductId(2L);
-        mainSelVo2.setTitle("테스트2");
+//        mainSelVo2.setTitle("테스트2");
         mainSelVo2.setName("네임테스트2");
         mainSelVo2.setPrice(2000);
         mainSelVo2.setQuantity(20);
@@ -115,7 +115,7 @@ class MainControllerTest {
         ra.andExpect(status().isOk())
                 .andExpect(jsonPath("$.list.[*]",hasSize(list.size())))
                 .andExpect(jsonPath("$.list.[0].productId").value(1L))
-                .andExpect(jsonPath("$.list.[0].title").value("테스트1"))
+//                .andExpect(jsonPath("$.list.[0].title").value("테스트1"))
                 .andExpect(jsonPath("$.list.[0].name").value("네임테스트1"))
                 .andExpect(jsonPath("$.list.[0].price").value(1000))
                 .andExpect(jsonPath("$.list.[0].quantity").value(10))
@@ -131,7 +131,7 @@ class MainControllerTest {
     void bestSell() throws Exception {
         MainSelVo mainSelVo1=new MainSelVo();
         mainSelVo1.setProductId(1L);
-        mainSelVo1.setTitle("테스트1");
+//        mainSelVo1.setTitle("테스트1");
         mainSelVo1.setName("네임테스트1");
         mainSelVo1.setPrice(1000);
         mainSelVo1.setQuantity(10);
@@ -147,7 +147,7 @@ class MainControllerTest {
         ra.andExpect(status().isOk())
                 .andExpect(jsonPath("$.[*]",hasSize(list.size())))
                 .andExpect(jsonPath("$.[0].productId").value(1L))
-                .andExpect(jsonPath("$.[0].title").value("테스트1"))
+//                .andExpect(jsonPath("$.[0].title").value("테스트1"))
                 .andExpect(jsonPath("$.[0].name").value("네임테스트1"))
                 .andExpect(jsonPath("$.[0].price").value(1000))
                 .andExpect(jsonPath("$.[0].quantity").value(10))
@@ -163,7 +163,7 @@ class MainControllerTest {
     void bestSellAll() throws Exception {
         MainSelVo mainSelVo1=new MainSelVo();
         mainSelVo1.setProductId(1L);
-        mainSelVo1.setTitle("테스트1");
+//        mainSelVo1.setTitle("테스트1");
         mainSelVo1.setName("네임테스트1");
         mainSelVo1.setPrice(1000);
         mainSelVo1.setQuantity(10);
@@ -183,7 +183,7 @@ class MainControllerTest {
         ra.andExpect(status().isOk())
                 .andExpect(jsonPath("$.list.[*]",hasSize(list.size())))
                 .andExpect(jsonPath("$.list.[0].productId").value(1L))
-                .andExpect(jsonPath("$.list.[0].title").value("테스트1"))
+//                .andExpect(jsonPath("$.list.[0].title").value("테스트1"))
                 .andExpect(jsonPath("$.list.[0].name").value("네임테스트1"))
                 .andExpect(jsonPath("$.list.[0].price").value(1000))
                 .andExpect(jsonPath("$.list.[0].quantity").value(10))
@@ -199,7 +199,7 @@ class MainControllerTest {
     void postBirthFilter() throws Exception {
         MainSelVo mainSelVo1=new MainSelVo();
         mainSelVo1.setProductId(1L);
-        mainSelVo1.setTitle("테스트1");
+//        mainSelVo1.setTitle("테스트1");
         mainSelVo1.setName("네임테스트1");
         mainSelVo1.setPrice(1000);
         mainSelVo1.setQuantity(10);
@@ -214,7 +214,7 @@ class MainControllerTest {
         ra.andExpect(status().isOk())
                 .andExpect(jsonPath("$.[*]",hasSize(list.size())))
                 .andExpect(jsonPath("$.[0].productId").value(1L))
-                .andExpect(jsonPath("$.[0].title").value("테스트1"))
+//                .andExpect(jsonPath("$.[0].title").value("테스트1"))
                 .andExpect(jsonPath("$.[0].name").value("네임테스트1"))
                 .andExpect(jsonPath("$.[0].price").value(1000))
                 .andExpect(jsonPath("$.[0].quantity").value(10))
