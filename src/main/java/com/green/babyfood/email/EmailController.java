@@ -6,9 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Tag(name = "메일발송")
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/mail")
 public class EmailController {
 
-    private final EmailService service;
+    private static EmailService service;
     //private final MailReservation reserveMail;
 
     public EmailController(EmailService service) {
@@ -29,7 +27,8 @@ public class EmailController {
             "mailAddress : 수신자 메일 주소<br>"+
             "title : 메일 제목<br>"+
             "ctnt : 내용 <br>")
-    public void postSend(MailSendDto dto) {
+    public static void postSend(@RequestBody MailSendDto dto) {
+        log.info("{}", dto);
         service.send(dto);
         // 보내고 싶은 메일이 있다면 dto 객체에 내용 맞춰서 넣은 후 해당 메소드 호출
     }
