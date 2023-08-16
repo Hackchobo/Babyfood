@@ -5,7 +5,7 @@
 <mapper namespace="com.green.babyfood.main.MainMapper">
 
     <select id="mainSelView">
-    SELECT A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
+    SELECT A.product_id productId<!--,A.p_title title-->,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
     from product A
     left join product_img B
     ON A.product_id=B.product_id
@@ -40,7 +40,7 @@
 
 
     <select id="random">
-        select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
+        select A.product_id productId<!--,A.p_title title-->,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
         from product A
         left join product_img B
         ON A.product_id=B.product_id
@@ -52,7 +52,7 @@
 
 
     <select id="bestSell">
-        select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
+        select A.product_id productId<!--,A.p_title title-->,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
         from product A
         left join product_img B
         ON A.product_id=B.product_id
@@ -71,7 +71,7 @@
 
 
     <select id="bestSellAll">
-        select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
+        select A.product_id productId<!--,A.p_title title-->,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
         from product A
         left join product_img B
         ON A.product_id=B.product_id
@@ -139,7 +139,7 @@
 -->
 
     <select id="birthRecommendFilter">
-        select A.product_id productId,A.p_title title,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
+        select A.product_id productId<!--,A.p_title title-->,A.p_name name,A.p_price price,A.p_quantity quantity,B.thumbnail thumbnail,A.sale_volumn volumn
         from product A
         left join product_img B
         ON A.product_id=B.product_id

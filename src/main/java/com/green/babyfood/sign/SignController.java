@@ -125,8 +125,8 @@ public class SignController {
 
     @GetMapping("/password")
     @Operation(summary = "비밀번호 찾기",description =
-            "테스트용 : 아이디(이메일)과 휴대폰 번호를 입력해주세요.<br>" +
-                    "비교하여 회원정보와 일치 시 등록된 메일 주소로 임시 비밀번호를 발송합니다"
+            "아이디(이메일)과 휴대폰 번호를 입력해주세요.<br>" +
+                    "회원정보와 일치 시 등록된 메일 주소로 임시 비밀번호를 발송합니다"
     )
     public String findPassword(@RequestParam String mail, @RequestParam String mobileNb){
         log.info("테스트");
@@ -136,7 +136,7 @@ public class SignController {
 
     @GetMapping("/id")
     @Operation(summary = "아이디 찾기",description =
-            "테스트용 : 휴대폰 번호와 생년월일을 입력해주세요.<br>" +
+            "휴대폰 번호와 생년월일을 입력해주세요.<br>" +
                     "회원정보와 일치 시 ID(이메일)을 확인할 수 있습니다.")
     public String findUserId(@RequestParam String mobileNb, @RequestParam String birthday){
         return SERVICE.findUserId(mobileNb, birthday);

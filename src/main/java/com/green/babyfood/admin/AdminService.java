@@ -1,16 +1,22 @@
 package com.green.babyfood.admin;
 
 import com.green.babyfood.admin.model.*;
+import com.green.babyfood.search.EnToKo.EnToKo;
 import com.green.babyfood.util.FileUtils;
+import com.twitter.penguin.korean.TwitterKoreanProcessorJava;
+import com.twitter.penguin.korean.tokenizer.KoreanTokenizer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import scala.collection.Seq;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.green.babyfood.util.FileUtils.getAbsolutePath;
 @Slf4j
@@ -130,21 +136,6 @@ public class AdminService {
         return mapper.delAdminProduct(productId);
     }
 
-    public List<AdminProductEntity> searchAdminProduct(String keyword) {
-        //입력된 모든 단어가 영어인지 검사
-        for (char c : keyword.toCharArray()) {
-            if (!Character.isLetter(c) || !Character.isAlphabetic(c)) {
-                // 영어 아닌 단어 섞여있으면 변환 필요없이 바로 종료
-                break;
-            } else {
-                // 영어로만 이루어진 단어
-                // 한글로 변환 - 쿼티 키보드 기준으로 변환 필요
-
-            }
-        }
-        return mapper.searchAdminProduct(keyword);
-    }
-
     public AdminProductUpdDto updProductInfo(int productId) {
         List<Integer> cateDetailList = mapper.updProductInfoCate(productId); // 카테고리 정보 획득
         AdminProductUpdDto adminProductUpdDto = mapper.updProductInfo(productId); // 상품 정보 획득
@@ -189,5 +180,68 @@ public class AdminService {
         }
         return list;
     }
+
+    public AdminSearchSelEntity selproduct(String keyword, int page, int row) {
+        AdminSearchSelDto dto = new AdminSearchSelDto();
+        dto.setPage(page);
+        dto.setRow(row);
+        String allergy = "";
+
+        int startIdx = (dto.getPage() - 1) * dto.getRow();
+        dto.setStartIdx(startIdx);
+
+        String msg = "";
+        boolean isEnglish = true;
+
+        Pattern p = Pattern.compile("[a-zA-Z0-9]");
+        String typoText = keyword;
+        Matcher m = p.matcher(typoText);
+        isEnglish = m.find();
+        if(isEnglish) {
+            msg = EnToKo.engToKor(typoText);
+        } else {
+            msg = typoText;
+        }
+
+        CharSequence normalized = TwitterKoreanProcessorJava.normalize(msg);
+
+        // Tokenize
+        Seq<KoreanTokenizer.KoreanToken> tokens = TwitterKoreanProcessorJava.tokenize(normalized);
+
+        Seq<KoreanTokenizer.KoreanToken> stemmed = TwitterKoreanProcessorJava.stem(tokens);
+        List<String> text = TwitterKoreanProcessorJava.tokensToJavaStringList(stemmed);
+
+        StringBuffer sb = new StringBuffer();
+
+        if ( text.size() > 0){
+            for (int i = 0; i <text.size()-1; i++) {
+                sb.append(text.get(i)).append("|");
+            }
+        }
+        sb.append(text.get(text.size()-1));
+
+        dto.setMsg(String.valueOf(sb));
+
+        //List<SearchSelVo> productDto = mapper.selproduct(dto);
+
+        List<AdminSearchSelVo> productDto = mapper.selproduct(dto);
+
+        for (int i = 0; i <productDto.size(); i++) {
+            String thumbnail = productDto.get(i).getThumbnail();
+            int productid = productDto.get(i).getProductid();
+            String fullPath ="http://192.168.0.144:5001/img/product/"+productid+"/"+thumbnail;
+            productDto.get(i).setThumbnail(fullPath);
+        }
+
+        int num = mapper.maxpage(String.valueOf(sb),allergy);
+        int maxpage = (int) Math.ceil((double) num / row);
+        AdminSearchSelEntity entity = new AdminSearchSelEntity();
+        entity.setDto(productDto);
+        entity.setCount(num);
+        entity.setMaxpage(maxpage);
+
+        return entity;
+    }
+
 }
 

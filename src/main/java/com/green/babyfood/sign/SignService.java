@@ -285,7 +285,11 @@ public class SignService {
 
         SignIdDto dto = SIGN_MAPPER.findUserId(mobileNb); // DB에서 유저 생일을 가져온다.
         String result;
-        if (birthday.equals(dto.getBirthday())){
+        if(birthday.equals(null)){
+            log.info("null값 확인");
+            return "정확한 정보를 입력해주세요";
+        }
+        else if (birthday.equals(dto.getBirthday())){
             // 회원이 입력한 생일과 db 저장된 생일이 일치하는 경우
             if (dto.getEamil().length() >= 4) {
                 result = "##" + dto.getEamil().substring(2, dto.getEamil().length() - 2) + "##";

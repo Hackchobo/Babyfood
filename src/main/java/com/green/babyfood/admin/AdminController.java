@@ -46,11 +46,15 @@ public class AdminController {
     }
 
     @GetMapping("/product/search")
-    @Operation(summary = "관리자페이지 - 상품 검색", description = "모든 상품(품절된 상품)포함하여 검색 <br>"+
-    "미구현상태입니다 호출 XXX 진행되면 말씀드리겠습니다 ")
-    public List<AdminProductEntity> searchAdminProduct(@RequestParam String keyword){
-        return service.searchAdminProduct(keyword);
+    @Operation(summary = "검색",description = "상품이름검색")
+    public AdminSearchSelEntity getproduct(@RequestParam String keyword,
+                                           @RequestParam(defaultValue = "1") int page,
+                                           @RequestParam(defaultValue = "30") int row
+    ) {
+        return service.selproduct(keyword,page,row);
     }
+
+
 
     // 웹에디터
 

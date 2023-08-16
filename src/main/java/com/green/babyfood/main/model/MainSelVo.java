@@ -7,7 +7,7 @@ public class MainSelVo {
 
     private Long productId;
     private String thumbnail;
-    private String title;
+//    private String title;
     private String name;
     private int price;
     private int quantity;
