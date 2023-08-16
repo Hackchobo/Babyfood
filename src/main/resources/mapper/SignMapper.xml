@@ -10,10 +10,9 @@
     </select>
 
     <select id="findUserId">
-        select mobile_nb, email
+        select email, birthday, mobile_nb mobileNb
         from user
-        where mobile_nb = #{mobile_nb}
-        limit 1
+        where mobile_nb = #{mobileNb}
     </select>
 
     <update id="updPassword">

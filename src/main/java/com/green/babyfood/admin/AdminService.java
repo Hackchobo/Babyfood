@@ -107,6 +107,9 @@ public class AdminService {
             return 0;
         }
 
+//        int cateCount = dto.getCateDetail().size();
+//        mapper.insCateProduct(cateCount); // 카테고리 갯수만큼 행 생성
+
         return mapper.updAdminProduct(dto);
     }
 

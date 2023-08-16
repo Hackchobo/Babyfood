@@ -214,23 +214,25 @@ public class SignService {
         SignPwDto inputDto = new SignPwDto();
         inputDto.setMail(mail);
         inputDto.setMobileNb(mobileNb);
-
-        SignPwDto dataDto = SIGN_MAPPER.findPassword(mail, mobileNb);
-
-        if (inputDto.equals(dataDto)){
-            log.info("회원정보 일치, 비밀번호 변경 시작");
-            MailSendDto dto = new MailSendDto();
-            String pw = updPassword(); // 임시 비밀번호 생성
-            SIGN_MAPPER.updPassword(dataDto.getIuser(), pw); // DB의 비밀번호 변경
-            dto.setTitle("비밀번호 변경 메일입니다");
-            dto.setCtnt("임시 비밀번호 : " + pw + "\n 임시 비밀번호를 이용하여 로그인 후, 사용하고자 하는 비밀번호로 변경하세요.");
-            dto.setMailAddress(mail);
-            EmailController.postSend(dto);
-            return "회원정보 일치 / 임시 비밀번호 메일 발송";
-        }
-        else {
-            return "회원정보 불일치 / 확인 후 다시 시도하세요";
-        }
+//
+//        SignPwDto dataDto = SIGN_MAPPER.findPassword(mail, mobileNb);
+//        System.out.println(dataDto);
+//
+//        if (inputDto.equals(dataDto)){
+//            log.info("회원정보 일치, 비밀번호 변경 시작");
+//            MailSendDto dto = new MailSendDto();
+//            String pw = updPassword(); // 임시 비밀번호 생성
+//            SIGN_MAPPER.updPassword(dataDto.getIuser(), pw); // DB의 비밀번호 변경
+//            dto.setTitle("비밀번호 변경 메일입니다");
+//            dto.setCtnt("임시 비밀번호 : " + pw + "\n 임시 비밀번호를 이용하여 로그인 후, 사용하고자 하는 비밀번호로 변경하세요.");
+//            dto.setMailAddress(mail);
+//            EmailController.postSend(dto);
+//            return "회원정보 일치 / 임시 비밀번호 메일 발송";
+//        }
+//        else {
+//            return "회원정보 불일치 / 확인 후 다시 시도하세요";
+//        }
+        return null;
     }
 
     public String updPassword() {
@@ -281,27 +283,29 @@ public class SignService {
         inputDto.setMobileNb(mobileNb);
         inputDto.setBirthday(birthday);
 
-        SignIdDto dto = SIGN_MAPPER.findUserId(mobileNb); // DB에서 유저 생일을 가져온다.
-        String result;
-        if(birthday.equals(null)){
-            log.info("null값 확인");
-            return "정확한 정보를 입력해주세요";
+
+        SignIdDto dto = SIGN_MAPPER.findUserId(mobileNb); // DB에서 유저 정보를 가져온다.
+        if(dto == null) {
+            log.info("유저정보없음");
+            return "정확한 정보를 입력해주세요"; // 유저 정보가 없는 경우
         }
-        else if (birthday.equals(dto.getBirthday())){
+
+        if(dto.getBirthday() == null) {
+            log.info("null값 확인");
+            return "오류코드1";
+        } else if (inputDto.getBirthday().equals(dto.getBirthday())) {
             // 회원이 입력한 생일과 db 저장된 생일이 일치하는 경우
             if (dto.getEamil().length() >= 4) {
-                result = "##" + dto.getEamil().substring(2, dto.getEamil().length() - 2) + "##";
+                String result = "##" + dto.getEamil().substring(2, dto.getEamil().length() - 2) + "##";
                 // 이메일의 앞 2글자, 뒤 2글자를 ## 으로 처리한다
                 // 4글자 이하라면 그대로 출력한다
+                return "유저 아이디는 : " + result + "입니다";
+            } else {
+                return "유저 아이디는 : " + dto.getEamil() + "입니다";
             }
-            else result = dto.getEamil();
-
-            return "유저 아이디는 : " + result + "입니다";
-        }
-        else {
+        } else {
             return "회원정보가 일치하지 않습니다. 다시 확인해주세요";
         }
-
     }
 }
 
