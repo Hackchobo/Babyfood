@@ -10,7 +10,7 @@
     </select>
 
     <select id="findUserId">
-        select email, birthday, mobile_nb mobileNb
+        select mobile_nb mobileNb, email, birthday
         from user
         where mobile_nb = #{mobileNb}
     </select>

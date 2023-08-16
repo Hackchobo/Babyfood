@@ -58,7 +58,6 @@ public class SearchService {
         Seq<KoreanTokenizer.KoreanToken> stemmed = TwitterKoreanProcessorJava.stem(tokens);
         List<String> text = TwitterKoreanProcessorJava.tokensToJavaStringList(stemmed);
 
-        System.out.println(text);
 
         StringBuffer sb = new StringBuffer();
 
