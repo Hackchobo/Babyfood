@@ -22,7 +22,7 @@
         <if test="month !=0">
             and A.created_at  BETWEEN DATE_ADD(NOW(),INTERVAL-#{month} MONTH) AND NOW()
         </if>
-        GROUP BY C.product_id
+        GROUP BY A.order_id
         ORDER BY A.created_at DESC
     </select>
 

@@ -42,4 +42,6 @@ public interface AdminMapper {
     ProductImgPk selProductImgPk(Long pImgId);
 
     int insImgList(AdminProductImgDto dto);
+
+    void insCateProduct(int cateCount);
 }

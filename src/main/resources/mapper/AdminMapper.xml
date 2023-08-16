@@ -31,17 +31,21 @@
         GROUP BY A.product_id
     </select>
 
+
     <update id="updAdminProduct">
-        update product
-        SET p_title = #{title}
-        , p_name = #{name}
-        , p_price = #{price}
-        , p_quantity = #{quantity}
-        , description = #{description}
-        , sale_volumn = #{saleVolume}
-        , allergy = #{allergy}
-        , created_at = current_timestamp()
-        where product_id = #{productId}
+        update product A
+        inner join product_category_relation B
+        ON A.product_id = B.product_id
+        SET A.p_title = #{title}
+        , A.p_name = #{name}
+        , A.p_price = #{price}
+        , A.p_quantity = #{quantity}
+        , A.description = #{description}
+        , A.sale_volumn = #{saleVolume}
+        , A.allergy = #{allergy}
+        , A.created_at = current_timestamp()
+        , B.cate_id = #{category}
+        where A.product_id = #{productId}
     </update>
 
     <insert id="insProductCateRelation">

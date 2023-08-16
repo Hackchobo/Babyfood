@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface SignMapper {
-    SignPwDto findPassword(String mail, String mobileNb);
+    SignPwDto findPassword(String mail);
 
     void updPassword(Long iuser, String pw);
     String emailCheck(String email);

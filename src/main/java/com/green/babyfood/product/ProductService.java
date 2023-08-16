@@ -83,17 +83,21 @@ public class ProductService {
         LocalTime afternoonOne = LocalTime.of(13, 0); // 오후 1시
 
         // 주말 확인
-        boolean isWeekend = currentDate.getDayOfWeek() == DayOfWeek.SATURDAY ||
-                currentDate.getDayOfWeek() == DayOfWeek.SUNDAY;
+        boolean isSaturday = currentDate.getDayOfWeek() == DayOfWeek.SATURDAY;
+        boolean isSunday = currentDate.getDayOfWeek() == DayOfWeek.SUNDAY;
 
+        // 기본 배송일은 오늘 날짜로부터 1일 후
+        LocalDate estimatedDeliveryDate = currentDate.plusDays(1);
         // 배송일 계산
-        LocalDate estimatedDeliveryDate = currentDate;
-        if (isWeekend || (currentTime.isAfter(afternoonOne) && !isWeekend)) {
-            // 주말이거나 현재 시각이 오후 1시 이후이면 배송일을 2일 후로 설정
+        if (isSaturday) {
+            // 토요일인 경우 배송일 + 2
             estimatedDeliveryDate = currentDate.plusDays(2);
-        } else {
-            // 현재 시각이 오후 1시 이전이면 배송일을 1일 후로 설정
+        } else if (isSunday || (currentTime.isAfter(afternoonOne) && !isSaturday)) {
+            // 일요일이거나 현재 시각이 오후 1시 이후인 경우 배송일 + 1
             estimatedDeliveryDate = currentDate.plusDays(1);
+        } else {
+            // 나머지 경우에는 배송일을 그대로 설정
+            estimatedDeliveryDate = currentDate;
         }
 
         // 배송일 출력

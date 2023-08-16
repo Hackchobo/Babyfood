@@ -213,21 +213,25 @@ public class SignService {
     public String findPassword(String mail, String mobileNb) {
 
         // email을 기준으로 DB의 유저 정보와 비교
-        SignPwDto inputDto = new SignPwDto();
-        inputDto.setMail(mail);
-        inputDto.setMobileNb(mobileNb);
+//        SignPwDto inputDto = new SignPwDto();
+//        inputDto.setMail(mail);
+//        inputDto.setMobileNb(mobileNb);
 
-        SignPwDto dataDto = SIGN_MAPPER.findPassword(mail, mobileNb);
+        SignPwDto dataDto = SIGN_MAPPER.findPassword(mail);
+        log.info(" : {}", dataDto.getIuser());
 
-        if (inputDto.equals(dataDto)){
+        if (mobileNb.equals(dataDto.getMobileNb())){
             log.info("회원정보 일치, 비밀번호 변경 시작");
             MailSendDto dto = new MailSendDto();
             String pw = updPassword(); // 임시 비밀번호 생성
-            SIGN_MAPPER.updPassword(dataDto.getIuser(), pw); // DB의 비밀번호 변경
+            log.info(pw);
+//            SIGN_MAPPER.updPassword(dataDto.getIuser(), pw); // DB의 비밀번호 변경
             dto.setTitle("비밀번호 변경 메일입니다");
             dto.setCtnt("임시 비밀번호 : " + pw + "\n 임시 비밀번호를 이용하여 로그인 후, 사용하고자 하는 비밀번호로 변경하세요.");
             dto.setMailAddress(mail);
-            EmailController.postSend(dto);
+            EmailController.postSend(dto);// 메일발송
+            String pw1 = PW_ENCODER.encode(pw);
+            SIGN_MAPPER.updPassword(dataDto.getIuser(), pw1); // DB의 비밀번호 변경
             return "회원정보 일치 / 임시 비밀번호 메일 발송";
         }
         else {

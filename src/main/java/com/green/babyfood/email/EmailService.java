@@ -23,8 +23,8 @@ import org.springframework.stereotype.Component;
 public class EmailService {
 
 
-    private static String user = "green502teamA@gmail.com";
-    private static String password = "qvoksygqngguntbl";
+    private final String user = "green502teamA@gmail.com";
+    private final String password = "kqvrkfnjbemoclmb";
 
     @Autowired
     private final EmailMapper mapper;
@@ -73,46 +73,47 @@ public class EmailService {
         }
     }
 
-    public void cycleMail(MailReservation dto) {
-        log.info("전체 회원 대상 발송 정기메일 : 주1회 월요일 오전 10시 메일 자동 발송");
+//    public void cycleMail(MailReservation dto) {
+//        log.info("전체 회원 대상 발송 정기메일 : 주1회 월요일 오전 10시 메일 자동 발송");
+//
+//        List<String> mailAddresses = Arrays.asList(dto.getMailAddress().toString());
+//
+//        for (String mailAddress : mailAddresses) {
+//            sendEmail(dto, mailAddress);
+//        }
+//
+//        log.info("정기메일 발송 완료");
+//    }
 
-        List<String> mailAddresses = Arrays.asList(dto.getMailAddress().toString());
+//    public void sendEmail(MailReservation mailReservationDto, String recipient){
+//        String title = mailReservationDto.getTitle();
+//        String ctnt = mailReservationDto.getCtnt();
+//
+//        // JavaMail 설정
+//        Properties props = new Properties();
+//        props.put("mail.smtp.host", "smtp.example.com");
+//        props.put("mail.smtp.port", "587");
+//        props.put("mail.smtp.auth", "true");
+//        props.put("mail.smtp.starttls.enable", "true");
+//
+//        Session session = Session.getInstance(props, new Authenticator() {
+//            @Override
+//            protected PasswordAuthentication getPasswordAuthentication() {
+//                return new PasswordAuthentication(user, password);
+//            }
+//        });
+//
+//        try {
+//            MimeMessage message = new MimeMessage(session);
+//            message.setFrom(new InternetAddress(user, "babyfoodTest")); // 발신메일, 발신자이름
+//            message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); // 수신자 메일 주소
+//            message.setSubject(title);
+//            message.setText(ctnt);
+//            Transport.send(message);
+//            log.info("메일 전송 완료");
+//        } catch (MessagingException | UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-        for (String mailAddress : mailAddresses) {
-            sendEmail(dto, mailAddress);
-        }
-
-        log.info("정기메일 발송 완료");
-    }
-
-    public void sendEmail(MailReservation mailReservationDto, String recipient){
-        String title = mailReservationDto.getTitle();
-        String ctnt = mailReservationDto.getCtnt();
-
-        // JavaMail 설정
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.example.com");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-
-        Session session = Session.getInstance(props, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(user, password);
-            }
-        });
-
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(user, "babyfoodTest")); // 발신메일, 발신자이름
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); // 수신자 메일 주소
-            message.setSubject(title);
-            message.setText(ctnt);
-            Transport.send(message);
-            log.info("메일 전송 완료");
-        } catch (MessagingException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
 }
