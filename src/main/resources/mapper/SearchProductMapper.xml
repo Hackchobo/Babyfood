@@ -15,7 +15,8 @@
         ON D.product_id = A.product_id
         LEFT JOIN product_category_relation E
         ON A.product_id = E.product_id
-        WHERE p_name REGEXP #{msg}
+        WHERE p_name LIKE '%${word}%'
+        and p_name REGEXP #{msg}
         AND A.p_quantity !=0
         AND A.is_delete = 0
         AND D.thumbnail is not null
@@ -36,7 +37,8 @@
         ON E.allergy_id = B.allergy_id
         LEFT JOIN product_category_relation F
         ON A.product_id = F.product_id
-        WHERE p_name REGEXP #{msg}
+        WHERE p_name LIKE '%${word}%'
+        and p_name REGEXP #{msg}
         AND A.p_quantity !=0
         AND A.is_delete = 0
         AND D.thumbnail is not null
@@ -68,13 +70,16 @@
         on A.product_id=B.product_id
         LEFT JOIN product_img C
         ON A.product_id = C.product_id
+        LEFT JOIN product_category_relation D
+        ON A.product_id = D.product_id
         where A.p_quantity!=0 AND A.is_delete=0
+        and A.p_name LIKE '%${word}%'
         AND A.p_name REGEXP #{msg}
         AND C.p_img_id IS NOT NULL
         <if test="allergy!=''">
             AND A.product_id NOT IN(SELECT product_id FROM product_allergy WHERE allergy_id in(${allergy}))
         </if>
-
+        AND D.cate_id IS NOT null
     </select>
 
 </mapper>

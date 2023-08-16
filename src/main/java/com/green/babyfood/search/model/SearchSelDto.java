@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class SearchSelDto {
+    private String word;
     private String msg;
     private int startIdx;
     private int page;

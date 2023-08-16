@@ -42,11 +42,5 @@ public class BuyController {
         return buySelProductDto;
     }
 
-    @PostMapping("/product")
-    @Operation(summary = "상품 바로구매하기 post입니다")
-    public BuySelProductDto postProduct(@RequestBody BuyInsVo vo){
-        BuySelProductDto buySelProductDto = SERVICE.selProductpo(vo);
-        return buySelProductDto;
-    }
 
 }

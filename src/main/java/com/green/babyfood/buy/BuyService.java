@@ -153,19 +153,4 @@ public class BuyService {
         return selproduct;
     }
 
-    public BuySelProductDto selProductpo(BuyInsVo vo){
-        //Long productId = vo.getProductId();
-
-        //Long iuser = USERPK.getLoginUserPk();
-        BuySelProductDto selproduct = Mapper.selproduct(vo.getProductId());
-
-        selproduct.setCount(vo.getCount());
-        String thumbnail = selproduct.getThumbnail();
-        String fullPath ="http://192.168.0.144:5001/img/product/"+vo.getProductId()+"/"+thumbnail;
-        selproduct.setThumbnail(fullPath);
-        return selproduct;
-    }
-
-
-
 }
