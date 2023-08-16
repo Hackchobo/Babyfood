@@ -71,7 +71,7 @@ class OrderBasketServiceTest {
        List<OrderBasketSelVo> vos = new ArrayList<>();
        OrderBasketSelVo vo1 = new OrderBasketSelVo();
        vo1.setCartId(1L);
-       vo1.setTitle("타이틀테스트1");
+//       vo1.setTitle("타이틀테스트1");
        vo1.setName("네임테스트1");
        vo1.setPrice(10000);
        vo1.setCount(10);
@@ -80,7 +80,7 @@ class OrderBasketServiceTest {
 
        OrderBasketSelVo vo2 = new OrderBasketSelVo();
        vo2.setCartId(2L);
-       vo2.setTitle("타이틀테스트2");
+//       vo2.setTitle("타이틀테스트2");
        vo2.setName("네임테스트2");
        vo2.setPrice(20000);
        vo2.setCount(20);
@@ -94,14 +94,14 @@ class OrderBasketServiceTest {
        assertEquals(rVosList.get(0).getCartId(), vos.get(0).getCartId());
        assertEquals(rVosList.get(0).getPrice(), vos.get(0).getPrice());
        assertEquals(rVosList.get(0).getName(), vos.get(0).getName());
-       assertEquals(rVosList.get(0).getTitle(), vos.get(0).getTitle());
+//       assertEquals(rVosList.get(0).getTitle(), vos.get(0).getTitle());
        assertEquals(rVosList.get(0).getThumbnail(), vos.get(0).getThumbnail());
        assertEquals(rVosList.get(0).getCount(), vos.get(0).getCount());
 
        assertEquals(rVosList.get(1).getCartId(), vos.get(1).getCartId());
        assertEquals(rVosList.get(1).getPrice(), vos.get(1).getPrice());
        assertEquals(rVosList.get(1).getName(), vos.get(1).getName());
-       assertEquals(rVosList.get(1).getTitle(), vos.get(1).getTitle());
+//       assertEquals(rVosList.get(1).getTitle(), vos.get(1).getTitle());
        assertEquals(rVosList.get(1).getThumbnail(), vos.get(1).getThumbnail());
        assertEquals(rVosList.get(1).getCount(), vos.get(1).getCount());
 

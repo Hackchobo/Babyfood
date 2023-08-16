@@ -58,6 +58,8 @@ public class SearchService {
         Seq<KoreanTokenizer.KoreanToken> stemmed = TwitterKoreanProcessorJava.stem(tokens);
         List<String> text = TwitterKoreanProcessorJava.tokensToJavaStringList(stemmed);
 
+        System.out.println(text);
+
         StringBuffer sb = new StringBuffer();
 
         if ( text.size() > 0){
@@ -66,7 +68,7 @@ public class SearchService {
             }
         }
         sb.append(text.get(text.size()-1));
-
+        dto.setWord(text.get(0).toString());
         dto.setMsg(String.valueOf(sb));
 
         List<SearchSelVo> productDto = mapper.selproduct(dto);
@@ -94,7 +96,7 @@ public class SearchService {
             list.add(selproduct);
         }
 
-        int num = mapper.maxpage(String.valueOf(sb),allergy);
+        int num = mapper.maxpage(text.get(0).toString(),String.valueOf(sb),allergy);
         int maxpage = (int) Math.ceil((double) num / row);
         SearchSelRes res = new SearchSelRes();
         res.setDto(list);
@@ -160,7 +162,7 @@ public class SearchService {
             }
         }
         sb.append(text.get(text.size()-1));
-
+        dto.setWord(text.get(0).toString());
         dto.setMsg(String.valueOf(sb));
 
 
@@ -191,7 +193,7 @@ public class SearchService {
             list.add(selproduct);
         }
 
-        int num = mapper.maxpage(String.valueOf(sb), String.valueOf(allergy));
+        int num = mapper.maxpage(text.get(0).toString(),String.valueOf(sb), String.valueOf(allergy));
         int maxpage = (int) Math.ceil((double) num / res.getRow());
 
         SearchSelRes selres = new SearchSelRes();

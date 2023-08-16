@@ -1,6 +1,7 @@
 package com.green.babyfood.testPerformance;
 
 import com.twitter.penguin.korean.TwitterKoreanProcessorJava;
+import com.twitter.penguin.korean.phrase_extractor.KoreanPhraseExtractor;
 import com.twitter.penguin.korean.tokenizer.KoreanTokenizer;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
@@ -50,9 +51,15 @@ public class TestWordService {
             Seq<KoreanTokenizer.KoreanToken> stemmed = TwitterKoreanProcessorJava.stem(tokens);
             List<String> text = TwitterKoreanProcessorJava.tokensToJavaStringList(stemmed);
 
+            List<KoreanPhraseExtractor.KoreanPhrase> phrases = TwitterKoreanProcessorJava.extractPhrases(tokens, true, true);
+
+
             StringBuffer sb = new StringBuffer();
 
-            System.out.println(text);
+            System.out.println("tokens: "+ tokens);
+            System.out.println("stemmed:"+stemmed);
+            System.out.println("text: " +text);
+            System.out.println("phrases: " + phrases);
             System.out.println(sb);
 
             i++;

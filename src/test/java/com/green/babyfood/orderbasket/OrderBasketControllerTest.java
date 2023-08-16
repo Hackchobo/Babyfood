@@ -103,7 +103,7 @@ public class OrderBasketControllerTest {
         OrderBasketSelVo vo1=new OrderBasketSelVo();
         vo1.setCartId(1L);
         vo1.setProductId(1L);
-        vo1.setTitle("테스트1");
+//        vo1.setTitle("테스트1");
         vo1.setName("홍길동1");
         vo1.setCount(3);
         vo1.setPrice(10000);
@@ -113,7 +113,7 @@ public class OrderBasketControllerTest {
         OrderBasketSelVo vo2=new OrderBasketSelVo();
         vo2.setCartId(2L);
         vo2.setProductId(2L);
-        vo2.setTitle("테스트2");
+//        vo2.setTitle("테스트2");
         vo2.setName("홍길동2");
         vo2.setCount(3); vo2.setPrice(10000);
         vo2.setThumbnail("main.jpg");

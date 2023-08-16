@@ -106,11 +106,12 @@ public class AdminService {
             log.info("카테고리는 1-4까지 설정 가능, 확인 후 다시 입력하세요");
             return 0;
         }
-
-//        int cateCount = dto.getCateDetail().size();
-//        mapper.insCateProduct(cateCount); // 카테고리 갯수만큼 행 생성
-
-        return mapper.updAdminProduct(dto);
+        AdminProductCateRelationDto apcd=new AdminProductCateRelationDto();
+        apcd.setProductId(dto.getProductId());
+        apcd.setCateId(dto.getCategory());
+        apcd.setCateDetailId(dto.getCateDetail());
+        mapper.updAdminProduct(dto);
+       return mapper.insProductCateRelation(apcd);
     }
 
     public int changeProduct(AdminProductUpdDto dto) {
