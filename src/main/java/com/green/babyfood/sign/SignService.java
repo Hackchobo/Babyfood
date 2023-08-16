@@ -162,10 +162,12 @@ public class SignService {
             List<String> roles = (List<String>)claims.get("roles");
             String reAccessToken = JWT_PROVIDER.generateJwtToken(strIuser, roles, JWT_PROVIDER.ACCESS_TOKEN_VALID_MS, JWT_PROVIDER.ACCESS_KEY);
 
-            return SignInResultDto.builder()
+            SignInResultDto builder=SignInResultDto.builder()
                     .accessToken(reAccessToken)
                     .refreshToken(refreshToken)
                     .build();
+            setSuccessResult(builder);
+            return builder;
         } catch (Exception e) {
             e.printStackTrace();
         }
