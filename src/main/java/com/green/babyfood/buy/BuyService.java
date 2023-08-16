@@ -5,6 +5,7 @@ import com.green.babyfood.config.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,7 @@ public class BuyService {
         order.setReceiver(entity.getReceiver());
         order.setAddress(entity.getAddress());
         order.setAddressDetail(entity.getAddressDetail());
+        order.setPoint(entity.getPoint());
 
 
         //제품의 수량이 0개 이하 일떄
@@ -137,5 +139,33 @@ public class BuyService {
 
         return res;
     }
+
+    public BuySelProductDto selProduct(Long productId, int count){
+        //Long productId = vo.getProductId();
+
+        //Long iuser = USERPK.getLoginUserPk();
+        BuySelProductDto selproduct = Mapper.selproduct(productId);
+
+        selproduct.setCount(count);
+        String thumbnail = selproduct.getThumbnail();
+        String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
+        selproduct.setThumbnail(fullPath);
+        return selproduct;
+    }
+
+    public BuySelProductDto selProductpo(BuyInsVo vo){
+        //Long productId = vo.getProductId();
+
+        //Long iuser = USERPK.getLoginUserPk();
+        BuySelProductDto selproduct = Mapper.selproduct(vo.getProductId());
+
+        selproduct.setCount(vo.getCount());
+        String thumbnail = selproduct.getThumbnail();
+        String fullPath ="http://192.168.0.144:5001/img/product/"+vo.getProductId()+"/"+thumbnail;
+        selproduct.setThumbnail(fullPath);
+        return selproduct;
+    }
+
+
 
 }

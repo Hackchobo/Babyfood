@@ -1,13 +1,12 @@
 package com.green.babyfood.buy;
 
 import com.green.babyfood.buy.model.*;
-import com.green.babyfood.buy.model.BuyEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "상품구매")
+@Tag(name = "상품결제")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/buy")
@@ -15,7 +14,7 @@ public class BuyController {
     private final BuyService SERVICE;
 
     @PostMapping("/order")
-    @Operation(summary = "상품구매",description = "사용법 <br>"+
+    @Operation(summary = "상품결제",description = "사용법 <br>"+
             "cartId : 장바구니 PK 번호<br>"+
             "productId : 상품 PK 번호<br>"+
             "count : 상품 갯수 <br>"+
@@ -36,7 +35,18 @@ public class BuyController {
         return SERVICE.BuyProduct(dto);
     }
 
+    @GetMapping("/product")
+    @Operation(summary = "상품 바로구매하기")
+    public BuySelProductDto getProduct(@RequestParam Long productId, @RequestParam int count){
+        BuySelProductDto buySelProductDto = SERVICE.selProduct(productId,count);
+        return buySelProductDto;
+    }
 
-
+    @PostMapping("/product")
+    @Operation(summary = "상품 바로구매하기 post입니다")
+    public BuySelProductDto postProduct(@RequestBody BuyInsVo vo){
+        BuySelProductDto buySelProductDto = SERVICE.selProductpo(vo);
+        return buySelProductDto;
+    }
 
 }

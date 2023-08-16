@@ -16,6 +16,7 @@ public interface MypageMapper {
     List<OrderlistDetailSelDto> orderlistDetail(Long orderId);
     OrderlistUserDto selUser(Long orderId);
     int delorder(Long orderId);
+    int count(Long orderId);
 
     int patchProfile(ProfileUpdPicDto dto);
 }

@@ -80,12 +80,11 @@ public class SearchService {
             productDto.get(i).setThumbnail(fullPath);
         }
 
-        int num = mapper.maxpage(allergy);
+        int num = mapper.maxpage(String.valueOf(sb),allergy);
         int maxpage = (int) Math.ceil((double) num / row);
-
-
         SearchSelRes res = new SearchSelRes();
         res.setDto(productDto);
+        res.setCount(num);
         res.setMaxpage(maxpage);
 
         return res;
@@ -161,14 +160,13 @@ public class SearchService {
             productDto.get(i).setThumbnail(fullPath);
         }
 
-        int num = mapper.maxpage(String.valueOf(allergy));
+        int num = mapper.maxpage(String.valueOf(sb), String.valueOf(allergy));
         int maxpage = (int) Math.ceil((double) num / res.getRow());
 
         SearchSelRes selres = new SearchSelRes();
         selres.setDto(productDto);
+        selres.setCount(num);
         selres.setMaxpage(maxpage);
-
-
         return selres;
 
     }

@@ -91,12 +91,12 @@ public class ProductServiceTest {
        ProductSelDto expectedDto = new ProductSelDto();
        expectedDto.setName("Test Product");
        expectedDto.setStep(2);
-       expectedDto.setImg(Collections.singletonList("test-image-url"));
-       expectedDto.setThumbnail(Collections.singletonList("test-thumbnail-url"));
+       expectedDto.setImg(Collections.singletonList("test/image/url"));
+       expectedDto.setThumbnail(Collections.singletonList("test/thumbnail/url"));
 
        when(mapper.selProduct(productId)).thenReturn(expectedDto);
-       when(mapper.selProductImg(productId)).thenReturn(Collections.singletonList("test-image-name"));
-       when(mapper.selProductThumbnail(productId)).thenReturn(Collections.singletonList("test-thumbnail-name"));
+       when(mapper.selProductImg(productId)).thenReturn(Collections.singletonList("test/image/name"));
+       when(mapper.selProductThumbnail(productId)).thenReturn(Collections.singletonList("test/thumbnail/name"));
 
        // Act
        ProductSelDto resultDto = service.selProduct(productId);

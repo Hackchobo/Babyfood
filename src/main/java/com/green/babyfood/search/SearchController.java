@@ -23,7 +23,7 @@ public class SearchController {
             "thumbnail: 썸네일<br>"+
             "price : 가격<br>"
     )
-    public SearchSelRes analysisChat(@RequestParam String product,
+    public SearchSelRes getproduct(@RequestParam String product,
                                      @RequestParam(defaultValue = "1") int page,
                                      @RequestParam(defaultValue = "30") int row
     ) {
@@ -36,7 +36,7 @@ public class SearchController {
     @Operation(summary = "필터",description = ""+
             " sorter: 0이면 판매량 많은순서 1이면 판매량 적은순서 <br> "+
             "sorter: 2이면 가격 높은 순서 3이면 가격 낮은 순서<br>")
-    public SearchSelRes getallergy(@RequestBody SearchRes res){
+    public SearchSelRes filterAllergy(@RequestBody SearchRes res){
 
         SearchSelRes selfilter = SERVICE.selfilter(res);
 
