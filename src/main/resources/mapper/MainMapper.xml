@@ -178,4 +178,9 @@
         order by A.sale_volumn desc,RAND()
     </select>
 -->
+
+    <select id="levelSel">
+        select distinct cate_id from product_category_relation
+        where product_id=#{productId}
+    </select>
 </mapper>

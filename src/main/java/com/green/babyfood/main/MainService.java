@@ -40,7 +40,14 @@ public class MainService {
            Long productId=mainSelVos.get(i).getProductId();
            String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
            mainSelVos.get(i).setThumbnail(fullPath);
-      }
+           Long levelSel = mapper.levelSel(mainSelVos.get(i).getProductId());
+           if(levelSel==null){
+               continue;
+           }
+           String name = mainSelVos.get(i).getName();
+           String levelName="["+levelSel+"단계] "+name;
+           mainSelVos.get(i).setName(levelName);
+       }
 
 
 
@@ -76,6 +83,13 @@ public class MainService {
             Long productId=random.get(i).getProductId();
             String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
             random.get(i).setThumbnail(fullPath);
+            Long levelSel = mapper.levelSel(random.get(i).getProductId());
+            if(levelSel==null){
+                continue;
+            }
+            String name = random.get(i).getName();
+            String levelName="["+levelSel+"단계] "+name;
+            random.get(i).setName(levelName);
         }
         return random;
     }
@@ -103,6 +117,14 @@ public class MainService {
             Long productId=mainSelVos.get(i).getProductId();
             String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
             mainSelVos.get(i).setThumbnail(fullPath);
+            Long levelSel = mapper.levelSel(mainSelVos.get(i).getProductId());
+            if(levelSel==null){
+                continue;
+            }
+            String name = mainSelVos.get(i).getName();
+            String levelName="["+levelSel+"단계] "+name;
+            mainSelVos.get(i).setName(levelName);
+
         }
         return mainSelVos;
     }
@@ -151,6 +173,13 @@ public class MainService {
             Long productId=mainSelVos.get(i).getProductId();
             String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
             mainSelVos.get(i).setThumbnail(fullPath);
+            Long levelSel = mapper.levelSel(mainSelVos.get(i).getProductId());
+            if(levelSel==null){
+                continue;
+            }
+            String name = mainSelVos.get(i).getName();
+            String levelName="["+levelSel+"단계] "+name;
+            mainSelVos.get(i).setName(levelName);
         }
         MainSelVoMaxPaige mainSelVoMaxPaige=new MainSelVoMaxPaige();
         mainSelVoMaxPaige.setMaxPage(maxPage);
@@ -229,6 +258,13 @@ public class MainService {
             Long productId=mainSelVos.get(i).getProductId();
            String fullPath ="http://192.168.0.144:5001/img/product/"+productId+"/"+thumbnail;
            mainSelVos.get(i).setThumbnail(fullPath);
+            Long levelSel = mapper.levelSel(mainSelVos.get(i).getProductId());
+            if(levelSel==null){
+                continue;
+            }
+            String name = mainSelVos.get(i).getName();
+            String levelName="["+levelSel+"단계] "+name;
+            mainSelVos.get(i).setName(levelName);
         }
 //       voMaxPaige.setMaxPage(maxPage);
 //       voMaxPaige.setList(mainSelVos);
