@@ -5,7 +5,7 @@
 <mapper namespace="com.green.babyfood.search.SearchMapper">
 
     <select id="selproduct">
-        SELECT  A.product_id productid,A.p_name NAME,D.thumbnail thumbnail,A.p_price price
+        SELECT  A.product_id productid,A.p_name NAME,D.thumbnail thumbnail,A.p_price price,E.cate_id cateId
         FROM product A
         left JOIN product_allergy B
         ON A.product_id = B.product_id
@@ -13,6 +13,8 @@
         on C.allergy_id = B.allergy_id
         LEFT JOIN product_img D
         ON D.product_id = A.product_id
+        LEFT JOIN product_category_relation E
+        ON A.product_id = E.product_id
         WHERE p_name REGEXP #{msg}
         AND A.p_quantity !=0
         AND A.is_delete = 0
@@ -22,7 +24,7 @@
     </select>
 
     <select id="selfilter">
-        SELECT A.product_id productid,A.p_name NAME,D.thumbnail thumbnail,A.p_price price
+        SELECT A.product_id productid,A.p_name NAME,D.thumbnail thumbnail,A.p_price price,F.cate_id cateId
         FROM product A
         left JOIN product_allergy B
         ON A.product_id = B.product_id
@@ -32,6 +34,8 @@
         ON D.product_id = A.product_id
         LEFT JOIN product_allergy E
         ON E.allergy_id = B.allergy_id
+        LEFT JOIN product_category_relation F
+        ON A.product_id = F.product_id
         WHERE p_name REGEXP #{msg}
         AND A.p_quantity !=0
         AND A.is_delete = 0

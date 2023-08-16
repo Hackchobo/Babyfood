@@ -13,7 +13,7 @@ public interface MypageMapper {
     String SelNickNm(String nickNm);
     int delUser(OrderIuserDto dto);
     List<OrderlistCountSelDto> orderlist(OrderlistMonthsSelDto dto);
-    List<OrderlistDetailSelDto> orderlistDetail(Long orderId);
+    List<OrderlistCountSelDto> orderlistDetail(Long orderId);
     OrderlistUserDto selUser(Long orderId);
     int delorder(Long orderId);
     int count(Long orderId);

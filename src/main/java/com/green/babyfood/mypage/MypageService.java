@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -28,7 +29,7 @@ public class MypageService {
     private final PasswordEncoder PW_ENCODER;
     private final AuthenticationFacade USERPK;
 
-    public  OrderlistSelDto[] Orderlist(int month){
+    public  List<OrderlistSelDto> Orderlist(int month){
         OrderlistMonthsSelDto dto = new OrderlistMonthsSelDto();
         dto.setIuser(USERPK.getLoginUserPk());
         dto.setMonth(month);
@@ -36,7 +37,7 @@ public class MypageService {
         List<OrderlistCountSelDto> orderlist = mapper.orderlist(dto);
 
 
-        OrderlistSelDto[] orderlistSelDto = new OrderlistSelDto[orderlist.size()];
+        List<OrderlistSelDto> list = new LinkedList<>();
 
 
         for (int i = 0; i < orderlist.size(); i++) {
@@ -62,35 +63,53 @@ public class MypageService {
             }
         }
 
-        for (int i = 0; i < orderlistSelDto.length; i++) {
-            orderlistSelDto[i]=new OrderlistSelDto();
-            orderlistSelDto[i].setOrderId(orderlist.get(i).getOrderId());
-            orderlistSelDto[i].setCreatedAt(orderlist.get(i).getCreatedAt());
+        for (int i = 0; i < orderlist.size(); i++) {
+            OrderlistSelDto order = new OrderlistSelDto();
+            order.setOrderId(orderlist.get(i).getOrderId());
+            order.setCreatedAt(orderlist.get(i).getCreatedAt());
             String path = "192.168.0.144:5001/img/product/"+orderlist.get(i).getProductId()+"/"+orderlist.get(i).getThumbnail();
-            orderlistSelDto[i].setThumbnail(path);
-            orderlistSelDto[i].setName(orderlist.get(i).getName());
-            orderlistSelDto[i].setPrice(orderlist.get(i).getPrice());
-            orderlistSelDto[i].setShipment(orderlist.get(i).getShipment());
+            order.setThumbnail(path);
+            int cateId = orderlist.get(i).getCateId();
+            String name = "["+cateId+"단계] "+orderlist.get(i).getName();
+            order.setName(name);
+            order.setPrice(orderlist.get(i).getPrice());
+            order.setShipment(orderlist.get(i).getShipment());
+            order.setTitle(orderlist.get(i).getTitle());
+            list.add(order);
         }
 
-        return orderlistSelDto;
+        return list;
     }
 
     public OrderlistSelUserDto OrderlistDetail(Long orderId){
-        OrderIuserDto dto = new OrderIuserDto();
 
-        List<OrderlistDetailSelDto> orderlist = mapper.orderlistDetail(orderId);
+        List<OrderlistCountSelDto> orderlist = mapper.orderlistDetail(orderId);
         OrderlistUserDto user = mapper.selUser(orderId);
+        OrderlistSelUserDto selUserDto = new OrderlistSelUserDto();
+        List<OrderlistDetailSelDto> dtoList = new LinkedList<>();
+
 
         for (int i = 0; i <orderlist.size(); i++) {
-
+            OrderlistDetailSelDto dto = new OrderlistDetailSelDto();
             String thumbnail = orderlist.get(i).getThumbnail();
             String path = "http://192.168.0.144:5001/img/product/"+orderlist.get(i).getProductId()+"/"+thumbnail;
             orderlist.get(i).setThumbnail(path);
 
+            int cateId = orderlist.get(i).getCateId();
+            String name = "["+cateId+"단계] "+orderlist.get(i).getName();
+            dto.setProductId(orderlist.get(i).getProductId());
+            //dto.setIuser(orderlist.get(i).getIuser());
+            dto.setThumbnail(path);
+            dto.setTitle(orderlist.get(i).getTitle());
+            dto.setCreatedAt(orderlist.get(i).getCreatedAt());
+            dto.setName(name);
+            dto.setPrice(orderlist.get(i).getPrice());
+            dto.setCount(orderlist.get(i).getCount());
+            dto.setTotalPrice(orderlist.get(i).getTotalPrice());
+            dtoList.add(dto);
+
         }
-        OrderlistSelUserDto selUserDto = new OrderlistSelUserDto();
-        selUserDto.setOrderlist(orderlist);
+        selUserDto.setOrderlist(dtoList);
         selUserDto.setUser(user);
 
         return selUserDto;

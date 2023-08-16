@@ -5,8 +5,8 @@
 <mapper namespace="com.green.babyfood.mypage.MypageMapper">
 
     <select id="orderlist">
-        SELECT A.order_id orderId,DATE_FORMAT(A.created_at,'%Y-%m-%d') createdAt,C.p_name name,COALESCE(D.thumbnail, "이미지없음") thumbnail,B.total_price price,A.shipment shipment,COUNT(A.order_id)-1 count
-        ,C.product_id productId
+        SELECT A.order_id orderId,DATE_FORMAT(A.created_at,'%Y-%m-%d') createdAt,C.p_name name,D.thumbnail thumbnail,B.total_price price,A.shipment shipment,COUNT(A.order_id)-1 count
+        ,C.product_id productId,E.cate_id cateId,C.p_title title
         FROM order_list A
         INNER JOIN order_detail B
         ON A.order_id = B.order_id
@@ -14,6 +14,8 @@
         ON B.product_id = C.product_id
         LEFT JOIN product_img D
         ON D.product_id = C.product_id
+        LEFT JOIN product_category_relation E
+        ON C.product_id = E.product_id
         where iuser = #{iuser}
         AND A.cancel = 0
         AND thumbnail IS NOT null
@@ -26,7 +28,7 @@
 
     <select id="orderlistDetail">
         SELECT  B.product_id productId,D.thumbnail thumbnail,C.p_title title,C.p_name name, C.p_price price, B.`count` count , B.total_price totalPrice, DATE(A.created_at) createdAt
-        ,A.iuser iuser
+        ,A.iuser iuser,E.cate_id cateId
         FROM order_list A
         left JOIN order_detail B
         ON A.order_id = B.order_id
@@ -34,6 +36,8 @@
         ON C.product_id = B.product_id
         left JOIN product_img D
         ON C.product_id = D.product_id
+        LEFT JOIN product_category_relation E
+        ON C.product_id = E.product_id
         WHERE A.order_id = #{orderId}
         AND D.thumbnail IS NOT null
         AND A.cancel = 0
