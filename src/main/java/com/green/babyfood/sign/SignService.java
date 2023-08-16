@@ -225,11 +225,13 @@ public class SignService {
             MailSendDto dto = new MailSendDto();
             String pw = updPassword(); // 임시 비밀번호 생성
             log.info(pw);
-            SIGN_MAPPER.updPassword(dataDto.getIuser(), pw); // DB의 비밀번호 변경
+//            SIGN_MAPPER.updPassword(dataDto.getIuser(), pw); // DB의 비밀번호 변경
             dto.setTitle("비밀번호 변경 메일입니다");
             dto.setCtnt("임시 비밀번호 : " + pw + "\n 임시 비밀번호를 이용하여 로그인 후, 사용하고자 하는 비밀번호로 변경하세요.");
             dto.setMailAddress(mail);
-            EmailController.postSend(dto);
+            EmailController.postSend(dto);// 메일발송
+            String pw1 = PW_ENCODER.encode(pw);
+            SIGN_MAPPER.updPassword(dataDto.getIuser(), pw1); // DB의 비밀번호 변경
             return "회원정보 일치 / 임시 비밀번호 메일 발송";
         }
         else {
