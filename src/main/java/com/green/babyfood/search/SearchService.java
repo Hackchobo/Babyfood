@@ -3,10 +3,6 @@ package com.green.babyfood.search;
 import com.green.babyfood.search.EnToKo.EnToKo;
 import com.green.babyfood.search.model.*;
 
-import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
-import kr.co.shineware.nlp.komoran.core.Komoran;
-import kr.co.shineware.nlp.komoran.model.KomoranResult;
-import kr.co.shineware.nlp.komoran.model.Token;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -62,13 +58,14 @@ public class SearchService {
         StringBuffer sb = new StringBuffer();
 
         if ( text.size() > 0){
-            for (int i = 0; i <text.size()-1; i++) {
+            for (int i = 1; i <text.size()-1; i++) {
                 sb.append(text.get(i)).append("|");
             }
         }
         sb.append(text.get(text.size()-1));
         dto.setWord(text.get(0).toString());
         dto.setMsg(String.valueOf(sb));
+        log.info("{}",dto.getMsg());
 
         List<SearchSelVo> productDto = mapper.selproduct(dto);
 
@@ -156,7 +153,7 @@ public class SearchService {
         StringBuffer sb = new StringBuffer();
 
         if ( text.size() > 0){
-            for (int i = 0; i <text.size()-1; i++) {
+            for (int i = 1; i <text.size()-1; i++) {
                 sb.append(text.get(i)).append("|");
             }
         }
