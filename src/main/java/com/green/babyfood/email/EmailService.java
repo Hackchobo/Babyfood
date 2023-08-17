@@ -25,6 +25,7 @@ public class EmailService {
 
     private final String user = "green502teamA@gmail.com";
     private final String password = "kqvrkfnjbemoclmb";
+    private final String admin = "dlwlsrb0307@naver.com";
 
     @Autowired
     private final EmailMapper mapper;
@@ -59,6 +60,7 @@ public class EmailService {
 
             message.setFrom(new InternetAddress(user, "babyfoodTest")); // 발신메일, 발신자이름
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(dto.getMailAddress())); // 수신자 메일 주소
+            message.addRecipient(Message.RecipientType.BCC, new InternetAddress(admin, "안녕하세요"));
             message.setSubject(dto.getTitle()); //메일 제목을 입력
             message.setText(dto.getCtnt());
             Transport.send(message);

@@ -33,7 +33,6 @@ public class EmailController {
         // 보내고 싶은 메일이 있다면 dto 객체에 내용 맞춰서 넣은 후 해당 메소드 호출
     }
 
-
 //    @PostMapping("/send/Reservation")
 //    @Operation(summary = "주1회 자동으로 메일 발송을 위해 메일 내용 작성",description = "매주 월요일 오전10시 자동발송 <br>"+
 //            "title : 메일 제목<br>"+
