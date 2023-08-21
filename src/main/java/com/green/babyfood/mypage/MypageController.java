@@ -26,9 +26,9 @@ public class MypageController {
         return service.Orderlist(month);
     }
 
-    @GetMapping("/orderlist/detail")
+    @GetMapping("/orderlist/{orderId}")
     @Operation(summary = "상세주문내역",description = "")
-    OrderlistSelUserDto getOrderlistDetail(Long orderId){
+    OrderlistSelUserDto getOrderlistDetail(@PathVariable Long orderId){
         return service.OrderlistDetail(orderId);
     }
 
@@ -52,7 +52,7 @@ public class MypageController {
     int patchprofile(@RequestBody ProfileUpdDto dto){
         return service.updProfile(dto);
     }
-    @PostMapping("/profile/nickname")
+    @GetMapping("/profile/nickname")
     @Operation(summary = "닉네임 중복체크" ,
             description = "return : 1이면 중복인것")
     int getNickNamecheck(@RequestParam String nickname){

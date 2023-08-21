@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.twitter.penguin.korean.TwitterKoreanProcessorJava;
 import com.twitter.penguin.korean.tokenizer.KoreanTokenizer;
+import org.springframework.web.bind.annotation.RequestParam;
 import scala.collection.Seq;
 
 
@@ -102,27 +103,27 @@ public class SearchService {
         return res;
     }
 
-    public SearchSelRes selfilter(SearchRes res){
+    public SearchSelRes selfilter(String product, int page, int row,int sorter,List<String>filter){
         StringBuffer allergy = new StringBuffer();
         String strallergy = "";
         String plus="";
 
-        if (res.getFilter().size()> 1){
-            for (int i = 0; i < res.getFilter().size()-1; i++) {
-                allergy.append(res.getFilter().get(i)+",");
+        if (filter.size()> 1){
+            for (int i = 0; i < filter.size()-1; i++) {
+                allergy.append(filter.get(i)+",");
             }
         }
-        if (res.getFilter().size()>0){
-            allergy.append(res.getFilter().get(res.getFilter().size()-1));
+        if (filter.size()>0){
+            allergy.append(filter.get(filter.size()-1));
         }
 
         strallergy = String.valueOf(allergy);
 
         SearchSelDto dto = new SearchSelDto();
-        dto.setPage(res.getPage());
-        dto.setRow(res.getRow());
+        dto.setPage(page);
+        dto.setRow(row);
         dto.setAllergy(strallergy);
-        dto.setSorter(res.getSorter());
+        dto.setSorter(sorter);
 
 
         int startIdx = (dto.getPage() - 1) * dto.getRow();
@@ -134,7 +135,7 @@ public class SearchService {
         boolean isEnglish = true;
 
         Pattern p = Pattern.compile("[a-zA-Z0-9]");
-        String typoText = res.getProduct();
+        String typoText = product;
         Matcher m = p.matcher(typoText);
         isEnglish = m.find();
         if(isEnglish) {
@@ -190,7 +191,7 @@ public class SearchService {
         }
 
         int num = mapper.maxpage(text.get(0).toString(),String.valueOf(sb), String.valueOf(allergy));
-        int maxpage = (int) Math.ceil((double) num / res.getRow());
+        int maxpage = (int) Math.ceil((double) num / row);
 
         SearchSelRes selres = new SearchSelRes();
         selres.setDto(list);

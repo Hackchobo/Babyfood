@@ -36,7 +36,7 @@ public class BuyController {
     }
 
     @GetMapping("/product")
-    @Operation(summary = "상품 바로구매하기")
+    @Operation(summary = "상품 보여주기")
     public BuySelProductDto getProduct(@RequestParam Long productId, @RequestParam int count){
         BuySelProductDto buySelProductDto = SERVICE.selProduct(productId,count);
         return buySelProductDto;

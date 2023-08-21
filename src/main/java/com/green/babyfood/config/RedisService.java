@@ -27,4 +27,5 @@ public class RedisService {
     public void deleteValues(String key) {
         redisTemplate.delete(key);
     }
+
 } // CRUD 중에 CSD 만있다.

@@ -100,11 +100,14 @@ public class BuyService {
 
 
                 BuyDetailInsDto detaildto = new BuyDetailInsDto();
+
+                log.info("orderId:{}",order.getOrderId());
                 detaildto.setOrderId(order.getOrderId());
                 detaildto.setProductId(orderbasket.get(i).getProductId());
                 detaildto.setCount(orderbasket.get(i).getCount());
                 detaildto.setTotalPrice(orderbasket.get(i).getTotalprice());
-                Mapper.InsBuyDetail(detaildto);
+                int result1 = Mapper.InsBuyDetail(detaildto);
+                log.info("result1:{}",result1);
 
                 BuyUpdDto updDto = new BuyUpdDto();
                 updDto.setProductId(orderbasket.get(i).getProductId());
@@ -126,7 +129,12 @@ public class BuyService {
             addpoint.setIuser(USERPK.getLoginUserPk());
             addpoint.setPoint(point);
 
+
+
+            log.info(":{}",updpoint.getPoint());
+            log.info(":{}",updpoint.getIuser());
             int removepoint = Mapper.removepoint(updpoint);
+            log.info(":{}",removepoint);
 
             if (removepoint!=1){
                 throw new RuntimeException();

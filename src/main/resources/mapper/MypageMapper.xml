@@ -83,7 +83,7 @@
 
     <delete id="delUser">
         delete from user
-        where iuser =#{iuser}
+        where iuser = #{iuser}
     </delete>
 
     <update id="patchProfile">
@@ -99,6 +99,4 @@
         ON A.order_id = B.order_id
         WHERE A.order_id  = #{orderId}
     </select>
-
-
 </mapper>

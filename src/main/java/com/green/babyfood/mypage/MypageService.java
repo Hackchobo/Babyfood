@@ -84,6 +84,7 @@ public class MypageService {
     public OrderlistSelUserDto OrderlistDetail(Long orderId){
 
         List<OrderlistCountSelDto> orderlist = mapper.orderlistDetail(orderId);
+
         OrderlistUserDto user = mapper.selUser(orderId);
         OrderlistSelUserDto selUserDto = new OrderlistSelUserDto();
         List<OrderlistDetailSelDto> dtoList = new LinkedList<>();
@@ -164,7 +165,10 @@ public class MypageService {
 
     public int delUser(){
         OrderIuserDto dto = new OrderIuserDto();
-       dto.setIuser(USERPK.getLoginUserPk());
+        Long loginUserPk = USERPK.getLoginUserPk();
+
+        System.out.println(loginUserPk);
+        dto.setIuser(USERPK.getLoginUserPk());
         return mapper.delUser(dto);
     }
 
