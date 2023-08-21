@@ -19,7 +19,7 @@
     <select id="getByUid">
         SELECT iuser, email, password, name, role, secret_key secretKey
         FROM user
-        WHERE email = #{email}
+        WHERE email = #{email} and del_yn = 0
     </select>
 
     <update id="updSecretKey">

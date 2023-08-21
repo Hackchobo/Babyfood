@@ -1,12 +1,14 @@
 package com.green.babyfood.user;
 
+import com.green.babyfood.sign.SignService;
 import com.green.babyfood.user.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService service;
+    private final SignService SERVICE;
 
     private final int ROW = 20; // 페이지당 출력 게시물, 고정값 20
 
@@ -78,12 +81,12 @@ public class UserController {
         return service.updPointUser(dto);
     }
 
-    @DeleteMapping("/{iuser}")
+    @DeleteMapping("/email")
     @Operation(summary = "유저/관리자 삭제",description = "iuser : 회원의 고유값(PK) <- 해당 유저가 삭제됨<br>")
-    public int delUser(@PathVariable String email){
+    public int delUser(@RequestParam String email, HttpServletRequest req){
         UserDelDto dto = new UserDelDto();
         dto.setEmail(email);
-        return service.delUser(dto);
+        return service.delUser(dto, req);
     }
 
 

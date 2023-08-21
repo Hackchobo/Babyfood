@@ -8,6 +8,7 @@
         SELECT iuser , email, password, image, name, birthday, mobile_nb mobileNb, created_at createdAt
         , role,zip_code zipCode, address, address_detail addressDetail, nick_nm nickNm, point
         FROM user
+        where del_yn = 0
         order by iuser asc
         LIMIT #{startIdx}, #{rowLen}
     </select>
@@ -37,11 +38,11 @@
         where email = #{email}
     </update>
 
-    <delete id="delUser">
-        delete
-        from user
+    <update id="delUser">
+        update user
+        set del_yn = 1
         where email = #{email}
-    </delete>
+    </update>
 
     <delete id="deltoken">
         delete

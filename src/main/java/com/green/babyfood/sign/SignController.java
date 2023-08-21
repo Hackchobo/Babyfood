@@ -3,6 +3,9 @@ package com.green.babyfood.sign;
 import com.green.babyfood.config.security.otp.OtpRes;
 import com.green.babyfood.config.security.otp.TOTPTokenGenerator;
 import com.green.babyfood.sign.model.*;
+import com.green.babyfood.user.UserMapper;
+import com.green.babyfood.user.model.AdminUserEntity;
+import com.green.babyfood.user.model.UserSelEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +26,7 @@ public class SignController {
 
     private final SignService SERVICE;
     private final TOTPTokenGenerator totp;
+    private final UserMapper mapper;
     //ApiParam은 문서 자동화를 위한 Swagger에서 쓰이는 어노테이션이고
     //RequestParam은 http 로부터 요청 온 정보를 받아오기 위한 스프링 어노테이션이다.
 

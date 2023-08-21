@@ -1,7 +1,14 @@
 package com.green.babyfood.user;
 
+import com.green.babyfood.config.RedisService;
+import com.green.babyfood.config.security.AuthenticationFacade;
+import com.green.babyfood.config.security.JwtTokenProvider;
+import com.green.babyfood.sign.SignMapper;
+import com.green.babyfood.sign.SignService;
 import com.green.babyfood.user.model.*;
 import com.green.babyfood.util.FileUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -21,7 +31,11 @@ public class UserService {
     private String fileDir;
 
     private final UserMapper mapper;
+    private final SignService service;
     private final PasswordEncoder PW_ENCODER;
+    private final JwtTokenProvider JWT_PROVIDER;
+    private final RedisService REDIS_SERVICE;
+    private final AuthenticationFacade FACADE;
 
     /*@Autowired
     public UserService(UserMapper mapper,@Value("${file.dir}")String fileDir) {
@@ -88,9 +102,10 @@ public class UserService {
         return mapper.updPointUser(dto);
     }
 
-    public int delUser(UserDelDto dto){
-        mapper.deltoken(dto);
+    public int delUser(UserDelDto dto, HttpServletRequest req){
+        service.logout(req);
         return mapper.delUser(dto);
+
     }
 
 
