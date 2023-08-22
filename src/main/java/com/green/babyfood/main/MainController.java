@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -99,7 +100,7 @@ public class MainController {
             "quantity : 상품의 재고<br>" +
             "volumn : 판매량<br>" +
             "4개월 이하는 이유식이 먹을 나이가 아닙니다")
-    public List<MainSelVo> postBirthFilter(int row) {
+    public Object postBirthFilter(int row) throws IOException {
         return service.birthRecommendFilter(row);
     }
 }

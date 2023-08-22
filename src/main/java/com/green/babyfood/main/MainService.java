@@ -6,11 +6,17 @@ import com.green.babyfood.main.model.MainSelVo;
 import com.green.babyfood.main.model.MainSelVoMaxPaige;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.connector.Request;
+import org.apache.catalina.connector.Response;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -219,7 +225,7 @@ public class MainService {
 //   }
 
 
-    public List<MainSelVo> birthRecommendFilter(int row) {
+    public Object birthRecommendFilter(int row) throws IOException {
 
 //        String plus="";
 //        String subAllergy="";
@@ -235,11 +241,12 @@ public class MainService {
 //        else {
 //            subAllergy="";
 //        }
+
         int month = mapper.birth(USERPK.getLoginUserPk());
         int cate = 0;
         if (month <= 4) {
-            return null;
-        }
+           return "null";
+         }
         if (month > 4 && month <= 6) {
             cate = 1;
         } else if (month > 6 && month <= 10) {
