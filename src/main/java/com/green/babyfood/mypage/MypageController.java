@@ -63,10 +63,8 @@ public class MypageController {
 
     @DeleteMapping("/profile")
     @Operation(summary = "회원탈퇴")
-    int delprofile(@RequestParam String email, HttpServletRequest req){
-        UserDelDto dto = new UserDelDto();
-        dto.setEmail(email);
-        return service.delUser(dto,req);
+    int delprofile(HttpServletRequest req){
+        return service.delUser(req);
     }
 
     @PatchMapping(value = "/profile/pic", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

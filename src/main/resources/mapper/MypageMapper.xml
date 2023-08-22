@@ -84,7 +84,7 @@
     <delete id="delUser">
         update user
         set del_yn = 1
-        where email = #{email}
+        where iuser = #{iuser}
     </delete>
 
     <update id="patchProfile">
