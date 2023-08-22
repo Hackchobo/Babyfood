@@ -1,6 +1,7 @@
 package com.green.babyfood.mypage;
 
 import com.green.babyfood.mypage.model.*;
+import com.green.babyfood.user.model.UserDelDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.core.annotation.Order;
 
@@ -11,7 +12,7 @@ public interface MypageMapper {
     ProfileSelDto profile(OrderIuserDto dto);
     int Updprofile(ProfileEntity entity);
     String SelNickNm(String nickNm);
-    int delUser(OrderIuserDto dto);
+    int delUser(UserDelDto dto);
     List<OrderlistCountSelDto> orderlist(OrderlistMonthsSelDto dto);
     List<OrderlistCountSelDto> orderlistDetail(Long orderId);
     OrderlistUserDto selUser(Long orderId);

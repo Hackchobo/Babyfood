@@ -82,8 +82,9 @@
     </select>
 
     <delete id="delUser">
-        delete from user
-        where iuser = #{iuser}
+        update user
+        set del_yn = 1
+        where email = #{email}
     </delete>
 
     <update id="patchProfile">
