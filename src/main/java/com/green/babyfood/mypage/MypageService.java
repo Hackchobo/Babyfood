@@ -170,9 +170,9 @@ public class MypageService {
     public int delUser(UserDelDto dto, HttpServletRequest req){
         service.logout(req);
 
-        Long loginUserPk = USERPK.getLoginUserPk();
-        OrderIuserDto iuser = new OrderIuserDto();
-        iuser.setIuser(USERPK.getLoginUserPk());
+//        Long loginUserPk = USERPK.getLoginUserPk();
+//        OrderIuserDto iuser = new OrderIuserDto();
+//        iuser.setIuser(USERPK.getLoginUserPk());
 
 
         return mapper.delUser(dto);
