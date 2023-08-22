@@ -2,7 +2,10 @@ package com.green.babyfood.mypage;
 
 import com.green.babyfood.config.security.AuthenticationFacade;
 import com.green.babyfood.mypage.model.*;
+import com.green.babyfood.sign.SignService;
+import com.green.babyfood.user.model.UserDelDto;
 import com.green.babyfood.util.FileUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +31,7 @@ public class MypageService {
     private final MypageMapper mapper;
     private final PasswordEncoder PW_ENCODER;
     private final AuthenticationFacade USERPK;
+    private final SignService service;
 
     public  List<OrderlistSelDto> Orderlist(int month){
         OrderlistMonthsSelDto dto = new OrderlistMonthsSelDto();
@@ -163,13 +167,14 @@ public class MypageService {
             return 0;
     }
 
-    public int delUser(){
-        OrderIuserDto dto = new OrderIuserDto();
-        Long loginUserPk = USERPK.getLoginUserPk();
+    public int delUser(HttpServletRequest req){
+        service.logout(req);
 
-        System.out.println(loginUserPk);
-        dto.setIuser(USERPK.getLoginUserPk());
-        return mapper.delUser(dto);
+        Long loginUserPk = USERPK.getLoginUserPk();
+        OrderIuserDto iuser = new OrderIuserDto();
+        iuser.setIuser(loginUserPk);
+
+        return mapper.delUser(iuser);
     }
 
 

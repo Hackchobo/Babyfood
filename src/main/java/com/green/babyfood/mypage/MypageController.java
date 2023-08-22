@@ -2,8 +2,10 @@ package com.green.babyfood.mypage;
 
 import com.green.babyfood.mypage.model.*;
 import com.green.babyfood.user.model.CreatePicDto;
+import com.green.babyfood.user.model.UserDelDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -61,8 +63,8 @@ public class MypageController {
 
     @DeleteMapping("/profile")
     @Operation(summary = "회원탈퇴")
-    int delprofile(){
-        return service.delUser();
+    int delprofile(HttpServletRequest req){
+        return service.delUser(req);
     }
 
     @PatchMapping(value = "/profile/pic", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

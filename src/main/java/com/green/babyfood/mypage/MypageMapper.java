@@ -1,6 +1,7 @@
 package com.green.babyfood.mypage;
 
 import com.green.babyfood.mypage.model.*;
+import com.green.babyfood.user.model.UserDelDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.core.annotation.Order;
 

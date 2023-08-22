@@ -82,7 +82,8 @@
     </select>
 
     <delete id="delUser">
-        delete from user
+        update user
+        set del_yn = 1
         where iuser = #{iuser}
     </delete>
 
