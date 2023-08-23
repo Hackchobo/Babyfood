@@ -30,8 +30,6 @@ public class SearchController {
         return SERVICE.selproduct(product,page,row);
     }
 
-
-
     @GetMapping("/filter")
     @Operation(summary = "필터",description = ""+
             " sorter: 0이면 판매량 많은순서 1이면 판매량 적은순서 <br> "+
@@ -40,12 +38,8 @@ public class SearchController {
                                       @RequestParam(defaultValue = "1") int page,
                                       @RequestParam(defaultValue = "10") int row,
                                       @RequestParam int sorter,
-                                      @RequestParam List<String>filter
-
-                                      ){
-
+                                      @RequestParam List<String>filter){
         SearchSelRes selfilter = SERVICE.selfilter(product,page,row,sorter,filter);
-
         return selfilter;
     }
 }
