@@ -18,8 +18,8 @@ public class SearchController {
 
     @GetMapping
     @Operation(summary = "검색",description = ""+
-            "title : 음식제목<br>"+
-            "name : 음식이름<br>"+
+            "title : 음식 제목<br>"+
+            "name : 음식 이름<br>"+
             "thumbnail: 썸네일<br>"+
             "price : 가격<br>"
     )
@@ -32,7 +32,7 @@ public class SearchController {
 
     @GetMapping("/filter")
     @Operation(summary = "필터",description = ""+
-            " sorter: 0이면 판매량 많은순서 1이면 판매량 적은순서 <br> "+
+            " sorter: 0이면 판매량 많은 순서 1이면 판매량 적은 순서 <br> "+
             "sorter: 2이면 가격 높은 순서 3이면 가격 낮은 순서<br>")
     public SearchSelRes filterAllergy(@RequestParam String product,
                                       @RequestParam(defaultValue = "1") int page,

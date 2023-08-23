@@ -23,7 +23,7 @@ public class EmailController {
     }
 
     @PostMapping("/send")
-    @Operation(summary = "메일 발송기능",description = "사용법 <br>"+
+    @Operation(summary = "메일 발송 기능",description = "사용법 <br>"+
             "mailAddress : 수신자 메일 주소<br>"+
             "title : 메일 제목<br>"+
             "ctnt : 내용 <br>")

@@ -27,7 +27,7 @@ public class UserController {
     private final int ROW = 20; // 페이지당 출력 게시물, 고정값 20
 
     @GetMapping("/search")
-    @Operation(summary = "유저/관리자 회원정보보기 (모든 정보보기) ",description =
+    @Operation(summary = "유저/관리자 회원 정보 보기 (모든 정보 보기) ",description =
             "나타나는 정보 : 회원의 고유값(PK), 이메일, 비밀번호, 이미지, 이름, 생년월일, 모바일 번호, 생성일, 관리자 여부" +
                     "우편번호, 주소, 상세주소, 닉네임, 포인트<br>"
     )

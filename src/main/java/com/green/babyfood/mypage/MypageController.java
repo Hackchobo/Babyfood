@@ -29,7 +29,7 @@ public class MypageController {
     }
 
     @GetMapping("/orderlist/{orderId}")
-    @Operation(summary = "상세주문내역",description = "")
+    @Operation(summary = "상세 주문내역",description = "")
     OrderlistSelUserDto getOrderlistDetail(@PathVariable Long orderId){
         return service.OrderlistDetail(orderId);
     }

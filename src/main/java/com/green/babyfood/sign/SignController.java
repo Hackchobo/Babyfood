@@ -34,8 +34,8 @@ public class SignController {
     @Operation(summary = "로그인",description =
             "email : 회원의 이메일(아이디가)<br>"+
                     "password: 회원의 비밀번호<br>" +
-                    "참고사항 : password 가 틀릴경우 경고창이 나와요<br>"+
-                    "참고사항 : 로그인시 액세스 토큰과 리프레시 토큰이 발급되요"
+                    "참고사항 : password 가 틀릴 경우 경고창이 나와요<br>"+
+                    "참고사항 : 로그인 시 액세스 토큰과 리프레시 토큰이 발급돼요"
     )
     public SignInResultDto signIn(HttpServletRequest req, @RequestBody SigninDto dto) throws Exception {
 
@@ -56,7 +56,7 @@ public class SignController {
                     "address : 주소<br>" +
                     "addressDetail : 상세주소<br>" +
                     "nickNm : 닉네임" +
-                    "참고사항 : email 과 nickNm이 겹칠경우 경고창이 나와요"
+                    "참고사항 : email과 nickNm이 겹칠 경우 경고창이 나와요"
     )
     public SignUpResultDto signUp(@RequestBody SignEntity entity) {
         /*log.info("[signUp] 회원가입을 수행합니다. email: {}, pw: {}, nm: {}, mobileNb: {}, role: {}" +
@@ -69,7 +69,7 @@ public class SignController {
     @GetMapping("/refresh-token")
     @Operation(summary = "토큰발행",description =
             "refreshToken : 리프레시 토큰을 입력하면 됩니다.<br>"+
-                    "참고사항 : 액세스토큰이 재발행 됩니다. <br>" +
+                    "참고사항 : 액세스 토큰이 재발행 됩니다. <br>" +
                     "참고사항 : 로그인이 되어있는 상태에서만 발행이 됩니다."
     )
     public ResponseEntity<SignUpResultDto> refreshToken(HttpServletRequest req
@@ -80,7 +80,7 @@ public class SignController {
 
     @PostMapping("/logout")
     @Operation(summary = "로그아웃",description =
-               "참고사항 : 로그인이 되어있는 상태에서 로그아웃을 하면 됩니다.(액티브토큰이 삭제됨)"
+               "참고사항 : 로그인이 되어있는 상태에서 로그아웃하면 됩니다.(액티브 토큰이 삭제됨)"
     )
     public ResponseEntity<?> logout(HttpServletRequest req) {
         SERVICE.logout(req);

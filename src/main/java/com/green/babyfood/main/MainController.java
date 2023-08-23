@@ -33,7 +33,7 @@ public class MainController {
 
 
     @GetMapping("/random")
-    @Operation(summary = "랜덤으로 상품추천", description = "" +
+    @Operation(summary = "랜덤으로 상품 추천", description = "" +
             "productId : 상품의 고유번호<br>" +
             "thumbnail : 상품의 썸네일<br>" +
             "title : 상품의 제목<br>" +
@@ -91,7 +91,7 @@ public class MainController {
 //  }
 
     @GetMapping("/recommend")
-    @Operation(summary = "회원 자녀의 개월에따라 상품추천", description = "" +
+    @Operation(summary = "회원 자녀의 개월에 따라 상품 추천", description = "" +
             "productId : 상품의 고유번호<br>" +
             "thumbnail : 상품의 썸네일<br>" +
             "title : 상품의 제목<br>" +
@@ -99,7 +99,7 @@ public class MainController {
             "price : 상품의 가격<br>" +
             "quantity : 상품의 재고<br>" +
             "volumn : 판매량<br>" +
-            "4개월 이하는 이유식이 먹을 나이가 아닙니다")
+            "4개월 이하는 이유식을 먹을 나이가 아닙니다.")
     public Object postBirthFilter(int row) throws IOException {
         return service.birthRecommendFilter(row);
     }
