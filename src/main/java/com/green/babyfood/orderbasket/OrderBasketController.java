@@ -20,7 +20,7 @@ public class OrderBasketController {
 
 
     @PostMapping
-    @Operation(summary = "상품페이지에서 장바구니 버튼",description = ""+
+    @Operation(summary = "상품 페이지에서 장바구니 버튼",description = ""+
     "productId : 상품번호<br>"+
     "count : 수량")
     public Long post(@RequestBody OrderBasketDto dto){
@@ -35,8 +35,8 @@ public class OrderBasketController {
             "title : 상품의 title<br>"+
             "name : 상품의 이름<br>"+
             "count : 수량 <br>"+
-            "price : 해당상품 하나의 가격<br>"+
-            "thumbnail : 해당상품의 썸네일<br>"+
+            "price : 해당 상품 하나의 가격<br>"+
+            "thumbnail : 해당 상품의 썸네일<br>"+
             "createdAt : 상품이 장바구니에 담긴 날짜"
     )
     public List<OrderBasketSelVo> getUserOrderBasket(){

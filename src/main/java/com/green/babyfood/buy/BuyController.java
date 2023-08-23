@@ -14,7 +14,7 @@ public class BuyController {
     private final BuyService SERVICE;
 
     @PostMapping("/order")
-    @Operation(summary = "상품결제",description = "사용법 <br>"+
+    @Operation(summary = "상품 결제",description = "사용법 <br>"+
             "cartId : 장바구니 PK 번호<br>"+
             "productId : 상품 PK 번호<br>"+
             "count : 상품 갯수 <br>"+
@@ -25,7 +25,7 @@ public class BuyController {
             "request: 요청사항 <br>"+
             "receiver: 수령인 <br>"+
             " 제품의 수량이 없거나 오류가 나면 return null <br>"+
-            " 결제가 완료 되면 주문내역의 PK 값과 사용자가 사용한 point 를 return 시켜줌<br>" +
+            " 결제가 완료 되면 주문 내역의 PK 값과 사용자가 사용한 point를 return 시켜줌<br>" +
             "totalprice: 상품들의 총 가격"+
             "point: 포인트 사용금액<br>"+
             "paymentprice: 결제한 금액<br>"+

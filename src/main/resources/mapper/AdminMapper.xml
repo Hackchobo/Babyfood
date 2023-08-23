@@ -114,7 +114,6 @@
 
 
 
-
     <insert id="insPk" useGeneratedKeys="true" keyProperty="productId">
         insert into product
         (p_title,p_name,p_price,p_quantity,description,created_at,updated_at)

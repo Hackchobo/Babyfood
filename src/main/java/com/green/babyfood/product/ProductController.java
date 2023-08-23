@@ -20,7 +20,7 @@ public class ProductController {
     private final ProductService service;
 
     @GetMapping
-    @Operation(summary = "상품 상세보기 페이지",description = ""+
+    @Operation(summary = "상품 상세 보기 페이지",description = ""+
             "productId = 상품 코드")
     ProductSelDto selProduct(Long productId){
         return service.selProduct(productId);

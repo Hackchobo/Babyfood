@@ -110,8 +110,8 @@ public class AdminService {
         apcd.setProductId(dto.getProductId());
         apcd.setCateId(dto.getCategory());
         apcd.setCateDetailId(dto.getCateDetail());
-        mapper.updAdminProduct(dto);
-       return mapper.insProductCateRelation(apcd);
+        mapper.insProductCateRelation(apcd);
+       return mapper.updAdminProduct(dto);
     }
 
     public int changeProduct(AdminProductUpdDto dto) {
