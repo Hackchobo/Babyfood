@@ -33,6 +33,11 @@ public class MypageController {
     OrderlistSelUserDto getOrderlistDetail(@PathVariable Long orderId){
         return service.OrderlistDetail(orderId);
     }
+    @GetMapping("/orderlist/detail")
+    @Operation(summary = "상세 주문내역",description = "")
+    OrderlistSelUserDto getOrderlistDetail2(@RequestParam Long orderId){
+        return service.OrderlistDetail(orderId);
+    }
 
     @DeleteMapping("/orderlist")
     @Operation(summary = "주문내역삭제",description = ""+
