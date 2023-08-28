@@ -8,13 +8,21 @@
         SELECT A.order_id orderId,DATE_FORMAT(A.created_at,'%Y-%m-%d') createdAt,C.p_name name,D.thumbnail thumbnail,B.total_price price,A.shipment shipment,COUNT(A.order_id)-1 count
         ,C.product_id productId,E.cate_id cateId,C.p_title title
         FROM order_list A
+
         INNER JOIN order_detail B
+
         ON A.order_id = B.order_id
+
         INNER JOIN product C
+
         ON B.product_id = C.product_id
+
         LEFT JOIN product_img D
+
         ON D.product_id = C.product_id
+
         LEFT JOIN product_category_relation E
+
         ON C.product_id = E.product_id
         where iuser = #{iuser}
         AND A.cancel = 0
@@ -99,5 +107,11 @@
         INNER JOIN order_detail B
         ON A.order_id = B.order_id
         WHERE A.order_id  = #{orderId}
+    </select>
+
+    <select id="selpw">
+        SELECT PASSWORD
+        FROM user
+        WHERE iuser = #{iuser};
     </select>
 </mapper>

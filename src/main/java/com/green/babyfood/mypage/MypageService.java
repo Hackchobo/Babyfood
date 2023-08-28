@@ -214,4 +214,14 @@ public class MypageService {
         }
         return 1;
     }
+
+    public int selpw(String pw){
+        Long userid = USERPK.getLoginUserPk();
+        String selpw = mapper.selpw(userid);
+
+        boolean matches = PW_ENCODER.matches(pw, selpw);
+        if (matches==true){
+            return 1;
+        }else return 0;
+    }
 }

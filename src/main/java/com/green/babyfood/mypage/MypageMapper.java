@@ -18,6 +18,7 @@ public interface MypageMapper {
     OrderlistUserDto selUser(Long orderId);
     int delorder(Long orderId);
     int count(Long orderId);
-
     int patchProfile(ProfileUpdPicDto dto);
+
+    String selpw(Long iuser);
 }

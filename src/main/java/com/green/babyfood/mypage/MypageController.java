@@ -80,4 +80,12 @@ public class MypageController {
         return service.updPicUser(pic);
     }
 
+    @PostMapping("/checkpw")
+    @Operation(summary = "비밀번호체크",description = "return:1 이면 비밀번호 맞음," +
+            "return:0이면 비밀번호 틀림")
+    int checkPw(@RequestParam String password){
+        return service.selpw(password);
+    }
+
+
 }
