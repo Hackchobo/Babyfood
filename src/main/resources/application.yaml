@@ -10,7 +10,9 @@ spring:
     multipart:
       max-file-size: 3MB
       max-request-size: 12MB
-
+  devtools:
+    livereload:
+      enabled: false
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://192.168.0.144:3306/team_a
@@ -69,3 +71,6 @@ file:
   dir: /home/download
 server:
   port: 8080
+  devtools:
+    livereload:
+      enabled: false

@@ -29,6 +29,7 @@ public class MyUserDetails implements UserDetails {
         //return this.roles.stream().map(item -> new SimpleGrantedAuthority(item)).collect(Collectors.toList());
     }
 
+
     @Override
     public String getPassword() { return this.password; }
 
