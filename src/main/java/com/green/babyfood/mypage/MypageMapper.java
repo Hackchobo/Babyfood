@@ -12,6 +12,8 @@ public interface MypageMapper {
     ProfileSelDto profile(OrderIuserDto dto);
     int Updprofile(ProfileEntity entity);
     String SelNickNm(String nickNm);
+    String selmyNickNm(Long iuser);
+
     int delUser(OrderIuserDto dto);
     List<OrderlistCountSelDto> orderlist(OrderlistMonthsSelDto dto);
     List<OrderlistCountSelDto> orderlistDetail(Long orderId);

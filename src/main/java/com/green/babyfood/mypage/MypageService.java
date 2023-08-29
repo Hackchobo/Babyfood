@@ -160,8 +160,13 @@ public class MypageService {
     }
 
     public int nicknmcheck(String nickname){
+        Long iuser = USERPK.getLoginUserPk();
+        String mynickNm = mapper.selmyNickNm(iuser);
+
         String Nicknm = mapper.SelNickNm(nickname);
-        if (nickname.equals(Nicknm)){
+        if (mynickNm.equals(nickname)){
+            return 2;
+        }if (nickname.equals(Nicknm)){
             return 1;
         }else
             return 0;
@@ -216,6 +221,7 @@ public class MypageService {
     }
 
     public int selpw(String pw){
+        log.info("pw:{}",pw);
         Long userid = USERPK.getLoginUserPk();
         String selpw = mapper.selpw(userid);
 

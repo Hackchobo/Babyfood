@@ -88,6 +88,11 @@
         SELECT nick_nm nickNm FROM user
         WHERE nick_nm =#{nickNm}
     </select>
+    <select id="selmyNickNm">
+        SELECT nick_nm nickNm FROM user
+        WHERE iuser = #{iuser}
+
+    </select>
 
     <delete id="delUser">
         update user
@@ -114,4 +119,6 @@
         FROM user
         WHERE iuser = #{iuser};
     </select>
+
+
 </mapper>
