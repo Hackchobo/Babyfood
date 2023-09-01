@@ -42,4 +42,13 @@ public class SearchController {
         SearchSelRes selfilter = SERVICE.selfilter(product,page,row,sorter,filter);
         return selfilter;
     }
+
+    @PostMapping("/filter")
+    @Operation(summary = "필터",description = ""+
+            " sorter: 0이면 판매량 많은 순서 1이면 판매량 적은 순서 <br> "+
+            "sorter: 2이면 가격 높은 순서 3이면 가격 낮은 순서<br>")
+    public SearchSelRes filterpostAllergy(@RequestBody SearchRes res){
+        SearchSelRes selfilter = SERVICE.selpostfilter(res);
+        return selfilter;
+    }
 }
